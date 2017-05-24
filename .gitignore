@@ -1,0 +1,10 @@
+*.o
+bin/
+.build_release/
+build
+*.orig
+*.caffemodel
+*.solverstate
+data/
+bin/
+*.mdb
