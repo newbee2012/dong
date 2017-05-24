@@ -66,7 +66,7 @@
 	"common.hpp"
 	"proto/caffe.pb.h"
 
-1489698898 /home/chendejia/workspace/github/dong/include/proto/caffe.pb.h
+1495654618 /home/chendejia/workspace/github/dong/include/proto/caffe.pb.h
 	<string>
 	<google/protobuf/stubs/common.h>
 	<google/protobuf/generated_message_util.h>
