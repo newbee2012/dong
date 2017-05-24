@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1495616755 source:/home/chendejia/workspace/github/Dong/main.cpp
+	<iostream>
+
+1495620751 source:/home/chendejia/workspace/github/Dong/src/main.cpp
+	<iostream>
+	"data_layer.hpp"
+
+1495620453 /home/chendejia/workspace/github/Dong/include/blob.hpp
+	<algorithm>
+	<string>
+	<vector>
+
+1495621409 source:/home/chendejia/workspace/github/Dong/src/data_layer.cpp
+	<iostream>
+	"blob.hpp"
+
+1495621950 /home/chendejia/workspace/github/Dong/include/data_layer.hpp
+	"common.hpp"
+	<vector>
+
+1495621733 /home/chendejia/workspace/github/Dong/include/common.hpp
+
