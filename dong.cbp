@@ -39,6 +39,7 @@
 			<Add library="libglog" />
 			<Add library="liblmdb" />
 			<Add library="libgflags" />
+			<Add library="libboost_system" />
 		</Linker>
 		<Unit filename="include/common.hpp" />
 		<Unit filename="include/data_layer.hpp" />

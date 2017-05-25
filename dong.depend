@@ -21,7 +21,7 @@
 
 1495621733 /home/chendejia/workspace/github/Dong/include/common.hpp
 
-1495651526 source:/home/chendejia/workspace/github/dong/src/proto/caffe.pb.cc
+1495675700 source:/home/chendejia/workspace/github/dong/src/proto/caffe.pb.cc
 	"proto/caffe.pb.h"
 	<algorithm>
 	<google/protobuf/stubs/common.h>
@@ -33,40 +33,42 @@
 	<google/protobuf/reflection_ops.h>
 	<google/protobuf/wire_format.h>
 
-1495652486 source:/home/chendejia/workspace/github/dong/src/util/db.cpp
+1495675700 source:/home/chendejia/workspace/github/dong/src/util/db.cpp
 	"util/db.hpp"
 	"util/db_lmdb.hpp"
 	"common.hpp"
 	<string>
 
-1495654316 source:/home/chendejia/workspace/github/dong/src/util/db_lmdb.cpp
+1495675700 source:/home/chendejia/workspace/github/dong/src/util/db_lmdb.cpp
 	"util/db_lmdb.hpp"
 	<sys/stat.h>
 	<string>
 
-1495645078 source:/home/chendejia/workspace/github/dong/src/data_layer.cpp
+1495707684 source:/home/chendejia/workspace/github/dong/src/data_layer.cpp
 	<iostream>
 	"data_layer.hpp"
 
-1495645078 /home/chendejia/workspace/github/dong/include/data_layer.hpp
+1495707705 /home/chendejia/workspace/github/dong/include/data_layer.hpp
 	"common.hpp"
+	<boost/shared_ptr.hpp>
 	<vector>
 
-1495652496 /home/chendejia/workspace/github/dong/include/common.hpp
+1495680346 /home/chendejia/workspace/github/dong/include/common.hpp
 	<gflags/gflags.h>
 	<glog/logging.h>
 
-1495654251 source:/home/chendejia/workspace/github/dong/src/main.cpp
+1495708236 source:/home/chendejia/workspace/github/dong/src/main.cpp
 	<iostream>
 	"data_layer.hpp"
 	"util/db.hpp"
+	<boost/shared_ptr.hpp>
 
-1495651182 /home/chendejia/workspace/github/dong/include/util/db.hpp
+1495675700 /home/chendejia/workspace/github/dong/include/util/db.hpp
 	<string>
 	"common.hpp"
 	"proto/caffe.pb.h"
 
-1495654618 /home/chendejia/workspace/github/dong/include/proto/caffe.pb.h
+1495675700 /home/chendejia/workspace/github/dong/include/proto/caffe.pb.h
 	<string>
 	<google/protobuf/stubs/common.h>
 	<google/protobuf/generated_message_util.h>
@@ -76,7 +78,7 @@
 	<google/protobuf/generated_enum_reflection.h>
 	<google/protobuf/unknown_field_set.h>
 
-1495652204 /home/chendejia/workspace/github/dong/include/util/db_lmdb.hpp
+1495675700 /home/chendejia/workspace/github/dong/include/util/db_lmdb.hpp
 	<string>
 	<vector>
 	"lmdb.h"
