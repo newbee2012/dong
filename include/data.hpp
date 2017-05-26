@@ -11,11 +11,8 @@ namespace dong
 class Data
 {
 public:
-    Data(): _num(0),_channels(0),_width(0),_height(0) {}
-    explicit Data(const int num, const int channels, const int width, const int height,
-                  boost::shared_ptr<int> _data);
+    explicit Data(int num, int channels, int width, int height);
     void print();
-
     int getCount();
 
 protected:
@@ -25,7 +22,7 @@ protected:
     int _width;
     int _height;
 
-    DISABLE_COPY_AND_ASSIGN(DataLayer);
+    DISABLE_COPY_AND_ASSIGN(Data);
 };
 
 }  // namespace dong

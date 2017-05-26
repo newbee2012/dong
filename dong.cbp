@@ -43,13 +43,13 @@
 		</Linker>
 		<Unit filename="include/common.hpp" />
 		<Unit filename="include/data.hpp" />
-		<Unit filename="include/data_layer.hpp" />
+		<Unit filename="include/input_layer.hpp" />
 		<Unit filename="include/layer.hpp" />
 		<Unit filename="include/proto/caffe.pb.h" />
 		<Unit filename="include/util/db.hpp" />
 		<Unit filename="include/util/db_lmdb.hpp" />
 		<Unit filename="src/data.cpp" />
-		<Unit filename="src/data_layer.cpp" />
+		<Unit filename="src/input_layer.cpp" />
 		<Unit filename="src/layer.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/proto/caffe.pb.cc" />

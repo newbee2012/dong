@@ -37,8 +37,8 @@ int main()
             }
         }
 
-        DataLayer* dataLayer = new DataLayer(1, channels, width, height, label, data);
-        dataLayer->printData();
+        DataLayer* InputLayer = new InputLayer(1, channels, width, height, label, data);
+        InputLayer->getData()->print();
         delete dataLayer;
         corsor->Next();
     }

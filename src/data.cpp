@@ -1,6 +1,7 @@
-#ifndef DONG_DATA_LAYER_HPP_
-#define DONG_DATA_LAYER_HPP_
+#ifndef DONG_DATA_HPP_
+#define DONG_DATA_HPP_
 #include "common.hpp"
+#include "data.hpp"
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
@@ -8,19 +9,17 @@
 namespace dong
 {
 
-class Data::Data(const int num, const int channels, const int width, const int height,
-                     boost::shared_ptr<int> _data)
+class Data::Data(int num, int channels, int width, int height)
 {
     this->_num = num;
     this->_channels = channels;
     this->_width=width;
     this->_height=height;
-    this->_data = data;
 }
 
 void Data::print()
 {
-    cout <<"w:"<< _width<<",h:"<<_height<< ",label is " << _label << endl;
+    cout <<"w:"<< _width<<",h:"<<_height<< endl;
     int* p = _data.get();
     for (int w = 0; w < this->_width; w++)
     {
