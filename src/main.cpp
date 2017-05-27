@@ -1,5 +1,5 @@
 #include <iostream>
-#include "data_layer.hpp"
+#include "input_layer.hpp"
 #include "util/db.hpp"
 #include <boost/shared_ptr.hpp>
 using namespace std;
@@ -24,8 +24,8 @@ int main()
         int height = datum.height();
         int label = datum.label();
 
-        boost::shared_ptr<int> data(new int[width*height]);
-        int* p = data.get();
+        boost::shared_ptr<int> inputImage(new int[width*height]);
+        int* p = inputImage.get();
         for (int c = 0; c < channels; c++)
         {
             for (int w = 0; w < width; w++)
@@ -37,9 +37,9 @@ int main()
             }
         }
 
-        DataLayer* InputLayer = new InputLayer(1, channels, width, height, label, data);
-        InputLayer->getData()->print();
-        delete dataLayer;
+        boost::shared_ptr<Data> data((new Data(1, channels, width, height, false))->setUp(inputImage));
+        boost::shared_ptr<InputLayer> inputLayer(new InputLayer(data));
+        inputLayer->getData()->print();
         corsor->Next();
     }
 

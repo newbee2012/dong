@@ -1,13 +1,13 @@
 #include <iostream>
-#include "data_layer.hpp"
+#include "input_layer.hpp"
 using namespace std;
 
 namespace dong
 {
 
-InputLayer::InputLayer(boost::shared_ptr<Data> data)
+InputLayer::InputLayer(const boost::shared_ptr<Data>& data)
 {
-    this->_data =data;
+    this->_data = data;
 }
 
 

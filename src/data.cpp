@@ -9,12 +9,23 @@
 namespace dong
 {
 
-class Data::Data(int num, int channels, int width, int height)
+Data::Data(int num, int channels, int width, int height, bool newData)
 {
     this->_num = num;
     this->_channels = channels;
     this->_width=width;
     this->_height=height;
+    if(newData)
+    {
+        _data.reset(new int[count()]);
+    }
+
+}
+
+Data* Data::setUp(const boost::shared_ptr<int>& data)
+{
+    _data = data;
+    return this;
 }
 
 void Data::print()
@@ -33,11 +44,6 @@ void Data::print()
 
         cout << endl;
     }
-}
-
-int Data::getCount()
-{
-    return num*channels*width*height;
 }
 
 

@@ -11,7 +11,8 @@ namespace dong
 class InputLayer:public Layer
 {
 public:
-    explicit InputLayer(boost::shared_ptr<Data> data);
+    explicit InputLayer(const boost::shared_ptr<Data>& data);
+    virtual LayerType getType(){return INPUT;}
 
 protected:
 

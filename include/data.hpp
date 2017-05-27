@@ -11,9 +11,10 @@ namespace dong
 class Data
 {
 public:
-    explicit Data(int num, int channels, int width, int height);
+    explicit Data(int num, int channels, int width, int height, bool newData);
+    Data* setUp(const boost::shared_ptr<int>& data);
     void print();
-    int getCount();
+    int inline count(){return _num*_channels*_width*_height;}
 
 protected:
     boost::shared_ptr<int> _data;
