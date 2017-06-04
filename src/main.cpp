@@ -37,8 +37,9 @@ int main()
             }
         }
 
-        boost::shared_ptr<Data> data((new Data(1, channels, width, height, false))->setUp(inputImage));
-        boost::shared_ptr<InputLayer> inputLayer(new InputLayer(data));
+        boost::shared_ptr<Data> inputData((new Data(1, channels, width, height, false))->setUp(inputImage));
+        boost::shared_ptr<InputLayer> inputLayer(new InputLayer(inputData));
+        cout<<"Label: "<<label<<endl;
         inputLayer->getData()->print();
         corsor->Next();
     }

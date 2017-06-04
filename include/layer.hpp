@@ -16,9 +16,11 @@ class Layer
 public:
     Layer(){};
     virtual ~Layer(){};
-    boost::shared_ptr<Data> getBottomData(){return _bottom_data;}
-    boost::shared_ptr<Data> getData(){return _data;}
-    boost::shared_ptr<Data> getWeight(){return _weight;}
+    virtual boost::shared_ptr<Data> getBottomData(){return _bottom_data;}
+    virtual boost::shared_ptr<Data> getData(){return _data;}
+    virtual boost::shared_ptr<Data> getWeight(){return _weight;}
+    virtual void forward() = 0;
+    virtual void backward() = 0;
 protected:
     boost::shared_ptr<Data> _bottom_data;
     boost::shared_ptr<Data> _data;
