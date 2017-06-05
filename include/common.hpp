@@ -11,5 +11,4 @@ using namespace std;
 #include <gflags/gflags.h>
 #include <glog/logging.h>
 
-
 #endif  // CAFFE_COMMON_HPP_

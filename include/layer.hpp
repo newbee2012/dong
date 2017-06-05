@@ -14,11 +14,20 @@ enum LayerType {INPUT, DATA, CONVOLUTION};
 class Layer
 {
 public:
-    Layer(){};
-    virtual ~Layer(){};
-    virtual boost::shared_ptr<Data> getBottomData(){return _bottom_data;}
-    virtual boost::shared_ptr<Data> getTopData(){return _top_data;}
-    virtual boost::shared_ptr<Data> getWeight(){return _weight;}
+    Layer() {};
+    virtual ~Layer() {};
+    virtual boost::shared_ptr<Data> getBottomData()
+    {
+        return _bottom_data;
+    }
+    virtual boost::shared_ptr<Data> getTopData()
+    {
+        return _top_data;
+    }
+    virtual boost::shared_ptr<Data> getWeight()
+    {
+        return _weight;
+    }
     virtual void forward() {};
     virtual void backward() {};
 protected:
