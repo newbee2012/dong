@@ -11,11 +11,15 @@ namespace dong
 class ConvLayer:public Layer
 {
 public:
-    explicit ConvLayer(const boost::shared_ptr<Data>& bottomData);
+    explicit ConvLayer();
     virtual LayerType getType(){return CONVOLUTION;}
-
+    virtual void setUp(const boost::shared_ptr<Data>& bottomData);
+    virtual void init(int kernel_num, int kernel_channels, int kernel_w, int kernel_h);
+    virtual void forward();
+    virtual void backward();
 
 protected:
+
 
     DISABLE_COPY_AND_ASSIGN(ConvLayer);
 };
