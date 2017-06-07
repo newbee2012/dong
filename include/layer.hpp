@@ -9,7 +9,7 @@
 namespace dong
 {
 
-enum LayerType {INPUT, DATA, CONVOLUTION};
+enum LayerType {INPUT, DATA, CONVOLUTION, POOL, INNER_PRODUCT};
 
 class Layer
 {
@@ -24,7 +24,7 @@ public:
     {
         return _top_data;
     }
-    virtual boost::shared_ptr<Data> getWeight()
+    virtual boost::shared_ptr<Data> getWeightData()
     {
         return _weight;
     }

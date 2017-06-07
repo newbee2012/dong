@@ -11,4 +11,9 @@ using namespace std;
 #include <gflags/gflags.h>
 #include <glog/logging.h>
 
+
+
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
+
 #endif  // CAFFE_COMMON_HPP_

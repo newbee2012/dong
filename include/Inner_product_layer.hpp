@@ -1,5 +1,5 @@
-#ifndef DONG_CONV_LAYER_HPP_
-#define DONG_CONV_LAYER_HPP_
+#ifndef DONG_INNER_PRODUCT_LAYER_HPP_
+#define DONG_INNER_PRODUCT_LAYER_HPP_
 #include "common.hpp"
 #include "layer.hpp"
 #include <boost/shared_ptr.hpp>
@@ -8,25 +8,25 @@
 
 namespace dong
 {
-class ConvLayer: public Layer
+class InnerProductLayer: public Layer
 {
 public:
-    explicit ConvLayer();
+    explicit InnerProductLayer();
     virtual LayerType getType()
     {
-        return CONVOLUTION;
+        return INNER_PRODUCT;
     }
     virtual void setUp(const boost::shared_ptr<Data>& bottomData);
-    virtual void init(int kernel_num, int kernel_channels, int kernel_h, int kernel_w);
+    virtual void init(int num);
     virtual void forward();
     virtual void backward();
 
 protected:
+    int _num;
 
-
-    DISABLE_COPY_AND_ASSIGN(ConvLayer);
+    DISABLE_COPY_AND_ASSIGN(InnerProductLayer);
 };
 
 }  // namespace dong
 
-#endif  // DONG_CONV_LAYER_HPP_
+#endif  // DONG_INNER_PRODUCT_LAYER_HPP_

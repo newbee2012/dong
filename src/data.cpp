@@ -16,12 +16,14 @@ Data::Data(int num, int channels, int height, int width, bool newData)
     this->_channels = channels;
     this->_height = height;
     this->_width = width;
+
     if (newData) {
         int* data = new int[count()]();
-        for(int i=0;i < count();i++)
-        {
+
+        for (int i = 0; i < count(); i++) {
             data[i] = random(2);
         }
+
         _data.reset(data);
     }
 }
@@ -37,30 +39,26 @@ void Data::print()
     cout << "w:" << _width << ",h:" << _height << endl;
     int* p = _data.get();
 
-    for (int w = 0; w < this->_width; w++) {
-        for (int h = 0; h < this->_height; h++) {
-            int value = p[w * this->_height + h];
-            if(value>0)
-            {
+    for (int w = 0; w < _width; w++) {
+        for (int h = 0; h < _height; h++) {
+            int value = p[w * _height + h];
+
+            if (value > 0) {
                 cout << value;
-            }
-            else
-            {
+            } else {
                 cout << ".";
             }
 
-            if(value<10)
-            {
+            if (value < 10) {
                 cout << "   ";
-            }
-            else
-            {
+            } else if (value < 100) {
                 cout << "  ";
+            }else{
+                cout << " ";
             }
-
         }
 
-        cout << endl<<endl;
+        cout << endl << endl;
     }
 }
 

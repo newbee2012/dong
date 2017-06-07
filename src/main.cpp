@@ -1,6 +1,7 @@
 #include <iostream>
 #include "input_layer.hpp"
 #include "conv_layer.hpp"
+#include "pool_layer.hpp"
 #include "util/db.hpp"
 #include <boost/shared_ptr.hpp>
 using namespace std;
@@ -29,28 +30,60 @@ int main()
         for (int c = 0; c < channels; c++) {
             for (int w = 0; w < width; w++) {
                 for (int h = 0; h < height; h++) {
-                    *(p++) = (int)(datum.data()[w * height + h])!=0 ?1:0;
+                    *(p++) = (int)(datum.data()[w * height + h]) != 0 ? 1 : 0;
                 }
             }
         }
 
         boost::shared_ptr<Data> inputData((new Data(1, channels, height, width, false))->setUp(inputImage));
-
         //L1.inputLayer
         boost::shared_ptr<InputLayer> inputLayer(new InputLayer());
         inputLayer->setUp(inputData);
         cout << "Label: " << label << endl;
         inputLayer->forward();
 
-        //L2.convLayer
-        boost::shared_ptr<ConvLayer> convLayer(new ConvLayer());
-        convLayer->init(1, 1, 5, 5);
-        convLayer->setUp(inputLayer->getTopData());
-        convLayer->forward();
+        //L2.convLayer1
+        boost::shared_ptr<ConvLayer> convLayer1(new ConvLayer());
+        convLayer1->init(1, 1, 5, 5);
+        convLayer1->setUp(inputLayer->getTopData());
+        convLayer1->forward();
+
+        //L3.poolLayer
+        boost::shared_ptr<PoolLayer> poolLayer1(new PoolLayer());
+        poolLayer1->init(2, 2, 2, 2);
+        poolLayer1->setUp(convLayer1->getTopData());
+        poolLayer1->forward();
+
+        //L4.convLayer
+        boost::shared_ptr<ConvLayer> convLayer2(new ConvLayer());
+        convLayer2->init(1, 1, 5, 5);
+        convLayer2->setUp(poolLayer1->getTopData());
+        convLayer2->forward();
+
+        //L5.poolLayer
+        boost::shared_ptr<PoolLayer> poolLayer2(new PoolLayer());
+        poolLayer2->init(2, 2, 2, 2);
+        poolLayer2->setUp(convLayer2->getTopData());
+        poolLayer2->forward();
 
         //print per layer
+        cout<<"---------inputLayer top_data-----------"<<endl;
         inputLayer->getTopData()->print();
-        convLayer->getTopData()->print();
+        cout<<"---------convLayer1 top_data-----------"<<endl;
+        convLayer1->getTopData()->print();
+        cout<<"---------convLayer1 weight-----------"<<endl;
+        convLayer1->getWeightData()->print();
+        cout<<"---------poolLayer1 top_data-----------"<<endl;
+        poolLayer1->getTopData()->print();
+
+        //cout<<"---------convLayer2 bottom_data-----------"<<endl;
+        //convLayer2->getBottomData()->print();
+        cout<<"---------convLayer2 top_data-----------"<<endl;
+        convLayer2->getTopData()->print();
+        cout<<"---------convLayer2 weight-----------"<<endl;
+        convLayer2->getWeightData()->print();
+        cout<<"---------poolLayer2 top_data-----------"<<endl;
+        poolLayer2->getTopData()->print();
         corsor->Next();
     }
 

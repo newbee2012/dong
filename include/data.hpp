@@ -26,7 +26,7 @@ public:
 
     int get(int n, int c, int h, int w)
     {
-        return get(offset(n,c,h,w));
+        return get(offset(n, c, h, w));
     };
 
     void set(int offset, int value)
@@ -36,7 +36,7 @@ public:
 
     void set(int n, int c, int h, int w, int value)
     {
-        _data.get()[offset(n,c,h,w)] = value;
+        _data.get()[offset(n, c, h, w)] = value;
     };
 
     inline int offset(const int n, const int c = 0, const int h = 0, const int w = 0) const
