@@ -17,18 +17,27 @@ Data::Data(int num, int channels, int height, int width, bool newData)
     this->_height = height;
     this->_width = width;
 
-    if (newData) {
-        int* data = new int[count()]();
-
-        for (int i = 0; i < count(); i++) {
-            data[i] = random(2);
+    if (newData)
+    {
+        float* data = new float[count()]();
+        for (int i = 0; i < count(); i++)
+        {
+            data[i] = random(2) * (random(2)==0?-1:1);
         }
 
+        int n = MIN(_height,_width);
+        //for (int i = 0; i < n; i++)
+        //{
+            //data[_height/2*_width+_width/2] = 1;
+        //}
+
+        //data[0] = 1;
+        //data[_height*_width-1] = 1;
         _data.reset(data);
     }
 }
 
-Data* Data::setUp(const boost::shared_ptr<int>& data)
+Data* Data::setUp(const boost::shared_ptr<float>& data)
 {
     _data = data;
     return this;
@@ -36,26 +45,34 @@ Data* Data::setUp(const boost::shared_ptr<int>& data)
 
 void Data::print()
 {
-    cout << "w:" << _width << ",h:" << _height << endl;
-    int* p = _data.get();
-
-    for (int w = 0; w < _width; w++) {
-        for (int h = 0; h < _height; h++) {
-            int value = p[w * _height + h];
-
-            if (value > 0) {
+    cout  << "h:" << _height << ",w:" << _width << endl;
+    for (int h = 0; h < _height; h++)
+    {
+        for (int w = 0; w < _width; w++)
+        {
+            float value = this->get(0,0,h,w);
+            //if (value > 0)
+            //{
                 cout << value;
-            } else {
-                cout << ".";
-            }
+            //}
+            //else
+            //{
+            //    cout << ".";
+            //}
 
-            if (value < 10) {
+            if (value < 10)
+            {
                 cout << "   ";
-            } else if (value < 100) {
+            }
+            else if (value < 100)
+            {
                 cout << "  ";
-            }else{
+            }
+            else
+            {
                 cout << " ";
             }
+
         }
 
         cout << endl << endl;

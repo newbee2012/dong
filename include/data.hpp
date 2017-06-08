@@ -12,29 +12,29 @@ class Data
 {
 public:
     explicit Data(int num, int channels, int height, int width, bool newData);
-    Data* setUp(const boost::shared_ptr<int>& data);
+    Data* setUp(const boost::shared_ptr<float>& data);
     void print();
     int inline count()
     {
         return _num * _channels * _width * _height;
     }
 
-    int get(int offset)
+    float get(int offset)
     {
         return _data.get()[offset];
     };
 
-    int get(int n, int c, int h, int w)
+    float get(int n, int c, int h, int w)
     {
         return get(offset(n, c, h, w));
     };
 
-    void set(int offset, int value)
+    void set(int offset, float value)
     {
         _data.get()[offset] = value;
     };
 
-    void set(int n, int c, int h, int w, int value)
+    void set(int n, int c, int h, int w, float value)
     {
         _data.get()[offset(n, c, h, w)] = value;
     };
@@ -56,15 +56,15 @@ public:
 
     inline int height() const
     {
-        return _width;
+        return _height;
     }
 
     inline int width() const
     {
-        return _height;
+        return _width;
     }
 protected:
-    boost::shared_ptr<int> _data;
+    boost::shared_ptr<float> _data;
     int _num;
     int _channels;
     int _width;

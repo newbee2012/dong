@@ -57,11 +57,12 @@
 	<gflags/gflags.h>
 	<glog/logging.h>
 
-1496827976 source:/home/chendejia/workspace/github/dong/src/main.cpp
+1496915534 source:/home/chendejia/workspace/github/dong/src/main.cpp
 	<iostream>
 	"input_layer.hpp"
 	"conv_layer.hpp"
 	"pool_layer.hpp"
+	"inner_product_layer.hpp"
 	"util/db.hpp"
 	<boost/shared_ptr.hpp>
 
@@ -86,13 +87,13 @@
 	"lmdb.h"
 	"util/db.hpp"
 
-1496827850 source:/home/chendejia/workspace/github/dong/src/data.cpp
+1496909455 source:/home/chendejia/workspace/github/dong/src/data.cpp
 	"common.hpp"
 	"data.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1496804241 /home/chendejia/workspace/github/dong/include/data.hpp
+1496909217 /home/chendejia/workspace/github/dong/include/data.hpp
 	"common.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
@@ -107,7 +108,7 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1496829953 /home/chendejia/workspace/github/dong/include/layer.hpp
+1496906358 /home/chendejia/workspace/github/dong/include/layer.hpp
 	"common.hpp"
 	"data.hpp"
 	<boost/shared_ptr.hpp>
@@ -117,7 +118,7 @@
 	<iostream>
 	"layer.hpp"
 
-1496816204 source:/home/chendejia/workspace/github/dong/src/conv_layer.cpp
+1496908679 source:/home/chendejia/workspace/github/dong/src/conv_layer.cpp
 	<iostream>
 	"conv_layer.hpp"
 
@@ -132,6 +133,16 @@
 	"pool_layer.hpp"
 
 1496804241 /home/chendejia/workspace/github/dong/include/pool_layer.hpp
+	"common.hpp"
+	"layer.hpp"
+	<boost/shared_ptr.hpp>
+	<vector>
+
+1496908663 source:/home/chendejia/workspace/github/dong/src/inner_product_layer.cpp
+	<iostream>
+	"inner_product_layer.hpp"
+
+1496830007 /home/chendejia/workspace/github/dong/include/inner_product_layer.hpp
 	"common.hpp"
 	"layer.hpp"
 	<boost/shared_ptr.hpp>

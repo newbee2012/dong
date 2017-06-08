@@ -26,14 +26,14 @@ public:
     }
     virtual boost::shared_ptr<Data> getWeightData()
     {
-        return _weight;
+        return _weight_data;
     }
     virtual void forward() {};
     virtual void backward() {};
 protected:
     boost::shared_ptr<Data> _bottom_data;
     boost::shared_ptr<Data> _top_data;
-    boost::shared_ptr<Data> _weight;
+    boost::shared_ptr<Data> _weight_data;
     virtual LayerType getType() = 0;
     //DISABLE_COPY_AND_ASSIGN(Layer);
 };

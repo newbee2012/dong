@@ -2,6 +2,7 @@
 #include "input_layer.hpp"
 #include "conv_layer.hpp"
 #include "pool_layer.hpp"
+#include "inner_product_layer.hpp"
 #include "util/db.hpp"
 #include <boost/shared_ptr.hpp>
 using namespace std;
@@ -24,13 +25,13 @@ int main()
         int width = datum.width();
         int height = datum.height();
         int label = datum.label();
-        boost::shared_ptr<int> inputImage(new int[width * height]);
-        int* p = inputImage.get();
+        boost::shared_ptr<float> inputImage(new float[width * height]);
+        float* p = inputImage.get();
 
         for (int c = 0; c < channels; c++) {
             for (int w = 0; w < width; w++) {
                 for (int h = 0; h < height; h++) {
-                    *(p++) = (int)(datum.data()[w * height + h]) != 0 ? 1 : 0;
+                    *(p++) = (float)(datum.data()[w * height + h]) != 0 ? 1 : 0;
                 }
             }
         }
@@ -66,6 +67,12 @@ int main()
         poolLayer2->setUp(convLayer2->getTopData());
         poolLayer2->forward();
 
+        //L6.InnerProductLayer
+        boost::shared_ptr<InnerProductLayer> innerProductLayer(new InnerProductLayer());
+        innerProductLayer->init(10);
+        innerProductLayer->setUp(poolLayer2->getTopData());
+        innerProductLayer->forward();
+
         //print per layer
         cout<<"---------inputLayer top_data-----------"<<endl;
         inputLayer->getTopData()->print();
@@ -84,6 +91,14 @@ int main()
         convLayer2->getWeightData()->print();
         cout<<"---------poolLayer2 top_data-----------"<<endl;
         poolLayer2->getTopData()->print();
+
+        cout<<"---------innerProductLayer weight_data-----------"<<endl;
+        innerProductLayer->getWeightData()->print();
+        cout<<"---------innerProductLayer top_data-----------"<<endl;
+        innerProductLayer->getTopData()->print();
+
+
+
         corsor->Next();
     }
 
