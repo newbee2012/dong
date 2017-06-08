@@ -21,7 +21,7 @@
 
 1495621733 /home/chendejia/workspace/github/Dong/include/common.hpp
 
-1495675700 source:/home/chendejia/workspace/github/dong/src/proto/caffe.pb.cc
+1495655530 source:/home/chendejia/workspace/github/dong/src/proto/caffe.pb.cc
 	"proto/caffe.pb.h"
 	<algorithm>
 	<google/protobuf/stubs/common.h>
@@ -33,13 +33,13 @@
 	<google/protobuf/reflection_ops.h>
 	<google/protobuf/wire_format.h>
 
-1496804241 source:/home/chendejia/workspace/github/dong/src/util/db.cpp
+1496935495 source:/home/chendejia/workspace/github/dong/src/util/db.cpp
 	"util/db.hpp"
 	"util/db_lmdb.hpp"
 	"common.hpp"
 	<string>
 
-1496804241 source:/home/chendejia/workspace/github/dong/src/util/db_lmdb.cpp
+1496935495 source:/home/chendejia/workspace/github/dong/src/util/db_lmdb.cpp
 	"util/db_lmdb.hpp"
 	<sys/stat.h>
 	<string>
@@ -53,12 +53,14 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1496804241 /home/chendejia/workspace/github/dong/include/common.hpp
+1496944877 /home/chendejia/workspace/github/dong/include/common.hpp
 	<gflags/gflags.h>
 	<glog/logging.h>
+	<math.h>
 
-1496915534 source:/home/chendejia/workspace/github/dong/src/main.cpp
+1496948587 source:/home/chendejia/workspace/github/dong/src/main.cpp
 	<iostream>
+	"util/gen_bmp.hpp"
 	"input_layer.hpp"
 	"conv_layer.hpp"
 	"pool_layer.hpp"
@@ -66,12 +68,12 @@
 	"util/db.hpp"
 	<boost/shared_ptr.hpp>
 
-1496804241 /home/chendejia/workspace/github/dong/include/util/db.hpp
+1496935495 /home/chendejia/workspace/github/dong/include/util/db.hpp
 	<string>
 	"common.hpp"
 	"proto/caffe.pb.h"
 
-1496804241 /home/chendejia/workspace/github/dong/include/proto/caffe.pb.h
+1496935495 /home/chendejia/workspace/github/dong/include/proto/caffe.pb.h
 	<string>
 	<google/protobuf/stubs/common.h>
 	<google/protobuf/generated_message_util.h>
@@ -81,70 +83,77 @@
 	<google/protobuf/generated_enum_reflection.h>
 	<google/protobuf/unknown_field_set.h>
 
-1496804241 /home/chendejia/workspace/github/dong/include/util/db_lmdb.hpp
+1496935495 /home/chendejia/workspace/github/dong/include/util/db_lmdb.hpp
 	<string>
 	<vector>
 	"lmdb.h"
 	"util/db.hpp"
 
-1496909455 source:/home/chendejia/workspace/github/dong/src/data.cpp
+1496948391 source:/home/chendejia/workspace/github/dong/src/data.cpp
 	"common.hpp"
 	"data.hpp"
+	"util/gen_bmp.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1496909217 /home/chendejia/workspace/github/dong/include/data.hpp
+1496942761 /home/chendejia/workspace/github/dong/include/data.hpp
 	"common.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1496804241 source:/home/chendejia/workspace/github/dong/src/input_layer.cpp
+1496935495 source:/home/chendejia/workspace/github/dong/src/input_layer.cpp
 	<iostream>
 	"input_layer.hpp"
 
-1496804241 /home/chendejia/workspace/github/dong/include/input_layer.hpp
+1496935495 /home/chendejia/workspace/github/dong/include/input_layer.hpp
 	"common.hpp"
 	"layer.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1496906358 /home/chendejia/workspace/github/dong/include/layer.hpp
+1496935495 /home/chendejia/workspace/github/dong/include/layer.hpp
 	"common.hpp"
 	"data.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1496804241 source:/home/chendejia/workspace/github/dong/src/layer.cpp
+1496935495 source:/home/chendejia/workspace/github/dong/src/layer.cpp
 	<iostream>
 	"layer.hpp"
 
-1496908679 source:/home/chendejia/workspace/github/dong/src/conv_layer.cpp
+1496945840 source:/home/chendejia/workspace/github/dong/src/conv_layer.cpp
 	<iostream>
 	"conv_layer.hpp"
 
-1496804241 /home/chendejia/workspace/github/dong/include/conv_layer.hpp
+1496935495 /home/chendejia/workspace/github/dong/include/conv_layer.hpp
 	"common.hpp"
 	"layer.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1496804241 source:/home/chendejia/workspace/github/dong/src/pool_layer.cpp
+1496935495 source:/home/chendejia/workspace/github/dong/src/pool_layer.cpp
 	<iostream>
 	"pool_layer.hpp"
 
-1496804241 /home/chendejia/workspace/github/dong/include/pool_layer.hpp
+1496935495 /home/chendejia/workspace/github/dong/include/pool_layer.hpp
 	"common.hpp"
 	"layer.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1496908663 source:/home/chendejia/workspace/github/dong/src/inner_product_layer.cpp
+1496935495 source:/home/chendejia/workspace/github/dong/src/inner_product_layer.cpp
 	<iostream>
 	"inner_product_layer.hpp"
 
-1496830007 /home/chendejia/workspace/github/dong/include/inner_product_layer.hpp
+1496935495 /home/chendejia/workspace/github/dong/include/inner_product_layer.hpp
 	"common.hpp"
 	"layer.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
+
+1496947566 /home/chendejia/workspace/github/dong/include/util/gen_bmp.hpp
+	"common.hpp"
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
 

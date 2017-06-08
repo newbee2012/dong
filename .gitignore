@@ -3,6 +3,7 @@ bin/
 .build_release/
 build
 *.orig
+*.bmp
 *.caffemodel
 *.solverstate
 data/

@@ -12,7 +12,7 @@ InnerProductLayer::InnerProductLayer()
 void InnerProductLayer::setUp(const boost::shared_ptr<Data>& data)
 {
     _bottom_data = data;
-    this->_weight_data.reset(new Data(1,1, _bottom_data->count(), _num, true));
+    this->_weight_data.reset(new Data(1, 1, _bottom_data->count(), _num, true));
 }
 
 void InnerProductLayer::forward()
@@ -29,10 +29,11 @@ void InnerProductLayer::forward()
         for (int h = 0; h < t_h; h++) {
             for (int w = 0; w < t_w; w++) {
                 float t_value = 0;
+
                 for (int i = 0; i < _bottom_data->count(); i++) {
-                        float b_value = _bottom_data->get(i);
-                        float w_value = _weight_data->get(0,0,i,w);
-                        t_value+=(b_value*w_value);
+                    float b_value = _bottom_data->get(i);
+                    float w_value = _weight_data->get(0, 0, i, w);
+                    t_value += (b_value * w_value);
                 }
 
                 _top_data->set(n, 0, h, w, t_value);

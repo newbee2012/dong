@@ -31,6 +31,7 @@ void ConvLayer::forward()
         for (int h = 0; h < t_h; h++) {
             for (int w = 0; w < t_w; w++) {
                 float t_value = 0;
+
                 for (int offset_h = 0; offset_h < k_h; offset_h++) {
                     for (int offset_w = 0; offset_w < k_w; offset_w++) {
                         float b_value = _bottom_data->get(0, 0, h + offset_h, w + offset_w);

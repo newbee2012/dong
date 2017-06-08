@@ -14,6 +14,8 @@ public:
     explicit Data(int num, int channels, int height, int width, bool newData);
     Data* setUp(const boost::shared_ptr<float>& data);
     void print();
+    void genBmp(const char* filename);
+
     int inline count()
     {
         return _num * _channels * _width * _height;

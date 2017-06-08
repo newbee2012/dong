@@ -1,9 +1,11 @@
 #include <iostream>
+#include "util/gen_bmp.hpp"
 #include "input_layer.hpp"
 #include "conv_layer.hpp"
 #include "pool_layer.hpp"
 #include "inner_product_layer.hpp"
 #include "util/db.hpp"
+
 #include <boost/shared_ptr.hpp>
 using namespace std;
 using namespace caffe;
@@ -31,7 +33,7 @@ int main()
         for (int c = 0; c < channels; c++) {
             for (int w = 0; w < width; w++) {
                 for (int h = 0; h < height; h++) {
-                    *(p++) = (float)(datum.data()[w * height + h]) != 0 ? 1 : 0;
+                    *(p++) = (BYTE)(datum.data()[w * height + h]); //!= 0 ? 1 : 0;
                 }
             }
         }
@@ -76,21 +78,28 @@ int main()
         //print per layer
         cout<<"---------inputLayer top_data-----------"<<endl;
         inputLayer->getTopData()->print();
+        inputLayer->getTopData()->genBmp("inputLayer_top_data.bmp");
         cout<<"---------convLayer1 top_data-----------"<<endl;
         convLayer1->getTopData()->print();
+        convLayer1->getTopData()->genBmp("convLayer1_top_data.bmp");
         cout<<"---------convLayer1 weight-----------"<<endl;
         convLayer1->getWeightData()->print();
+        convLayer1->getWeightData()->genBmp("convLayer1_weight_data.bmp");
         cout<<"---------poolLayer1 top_data-----------"<<endl;
         poolLayer1->getTopData()->print();
+        poolLayer1->getTopData()->genBmp("poolLayer1_top_data.bmp");
 
         //cout<<"---------convLayer2 bottom_data-----------"<<endl;
         //convLayer2->getBottomData()->print();
         cout<<"---------convLayer2 top_data-----------"<<endl;
         convLayer2->getTopData()->print();
+        convLayer2->getTopData()->genBmp("convLayer2_top_data.bmp");
         cout<<"---------convLayer2 weight-----------"<<endl;
         convLayer2->getWeightData()->print();
+        convLayer2->getWeightData()->genBmp("convLayer2_weight_data.bmp");
         cout<<"---------poolLayer2 top_data-----------"<<endl;
         poolLayer2->getTopData()->print();
+        poolLayer2->getTopData()->genBmp("poolLayer2_top_data.bmp");
 
         cout<<"---------innerProductLayer weight_data-----------"<<endl;
         innerProductLayer->getWeightData()->print();
@@ -105,6 +114,8 @@ int main()
     delete corsor;
     mydb->Close();
     delete mydb;
+
+
     cout << "Hello world!" << endl;
     return 0;
 }

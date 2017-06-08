@@ -2,9 +2,9 @@
 #define DONG_DATA_HPP_
 #include "common.hpp"
 #include "data.hpp"
+#include "util/gen_bmp.hpp"
 #include <boost/shared_ptr.hpp>
 #include <vector>
-
 #define random(x) (rand()%x)
 
 namespace dong
@@ -17,23 +17,21 @@ Data::Data(int num, int channels, int height, int width, bool newData)
     this->_height = height;
     this->_width = width;
 
-    if (newData)
-    {
-        float* data = new float[count()]();
-        for (int i = 0; i < count(); i++)
-        {
-            data[i] = random(2) * (random(2)==0?-1:1);
+    if (newData) {
+        _data.reset(new float[count()]());
+
+        for (int i = 0; i < count(); i++) {
+            _data.get()[i] =  (float)random(2);// * (random(2)==0?-1:1);
         }
 
-        int n = MIN(_height,_width);
+        //int n = MIN(_height,_width);
         //for (int i = 0; i < n; i++)
         //{
-            //data[_height/2*_width+_width/2] = 1;
+        //data[_height/2*_width+_width/2] = 1;
         //}
-
         //data[0] = 1;
         //data[_height*_width-1] = 1;
-        _data.reset(data);
+        //_data.reset(data);
     }
 }
 
@@ -46,37 +44,56 @@ Data* Data::setUp(const boost::shared_ptr<float>& data)
 void Data::print()
 {
     cout  << "h:" << _height << ",w:" << _width << endl;
-    for (int h = 0; h < _height; h++)
-    {
-        for (int w = 0; w < _width; w++)
-        {
-            float value = this->get(0,0,h,w);
+
+    for (int h = 0; h < _height; h++) {
+        for (int w = 0; w < _width; w++) {
+            float value = this->get(0, 0, h, w);
             //if (value > 0)
             //{
-                cout << value;
+            cout << value;
             //}
             //else
             //{
             //    cout << ".";
             //}
 
-            if (value < 10)
-            {
+            if (value < 10) {
                 cout << "   ";
-            }
-            else if (value < 100)
-            {
+            } else if (value < 100) {
                 cout << "  ";
-            }
-            else
-            {
+            } else {
                 cout << " ";
             }
-
         }
 
         cout << endl << endl;
     }
+}
+
+void Data::genBmp(const char* filename)
+{
+
+    RGB* pRGB = new RGB[_width*_height];
+    memset(pRGB, 0xFF, sizeof(pRGB)); // 设置背景为黑色
+
+    for (int h = 0; h < _height; h++) {
+        for (int w = 0; w < _width; w++) {
+            BYTE gray = this->get(0, 0, h, w);
+            if(w==0 || w==_width-1|| h==0 ||h==_height-1){
+                pRGB[(_height-h-1)*_width+w].r = 0xFF;
+                pRGB[(_height-h-1)*_width+w].g = 0xFF;
+                pRGB[(_height-h-1)*_width+w].b = 0xFF;
+            }else
+            {
+                pRGB[(_height-h-1)*_width+w].r = gray;
+                pRGB[(_height-h-1)*_width+w].g = gray;
+                pRGB[(_height-h-1)*_width+w].b = gray;
+            }
+
+        }
+    }
+
+    BmpTool::generateBMP((BYTE*)pRGB, _width, _height, filename );
 }
 
 
