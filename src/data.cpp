@@ -5,6 +5,7 @@
 #include "util/gen_bmp.hpp"
 #include <boost/shared_ptr.hpp>
 #include <vector>
+#include <iomanip>
 #define random(x) (rand()%x)
 
 namespace dong
@@ -21,7 +22,7 @@ Data::Data(int num, int channels, int height, int width, bool newData)
         _data.reset(new float[count()]());
 
         for (int i = 0; i < count(); i++) {
-            _data.get()[i] =  (float)random(2);// * (random(2)==0?-1:1);
+            _data.get()[i] =  2*((float)random(2)-0.5);// * (random(2)==0?-1:1);
         }
 
         //int n = MIN(_height,_width);
@@ -51,6 +52,7 @@ void Data::print()
             //if (value > 0)
             //{
             cout << value;
+            //cout << setprecision(2)<<fixed<< value;
             //}
             //else
             //{

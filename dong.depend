@@ -33,7 +33,7 @@
 	<google/protobuf/reflection_ops.h>
 	<google/protobuf/wire_format.h>
 
-1496935495 source:/home/chendejia/workspace/github/dong/src/util/db.cpp
+1497200895 source:/home/chendejia/workspace/github/dong/src/util/db.cpp
 	"util/db.hpp"
 	"util/db_lmdb.hpp"
 	"common.hpp"
@@ -53,18 +53,21 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1496944877 /home/chendejia/workspace/github/dong/include/common.hpp
+1497111264 /home/chendejia/workspace/github/dong/include/common.hpp
 	<gflags/gflags.h>
 	<glog/logging.h>
 	<math.h>
+	<algorithm>
 
-1496948587 source:/home/chendejia/workspace/github/dong/src/main.cpp
+1497203065 source:/home/chendejia/workspace/github/dong/src/main.cpp
 	<iostream>
 	"util/gen_bmp.hpp"
 	"input_layer.hpp"
 	"conv_layer.hpp"
 	"pool_layer.hpp"
 	"inner_product_layer.hpp"
+	"relu_layer.hpp"
+	"softmax_layer.hpp"
 	"util/db.hpp"
 	<boost/shared_ptr.hpp>
 
@@ -89,12 +92,13 @@
 	"lmdb.h"
 	"util/db.hpp"
 
-1496948391 source:/home/chendejia/workspace/github/dong/src/data.cpp
+1497202969 source:/home/chendejia/workspace/github/dong/src/data.cpp
 	"common.hpp"
 	"data.hpp"
 	"util/gen_bmp.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
+	<iomanip>
 
 1496942761 /home/chendejia/workspace/github/dong/include/data.hpp
 	"common.hpp"
@@ -111,7 +115,7 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1496935495 /home/chendejia/workspace/github/dong/include/layer.hpp
+1497196114 /home/chendejia/workspace/github/dong/include/layer.hpp
 	"common.hpp"
 	"data.hpp"
 	<boost/shared_ptr.hpp>
@@ -156,4 +160,28 @@
 	<iostream>
 	<stdio.h>
 	<stdlib.h>
+
+1497169539 source:/home/chendejia/workspace/github/dong/src/relu_layer.cpp
+	<iostream>
+	<common.hpp>
+	<algorithm>
+	"relu_layer.hpp"
+
+1497110789 /home/chendejia/workspace/github/dong/include/relu_layer.hpp
+	"common.hpp"
+	"layer.hpp"
+	<boost/shared_ptr.hpp>
+	<vector>
+
+1497202802 source:/home/chendejia/workspace/github/dong/src/softmax_layer.cpp
+	<iostream>
+	<common.hpp>
+	<algorithm>
+	"softmax_layer.hpp"
+
+1497196123 /home/chendejia/workspace/github/dong/include/softmax_layer.hpp
+	"common.hpp"
+	"layer.hpp"
+	<boost/shared_ptr.hpp>
+	<vector>
 

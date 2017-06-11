@@ -9,7 +9,7 @@
 namespace dong
 {
 
-enum LayerType {INPUT, DATA, CONVOLUTION, POOL, INNER_PRODUCT};
+enum LayerType {INPUT, DATA, CONVOLUTION, POOL, INNER_PRODUCT, RELU, SOFTMAX};
 
 class Layer
 {

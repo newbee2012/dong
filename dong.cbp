@@ -41,19 +41,25 @@
 			<Add library="libgflags" />
 			<Add library="libboost_system" />
 		</Linker>
+		<Unit filename="include/Inner_product_layer.hpp" />
 		<Unit filename="include/common.hpp" />
 		<Unit filename="include/conv_layer.hpp" />
 		<Unit filename="include/data.hpp" />
+		<Unit filename="include/inner_product_layer.hpp" />
 		<Unit filename="include/input_layer.hpp" />
 		<Unit filename="include/layer.hpp" />
+		<Unit filename="include/pool_layer.hpp" />
 		<Unit filename="include/proto/caffe.pb.h" />
 		<Unit filename="include/util/db.hpp" />
 		<Unit filename="include/util/db_lmdb.hpp" />
+		<Unit filename="include/util/gen_bmp.hpp" />
 		<Unit filename="src/conv_layer.cpp" />
 		<Unit filename="src/data.cpp" />
+		<Unit filename="src/inner_product_layer.cpp" />
 		<Unit filename="src/input_layer.cpp" />
 		<Unit filename="src/layer.cpp" />
 		<Unit filename="src/main.cpp" />
+		<Unit filename="src/pool_layer.cpp" />
 		<Unit filename="src/proto/caffe.pb.cc" />
 		<Unit filename="src/util/db.cpp" />
 		<Unit filename="src/util/db_lmdb.cpp" />

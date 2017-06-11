@@ -4,6 +4,8 @@
 #include "conv_layer.hpp"
 #include "pool_layer.hpp"
 #include "inner_product_layer.hpp"
+#include "relu_layer.hpp"
+#include "softmax_layer.hpp"
 #include "util/db.hpp"
 
 #include <boost/shared_ptr.hpp>
@@ -71,20 +73,46 @@ int main()
 
         //L6.InnerProductLayer
         boost::shared_ptr<InnerProductLayer> innerProductLayer(new InnerProductLayer());
-        innerProductLayer->init(10);
+        innerProductLayer->init(500);
         innerProductLayer->setUp(poolLayer2->getTopData());
         innerProductLayer->forward();
+
+        //L7.reluLayer
+        boost::shared_ptr<ReluLayer> reluLayer(new ReluLayer());
+        reluLayer->init();
+        reluLayer->setUp(innerProductLayer->getTopData());
+        reluLayer->forward();
+
+        //L8.InnerProductLayer
+        boost::shared_ptr<InnerProductLayer> innerProductLayer2(new InnerProductLayer());
+        innerProductLayer2->init(10);
+        innerProductLayer2->setUp(reluLayer->getTopData());
+        innerProductLayer2->forward();
+
+        //L9.SoftmaxLayer
+        boost::shared_ptr<SoftmaxLayer> softmaxLayer(new SoftmaxLayer());
+        softmaxLayer->init();
+        softmaxLayer->setUp(innerProductLayer2->getTopData());
+        softmaxLayer->forward();
+
 
         //print per layer
         cout<<"---------inputLayer top_data-----------"<<endl;
         inputLayer->getTopData()->print();
-        inputLayer->getTopData()->genBmp("inputLayer_top_data.bmp");
+
+        char filename[32];
+        const char* format = "inputLayer_top_data_l%d_%d.bmp";
+        sprintf(filename,format,label, i);
+        inputLayer->getTopData()->genBmp(filename);
+
         cout<<"---------convLayer1 top_data-----------"<<endl;
         convLayer1->getTopData()->print();
         convLayer1->getTopData()->genBmp("convLayer1_top_data.bmp");
+
         cout<<"---------convLayer1 weight-----------"<<endl;
         convLayer1->getWeightData()->print();
         convLayer1->getWeightData()->genBmp("convLayer1_weight_data.bmp");
+
         cout<<"---------poolLayer1 top_data-----------"<<endl;
         poolLayer1->getTopData()->print();
         poolLayer1->getTopData()->genBmp("poolLayer1_top_data.bmp");
@@ -94,9 +122,11 @@ int main()
         cout<<"---------convLayer2 top_data-----------"<<endl;
         convLayer2->getTopData()->print();
         convLayer2->getTopData()->genBmp("convLayer2_top_data.bmp");
+
         cout<<"---------convLayer2 weight-----------"<<endl;
         convLayer2->getWeightData()->print();
         convLayer2->getWeightData()->genBmp("convLayer2_weight_data.bmp");
+
         cout<<"---------poolLayer2 top_data-----------"<<endl;
         poolLayer2->getTopData()->print();
         poolLayer2->getTopData()->genBmp("poolLayer2_top_data.bmp");
@@ -106,7 +136,19 @@ int main()
         cout<<"---------innerProductLayer top_data-----------"<<endl;
         innerProductLayer->getTopData()->print();
 
+        cout<<"---------reluLayer top_data-----------"<<endl;
+        reluLayer->getTopData()->print();
+        reluLayer->getTopData()->genBmp("reluLayer_top_data.bmp");
 
+        cout<<"---------innerProductLayer2 weight_data-----------"<<endl;
+        innerProductLayer2->getWeightData()->print();
+        cout<<"---------innerProductLayer2 top_data-----------"<<endl;
+        innerProductLayer2->getTopData()->print();
+
+        //cout<<"---------softmaxLayer weight_data-----------"<<endl;
+        //softmaxLayer->getWeightData()->print();
+        cout<<"---------softmaxLayer top_data-----------"<<endl;
+        softmaxLayer->getTopData()->print();
 
         corsor->Next();
     }

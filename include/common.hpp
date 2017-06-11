@@ -15,6 +15,7 @@ using namespace std;
 #include <gflags/gflags.h>
 #include <glog/logging.h>
 #include <math.h>
+#include <algorithm>
 
 
 #define MIN(a,b) (((a)<(b))?(a):(b))

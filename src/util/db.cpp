@@ -1,7 +1,6 @@
 #include "util/db.hpp"
 #include "util/db_lmdb.hpp"
 #include "common.hpp"
-
 #include <string>
 
 namespace caffe
