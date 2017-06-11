@@ -77,4 +77,4 @@ protected:
 
 }  // namespace dong
 
-#endif  // DONG_BLOB_HPP_
+#endif  // DONG_DATA_LAYER_HPP_

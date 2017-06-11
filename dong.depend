@@ -100,7 +100,7 @@
 	<vector>
 	<iomanip>
 
-1496942761 /home/chendejia/workspace/github/dong/include/data.hpp
+1497209424 /home/chendejia/workspace/github/dong/include/data.hpp
 	"common.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
@@ -182,6 +182,14 @@
 1497196123 /home/chendejia/workspace/github/dong/include/softmax_layer.hpp
 	"common.hpp"
 	"layer.hpp"
+	<boost/shared_ptr.hpp>
+	<vector>
+
+1497210848 source:/home/chendejia/workspace/github/dong/src/neuron.cpp
+	"neuron.hpp"
+
+1497211429 /home/chendejia/workspace/github/dong/include/neuron.hpp
+	"common.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
 
