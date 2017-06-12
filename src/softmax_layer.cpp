@@ -12,11 +12,6 @@ SoftmaxLayer::SoftmaxLayer()
 {
 }
 
-void SoftmaxLayer::setUp(const boost::shared_ptr<Data>& data)
-{
-    _bottom_data = data;
-}
-
 void SoftmaxLayer::forward()
 {
 
@@ -26,21 +21,21 @@ void SoftmaxLayer::forward()
     float maxValue = 0.0F;
     for (int i = 0; i < count; ++i)
     {
-        maxValue = MAX(maxValue, _bottom_data->get(i));
+        maxValue = MAX(maxValue, _bottom_data->get(i).value);
     }
 
 
     double sumExp = 0.0F;
     for (int i = 0; i < count; ++i)
     {
-        float expValue = exp(_bottom_data->get(i)/ (maxValue/10)) ;
-        _top_data->set(i,expValue);
+        float expValue = exp(_bottom_data->get(i).value/ (maxValue/10)) ;
+        _top_data->get(i).value = expValue;
         sumExp += expValue;
     }
 
     for (int i = 0; i < count; ++i)
     {
-        _top_data->set(i,(float)_top_data->get(i)/sumExp);
+        _top_data->get(i).value = (float)_top_data->get(i).value/sumExp;
     }
 }
 

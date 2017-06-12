@@ -11,11 +11,6 @@ ReluLayer::ReluLayer()
 {
 }
 
-void ReluLayer::setUp(const boost::shared_ptr<Data>& data)
-{
-    _bottom_data = data;
-}
-
 void ReluLayer::forward()
 {
 
@@ -23,7 +18,7 @@ void ReluLayer::forward()
     const int count = _bottom_data->count();
     for (int i = 0; i < count; ++i)
     {
-        _top_data->set(i,MAX(_bottom_data->get(i), 0.0F));
+        _top_data->get(i).value = MAX(_bottom_data->get(i).value, 0.0F);
     }
 }
 

@@ -29,13 +29,13 @@ int main()
         int width = datum.width();
         int height = datum.height();
         int label = datum.label();
-        boost::shared_ptr<float> inputImage(new float[width * height]);
-        float* p = inputImage.get();
+        boost::shared_ptr<Neuron<float> > inputImage(new Neuron<float>[width * height]);
+        Neuron<float>* p = inputImage.get();
 
         for (int c = 0; c < channels; c++) {
             for (int w = 0; w < width; w++) {
                 for (int h = 0; h < height; h++) {
-                    *(p++) = (BYTE)(datum.data()[w * height + h]); //!= 0 ? 1 : 0;
+                    (p++)->value = (BYTE)(datum.data()[w * height + h]); //!= 0 ? 1 : 0;
                 }
             }
         }
@@ -73,7 +73,7 @@ int main()
 
         //L6.InnerProductLayer
         boost::shared_ptr<InnerProductLayer> innerProductLayer(new InnerProductLayer());
-        innerProductLayer->init(500);
+        innerProductLayer->init(10);
         innerProductLayer->setUp(poolLayer2->getTopData());
         innerProductLayer->forward();
 
@@ -95,7 +95,7 @@ int main()
         softmaxLayer->setUp(innerProductLayer2->getTopData());
         softmaxLayer->forward();
 
-
+/*
         //print per layer
         cout<<"---------inputLayer top_data-----------"<<endl;
         inputLayer->getTopData()->print();
@@ -145,11 +145,11 @@ int main()
         cout<<"---------innerProductLayer2 top_data-----------"<<endl;
         innerProductLayer2->getTopData()->print();
 
-        //cout<<"---------softmaxLayer weight_data-----------"<<endl;
-        //softmaxLayer->getWeightData()->print();
+        cout<<"---------softmaxLayer weight_data-----------"<<endl;
+        softmaxLayer->getWeightData()->print();
         cout<<"---------softmaxLayer top_data-----------"<<endl;
         softmaxLayer->getTopData()->print();
-
+*/
         corsor->Next();
     }
 

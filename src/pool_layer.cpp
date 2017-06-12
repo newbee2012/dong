@@ -9,11 +9,6 @@ PoolLayer::PoolLayer()
 {
 }
 
-void PoolLayer::setUp(const boost::shared_ptr<Data>& data)
-{
-    _bottom_data = data;
-}
-
 void PoolLayer::forward()
 {
     int b_n = _bottom_data->num();
@@ -27,16 +22,16 @@ void PoolLayer::forward()
     for (int n = 0; n < t_n; n++) {
         for (int h = 0; h < t_h; h++) {
             for (int w = 0; w < t_w; w++) {
-                int t_value = 0;
+                float t_value = 0;
 
                 for (int offset_h = 0; offset_h < _kernel_h; offset_h++) {
                     for (int offset_w = 0; offset_w < _kernel_w; offset_w++) {
-                        int b_value = _bottom_data->get(0, 0, h * _stride_h + offset_h, w * _kernel_w + offset_w);
+                        float b_value = _bottom_data->get(0, 0, h * _stride_h + offset_h, w * _kernel_w + offset_w).value;
                         t_value = MAX(t_value, b_value);
                     }
                 }
 
-                _top_data->set(n, 0, h, w, t_value);
+                //_top_data->get(n, 0, h, w).value = t_value;
             }
         }
     }

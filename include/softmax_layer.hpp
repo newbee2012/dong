@@ -12,11 +12,12 @@ class SoftmaxLayer: public Layer
 {
 public:
     explicit SoftmaxLayer();
+    virtual ~SoftmaxLayer(){};
     virtual LayerType getType()
     {
         return SOFTMAX;
     }
-    virtual void setUp(const boost::shared_ptr<Data>& bottomData);
+
     virtual void init();
     virtual void forward();
     virtual void backward();

@@ -16,7 +16,7 @@ public:
     {
         return RELU;
     }
-    virtual void setUp(const boost::shared_ptr<Data>& bottomData);
+
     virtual void init();
     virtual void forward();
     virtual void backward();

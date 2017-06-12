@@ -9,13 +9,9 @@ ConvLayer::ConvLayer()
 {
 }
 
-void ConvLayer::setUp(const boost::shared_ptr<Data>& data)
-{
-    _bottom_data = data;
-}
-
 void ConvLayer::forward()
 {
+
     int b_n = _bottom_data->num();
     int b_h = _bottom_data->height();
     int b_w = _bottom_data->width();
@@ -34,16 +30,17 @@ void ConvLayer::forward()
 
                 for (int offset_h = 0; offset_h < k_h; offset_h++) {
                     for (int offset_w = 0; offset_w < k_w; offset_w++) {
-                        float b_value = _bottom_data->get(0, 0, h + offset_h, w + offset_w);
-                        float k_value = _weight_data->get(n, 0, offset_h, offset_w);
+                        float b_value = _bottom_data->get(0, 0, h + offset_h, w + offset_w).value;
+                        float k_value = _weight_data->get(n, 0, offset_h, offset_w).value;
                         t_value += (b_value * k_value);
                     }
                 }
 
-                _top_data->set(n, 0, h, w, t_value);
+                _top_data->get(n, 0, h, w).value = t_value;
             }
         }
     }
+
 }
 
 void ConvLayer::backward()

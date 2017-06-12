@@ -16,7 +16,7 @@ public:
     {
         return CONVOLUTION;
     }
-    virtual void setUp(const boost::shared_ptr<Data>& bottomData);
+
     virtual void init(int kernel_num, int kernel_channels, int kernel_h, int kernel_w);
     virtual void forward();
     virtual void backward();

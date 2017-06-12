@@ -12,21 +12,16 @@ template <typename Dtype> class Neuron
 {
 public:
     Neuron(){};
-    void forward()
-    {
-        for(int i = 0; i < _forward_neuron_count; ++i)
-        {
-            _forward_neuron[i]->value += (value * _weight[i]->value);
-        }
-    }
+    void forward();
+    Dtype value;
 
 protected:
-    vector< Neuron<Dtype>* > _forward_neuron;
-    vector< Neuron<Dtype>* > _backward_neuron;
-    vector< Neuron<Dtype>* > _weight;
+    //vector< Neuron<Dtype>* > _forward_neuron;
+    //vector< Neuron<Dtype>* > _backward_neuron;
+    //vector< Neuron<Dtype>* > _weight;
     int _forward_neuron_count;
     int _backward_neuron_count;
-    Dtype value;
+
 };
 
 }

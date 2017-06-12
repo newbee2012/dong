@@ -16,7 +16,7 @@ public:
     {
         return INPUT;
     }
-    virtual void setUp(const boost::shared_ptr<Data>& data);
+
     virtual void forward();
 
 protected:

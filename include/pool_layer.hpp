@@ -16,7 +16,7 @@ public:
     {
         return POOL;
     }
-    virtual void setUp(const boost::shared_ptr<Data>& bottomData);
+
     virtual void init(int kernel_h, int _kernel_w, int _stride_h, int _stride_w);
     virtual void forward();
     virtual void backward();
