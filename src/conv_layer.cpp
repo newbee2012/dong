@@ -67,7 +67,7 @@ void ConvLayer::forward()
                 {
                     Neuron* t_neuron = b_neuron._forward_neuron[i];
                     Neuron* w_neuron = b_neuron._weight_neuron[i];
-                    t_neuron->value += (b_neuron.value * w_neuron->value);
+                    t_neuron->_value += (b_neuron._value * w_neuron->_value);
                 }
             }
         }

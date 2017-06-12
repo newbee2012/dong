@@ -19,10 +19,10 @@ Data::Data(int num, int channels, int height, int width, bool newData)
     this->_width = width;
 
     if (newData) {
-        _data.reset(new Neuron[count()]());
+        _data.reset(new Neuron[count()](0));
 
         for (int i = 0; i < count(); i++) {
-            _data.get()[i].value = (float)random(2);//2 * ((float)random(2) - 0.5); // * (random(2)==0?-1:1);
+            _data.get()[i]._value = (float)random(2);//2 * ((float)random(2) - 0.5); // * (random(2)==0?-1:1);
         }
 
         //int n = MIN(_height,_width);
@@ -48,7 +48,7 @@ void Data::print()
 
     for (int h = 0; h < _height; h++) {
         for (int w = 0; w < _width; w++) {
-            float value = this->get(0, 0, h, w).value;
+            float value = this->get(0, 0, h, w)._value;
             //if (value > 0)
             //{
             cout << value;
@@ -79,7 +79,7 @@ void Data::genBmp(const char* filename)
 
     for (int h = 0; h < _height; h++) {
         for (int w = 0; w < _width; w++) {
-            BYTE gray = this->get(0, 0, h, w).value;
+            BYTE gray = this->get(0, 0, h, w)._value;
 
             if (w == 0 || w == _width - 1 || h == 0 || h == _height - 1) {
                 pRGB[(_height - h - 1)*_width + w].r = 0xFF;

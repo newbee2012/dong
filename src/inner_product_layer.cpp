@@ -31,12 +31,12 @@ void InnerProductLayer::forward()
                 float t_value = 0;
 
                 for (int i = 0; i < _bottom_data->count(); i++) {
-                    float b_value = _bottom_data->get(i).value;
-                    float w_value = _weight_data->get(0, 0, i, w).value;
+                    float b_value = _bottom_data->get(0, 0, i, w)._value;
+                    float w_value = _weight_data->get(0, 0, i, w)._value;
                     t_value += (b_value * w_value);
                 }
 
-                _top_data->get(n, 0, h, w).value = t_value;
+                _top_data->get(n, 0, h, w)._value = t_value;
             }
         }
     }

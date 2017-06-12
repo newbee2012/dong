@@ -15,6 +15,7 @@ using namespace dong;
 
 int main()
 {
+
     srand((int)time(0));
     db::DB* mydb = db::GetDB("lmdb");
     mydb->Open("/home/chendejia/workspace/github/dong/data/mnist_train_lmdb", db::READ);
@@ -30,16 +31,15 @@ int main()
         int height = datum.height();
         int label = datum.label();
 
-        boost::shared_ptr<Neuron[]> inputImage(new Neuron[height*width]);
-        Neuron* p = inputImage.get();
-
+        boost::shared_ptr<Neuron[]> inputImage(new Neuron[height*width](0));
         for (int c = 0; c < channels; c++) {
             for (int w = 0; w < width; w++) {
                 for (int h = 0; h < height; h++) {
-                    (p++)->value = (BYTE)(datum.data()[w * height + h]); //!= 0 ? 1 : 0;
+                    inputImage[w * height + h]._value = (BYTE)(datum.data()[w * height + h]); //!= 0 ? 1 : 0;
                 }
             }
         }
+
 
         boost::shared_ptr<Data> inputData((new Data(1, channels, height, width, false))->setUp(inputImage));
         //L1.inputLayer
@@ -134,6 +134,7 @@ int main()
     delete corsor;
     mydb->Close();
     delete mydb;
+
     cout << "Hello world!" << endl;
     return 0;
 }

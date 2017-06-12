@@ -24,7 +24,7 @@ public:
 
     Neuron& get(int offset)
     {
-        return _data.get()[offset];
+        return _data[offset];
     };
 
     Neuron& get(int n, int c, int h, int w)
@@ -34,12 +34,12 @@ public:
 
     void set(int offset, Neuron value)
     {
-        _data.get()[offset] = value;
+        _data[offset] = value;
     };
 
     void set(int n, int c, int h, int w, Neuron value)
     {
-        _data.get()[offset(n, c, h, w)] = value;
+        _data[offset(n, c, h, w)] = value;
     };
 
     inline int offset(const int n, const int c = 0, const int h = 0, const int w = 0) const

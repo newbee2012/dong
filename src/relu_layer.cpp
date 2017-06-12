@@ -17,7 +17,7 @@ void ReluLayer::forward()
     const int count = _bottom_data->count();
 
     for (int i = 0; i < count; ++i) {
-        _top_data->get(i).value = MAX(_bottom_data->get(i).value, 0.0F);
+        _top_data->get(i)._value = MAX(_bottom_data->get(i)._value, 0.0F);
     }
 }
 

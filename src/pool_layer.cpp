@@ -22,7 +22,7 @@ void PoolLayer::forward()
 
                 for (int offset_h = 0; offset_h < _kernel_h; offset_h++) {
                     for (int offset_w = 0; offset_w < _kernel_w; offset_w++) {
-                        float b_value = _bottom_data->get(0, 0, h * _stride_h + offset_h, w * _kernel_w + offset_w).value;
+                        float b_value = _bottom_data->get(0, 0, h * _stride_h + offset_h, w * _kernel_w + offset_w)._value;
                         t_value = MAX(t_value, b_value);
                     }
                 }

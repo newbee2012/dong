@@ -13,12 +13,16 @@ class Neuron
 public:
     Neuron()
     {
-        //_forward_neuron = NULL;
-        //_weight_neuron = NULL;
+        this->_value = 0;
+    }
+
+    Neuron(float value)
+    {
+        this->_value = value;
     }
 
     void forward();
-    float value;
+    float _value;
 
     vector< Neuron* > _forward_neuron;
     vector< Neuron* > _weight_neuron;

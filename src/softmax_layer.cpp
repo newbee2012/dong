@@ -19,19 +19,19 @@ void SoftmaxLayer::forward()
     float maxValue = 0.0F;
 
     for (int i = 0; i < count; ++i) {
-        maxValue = MAX(maxValue, _bottom_data->get(i).value);
+        maxValue = MAX(maxValue, _bottom_data->get(i)._value);
     }
 
     double sumExp = 0.0F;
 
     for (int i = 0; i < count; ++i) {
-        float expValue = exp(_bottom_data->get(i).value / (maxValue / 10)) ;
-        _top_data->get(i).value = expValue;
+        float expValue = exp(_bottom_data->get(i)._value / (maxValue / 10)) ;
+        _top_data->get(i)._value = expValue;
         sumExp += expValue;
     }
 
     for (int i = 0; i < count; ++i) {
-        _top_data->get(i).value = (float)_top_data->get(i).value / sumExp;
+        _top_data->get(i)._value = (float)_top_data->get(i)._value / sumExp;
     }
 }
 
