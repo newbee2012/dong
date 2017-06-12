@@ -12,7 +12,7 @@ class SoftmaxLayer: public Layer
 {
 public:
     explicit SoftmaxLayer();
-    virtual ~SoftmaxLayer(){};
+    virtual ~SoftmaxLayer() {};
     virtual LayerType getType()
     {
         return SOFTMAX;

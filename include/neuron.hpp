@@ -8,17 +8,20 @@
 namespace dong
 {
 
-template <typename Dtype> class Neuron
+class Neuron
 {
 public:
-    Neuron(){};
-    void forward();
-    Dtype value;
+    Neuron()
+    {
+        //_forward_neuron = NULL;
+        //_weight_neuron = NULL;
+    }
 
-protected:
-    //vector< Neuron<Dtype>* > _forward_neuron;
-    //vector< Neuron<Dtype>* > _backward_neuron;
-    //vector< Neuron<Dtype>* > _weight;
+    void forward();
+    float value;
+
+    vector< Neuron* > _forward_neuron;
+    vector< Neuron* > _weight_neuron;
     int _forward_neuron_count;
     int _backward_neuron_count;
 

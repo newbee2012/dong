@@ -38,7 +38,7 @@ public:
 
     virtual void forward() {};
     virtual void backward() {};
-protected:
+
     boost::shared_ptr<Data> _bottom_data;
     boost::shared_ptr<Data> _top_data;
     boost::shared_ptr<Data> _weight_data;

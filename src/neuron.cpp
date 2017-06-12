@@ -6,7 +6,7 @@ namespace dong
 {
 
 
-template <typename Dtype>void Neuron<Dtype>::forward()
+void Neuron::forward()
 {
     //for(int i = 0; i < _forward_neuron_count; ++i)
     //{

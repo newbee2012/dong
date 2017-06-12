@@ -19,10 +19,10 @@ Data::Data(int num, int channels, int height, int width, bool newData)
     this->_width = width;
 
     if (newData) {
-        _data.reset(new Neuron<float>[count()]());
+        _data.reset(new Neuron[count()]());
 
         for (int i = 0; i < count(); i++) {
-            _data.get()[i].value = 2*((float)random(2)-0.5);// * (random(2)==0?-1:1);
+            _data.get()[i].value = (float)random(2);//2 * ((float)random(2) - 0.5); // * (random(2)==0?-1:1);
         }
 
         //int n = MIN(_height,_width);
@@ -36,7 +36,7 @@ Data::Data(int num, int channels, int height, int width, bool newData)
     }
 }
 
-Data* Data::setUp(const boost::shared_ptr< Neuron<float> >& data)
+Data* Data::setUp(const boost::shared_ptr<Neuron[]>& data)
 {
     _data = data;
     return this;
@@ -74,24 +74,22 @@ void Data::print()
 
 void Data::genBmp(const char* filename)
 {
-
-    RGB* pRGB = new RGB[_width*_height];
-    memset(pRGB, 0x0, sizeof(RGB) * _width*_height); // 设置背景为黑色
+    RGB* pRGB = new RGB[_width * _height];
+    memset(pRGB, 0x0, sizeof(RGB) * _width * _height); // 设置背景为黑色
 
     for (int h = 0; h < _height; h++) {
         for (int w = 0; w < _width; w++) {
             BYTE gray = this->get(0, 0, h, w).value;
-            if(w==0 || w==_width-1|| h==0 ||h==_height-1){
-                pRGB[(_height-h-1)*_width+w].r = 0xFF;
-                pRGB[(_height-h-1)*_width+w].g = 0xFF;
-                pRGB[(_height-h-1)*_width+w].b = 0xFF;
-            }else
-            {
-                pRGB[(_height-h-1)*_width+w].r = gray;
-                pRGB[(_height-h-1)*_width+w].g = gray;
-                pRGB[(_height-h-1)*_width+w].b = gray;
-            }
 
+            if (w == 0 || w == _width - 1 || h == 0 || h == _height - 1) {
+                pRGB[(_height - h - 1)*_width + w].r = 0xFF;
+                pRGB[(_height - h - 1)*_width + w].g = 0xFF;
+                pRGB[(_height - h - 1)*_width + w].b = 0xFF;
+            } else {
+                pRGB[(_height - h - 1)*_width + w].r = gray;
+                pRGB[(_height - h - 1)*_width + w].g = gray;
+                pRGB[(_height - h - 1)*_width + w].b = gray;
+            }
         }
     }
 

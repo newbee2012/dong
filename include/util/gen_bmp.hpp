@@ -9,16 +9,14 @@ using namespace std;
 
 namespace dong
 {
-#pragma pack(2)//必须得写，否则sizeof得不到正确的结果
-typedef struct
-{
+#pragma pack(push, 2)//必须得写，否则sizeof得不到正确的结果
+typedef struct {
     BYTE b;
     BYTE g;
     BYTE r;
 } RGB;
 
-typedef struct
-{
+typedef struct {
     WORD    bfType;
     DWORD   bfSize;
     WORD    bfReserved1;
@@ -26,8 +24,7 @@ typedef struct
     DWORD   bfOffBits;
 } BITMAPFILEHEADER;
 
-typedef struct
-{
+typedef struct {
     DWORD      biSize;
     INT32       biWidth;
     INT32       biHeight;
@@ -40,7 +37,7 @@ typedef struct
     DWORD      biClrUsed;
     DWORD      biClrImportant;
 } BITMAPINFOHEADER;
-
+#pragma pack(pop)
 
 class BmpTool
 {
@@ -73,8 +70,7 @@ public:
         bih.biClrImportant = 0;
         FILE* fp = fopen( filename, "wb" );
 
-        if ( !fp )
-        {
+        if ( !fp ) {
             return;
         }
 

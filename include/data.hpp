@@ -13,7 +13,7 @@ class Data
 {
 public:
     explicit Data(int num, int channels, int height, int width, bool newData);
-    Data* setUp(const boost::shared_ptr< Neuron<float> >& data);
+    Data* setUp(const boost::shared_ptr<Neuron[]>& data);
     void print();
     void genBmp(const char* filename);
 
@@ -22,22 +22,22 @@ public:
         return _num * _channels * _width * _height;
     }
 
-    Neuron<float>& get(int offset)
+    Neuron& get(int offset)
     {
         return _data.get()[offset];
     };
 
-    Neuron<float>& get(int n, int c, int h, int w)
+    Neuron& get(int n, int c, int h, int w)
     {
         return get(offset(n, c, h, w));
     };
 
-    void set(int offset, Neuron<float> value)
+    void set(int offset, Neuron value)
     {
         _data.get()[offset] = value;
     };
 
-    void set(int n, int c, int h, int w, Neuron<float> value)
+    void set(int n, int c, int h, int w, Neuron value)
     {
         _data.get()[offset(n, c, h, w)] = value;
     };
@@ -67,7 +67,7 @@ public:
         return _width;
     }
 protected:
-    boost::shared_ptr< Neuron<float> > _data;
+    boost::shared_ptr<Neuron[]> _data;
     int _num;
     int _channels;
     int _width;

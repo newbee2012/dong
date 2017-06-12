@@ -5,10 +5,6 @@ using namespace std;
 namespace dong
 {
 
-PoolLayer::PoolLayer()
-{
-}
-
 void PoolLayer::forward()
 {
     int b_n = _bottom_data->num();
