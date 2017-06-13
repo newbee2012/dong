@@ -30,13 +30,11 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-m64" />
-			<Add option="-fexceptions -fpermissive" />
+			<Add option="-fexceptions" />
 			<Add option="-DUSE_LMDB" />
 			<Add directory="include" />
 		</Compiler>
 		<Linker>
-			<Add option="-m64" />
 			<Add library="libprotobuf" />
 			<Add library="libglog" />
 			<Add library="liblmdb" />
@@ -46,7 +44,7 @@
 		<Unit filename="include/common.hpp" />
 		<Unit filename="include/conv_layer.hpp" />
 		<Unit filename="include/data.hpp" />
-		<Unit filename="include/inner_product_layer.hpp" />
+		<Unit filename="include/full_connect_layer.hpp" />
 		<Unit filename="include/input_layer.hpp" />
 		<Unit filename="include/layer.hpp" />
 		<Unit filename="include/neuron.hpp" />
@@ -59,7 +57,7 @@
 		<Unit filename="include/util/gen_bmp.hpp" />
 		<Unit filename="src/conv_layer.cpp" />
 		<Unit filename="src/data.cpp" />
-		<Unit filename="src/inner_product_layer.cpp" />
+		<Unit filename="src/full_connect_layer.cpp" />
 		<Unit filename="src/input_layer.cpp" />
 		<Unit filename="src/layer.cpp" />
 		<Unit filename="src/main.cpp" />
@@ -70,18 +68,11 @@
 		<Unit filename="src/softmax_layer.cpp" />
 		<Unit filename="src/util/db.cpp" />
 		<Unit filename="src/util/db_lmdb.cpp" />
-		<Unit filename="version.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
 			<lib_finder disable_auto="1" />
 			<debugger />
-			<AutoVersioning>
-				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
-				<Settings autoincrement="1" date_declarations="1" use_define="0" update_manifest="1" do_auto_increment="0" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="version.h" />
-				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
-				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
-			</AutoVersioning>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

@@ -1,21 +1,17 @@
 #include <iostream>
-#include "inner_product_layer.hpp"
+#include "full_connect_layer.hpp"
 using namespace std;
 
 namespace dong
 {
 
-InnerProductLayer::InnerProductLayer()
-{
-}
-
-void InnerProductLayer::setUp(const boost::shared_ptr<Data>& data)
+void FullConnectLayer::setUp(const boost::shared_ptr<Data>& data)
 {
     _bottom_data = data;
     this->_weight_data.reset(new Data(1, 1, _bottom_data->count(), _num, true));
 }
 
-void InnerProductLayer::forward()
+void FullConnectLayer::forward_cpu()
 {
     int b_n = _bottom_data->num();
     int b_h = _bottom_data->height();
@@ -42,11 +38,11 @@ void InnerProductLayer::forward()
     }
 }
 
-void InnerProductLayer::backward()
+void FullConnectLayer::backward()
 {
 }
 
-void InnerProductLayer::init(int num)
+void FullConnectLayer::init(int num)
 {
     this->_num = num;
 }

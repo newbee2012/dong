@@ -9,7 +9,10 @@
 namespace dong
 {
 
-enum LayerType {INPUT, DATA, CONVOLUTION, POOL, INNER_PRODUCT, RELU, SOFTMAX};
+enum LayerType_ {INPUT, DATA, CONVOLUTION, POOL, FULL_CONNECT, RELU, SOFTMAX};
+enum ForwardComputeType_ {INNER_PRODUCT, MAX};
+typedef LayerType_ LayerType;
+typedef ForwardComputeType_ ForwardComputeType;
 
 class Layer
 {
@@ -36,14 +39,48 @@ public:
         return _weight_data;
     }
 
-    virtual void forward() {};
+    virtual void forward_cpu() = 0;
+
+    virtual void forward()
+    {
+        this->forward_cpu();
+    }
+
+    virtual LayerType getType() = 0;
+
+protected:
+    virtual void forwardBase(ForwardComputeType type)
+    {
+        int count = _bottom_data->count();
+        for (int i = 0; i < count; ++i)
+        {
+            Neuron& b_neuron = _bottom_data->get(i);
+            for(int j=0; j<b_neuron._forward_neuron.size(); ++j)
+            {
+                Neuron* t_neuron = b_neuron._forward_neuron[j];
+                Neuron* w_neuron = b_neuron._weight_neuron[j];
+                if(type == INNER_PRODUCT)
+                {
+                    t_neuron->_value += (b_neuron._value * w_neuron->_value);
+                }
+                else if(type == MAX)
+                {
+                    {
+                        t_neuron->_value = MAX(t_neuron->_value, b_neuron._value);
+                    }
+
+                }
+            }
+        }
+    }
+
     virtual void backward() {};
 
     boost::shared_ptr<Data> _bottom_data;
     boost::shared_ptr<Data> _top_data;
     boost::shared_ptr<Data> _weight_data;
-    virtual LayerType getType() = 0;
-    //DISABLE_COPY_AND_ASSIGN(Layer);
+    ForwardComputeType _forwardType;
+    DISABLE_COPY_AND_ASSIGN(Layer);
 };
 
 }  // namespace dong

@@ -6,7 +6,6 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 #include <iomanip>
-#define random(x) (rand()%x)
 
 namespace dong
 {
@@ -19,20 +18,7 @@ Data::Data(int num, int channels, int height, int width, bool newData)
     this->_width = width;
 
     if (newData) {
-        _data.reset(new Neuron[count()](0));
-
-        for (int i = 0; i < count(); i++) {
-            _data.get()[i]._value = (float)random(2);//2 * ((float)random(2) - 0.5); // * (random(2)==0?-1:1);
-        }
-
-        //int n = MIN(_height,_width);
-        //for (int i = 0; i < n; i++)
-        //{
-        //data[_height/2*_width+_width/2] = 1;
-        //}
-        //data[0] = 1;
-        //data[_height*_width-1] = 1;
-        //_data.reset(data);
+        _data.reset(new Neuron[count()]());
     }
 }
 

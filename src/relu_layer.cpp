@@ -7,11 +7,7 @@ using namespace std;
 namespace dong
 {
 
-ReluLayer::ReluLayer()
-{
-}
-
-void ReluLayer::forward()
+void ReluLayer::forward_cpu()
 {
     _top_data.reset(new Data(1, 1, _bottom_data->height(), _bottom_data->width(), true));
     const int count = _bottom_data->count();

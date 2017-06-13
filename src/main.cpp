@@ -3,7 +3,7 @@
 #include "input_layer.hpp"
 #include "conv_layer.hpp"
 #include "pool_layer.hpp"
-#include "inner_product_layer.hpp"
+#include "full_connect_layer.hpp"
 #include "relu_layer.hpp"
 #include "softmax_layer.hpp"
 #include "util/db.hpp"
@@ -31,7 +31,7 @@ int main()
         int height = datum.height();
         int label = datum.label();
 
-        boost::shared_ptr<Neuron[]> inputImage(new Neuron[height*width](0));
+        boost::shared_ptr<Neuron[]> inputImage(new Neuron[height*width]());
         for (int c = 0; c < channels; c++) {
             for (int w = 0; w < width; w++) {
                 for (int h = 0; h < height; h++) {
@@ -69,10 +69,10 @@ int main()
         poolLayer2->setUp(convLayer2->getTopData());
         poolLayer2->forward();
         //L6.InnerProductLayer
-        boost::shared_ptr<InnerProductLayer> innerProductLayer(new InnerProductLayer());
-        innerProductLayer->init(10);
-        innerProductLayer->setUp(poolLayer2->getTopData());
-        innerProductLayer->forward();
+        boost::shared_ptr<FullConnectLayer> fullConnectLayer(new FullConnectLayer());
+        fullConnectLayer->init(10);
+        fullConnectLayer->setUp(poolLayer2->getTopData());
+        fullConnectLayer->forward();
         //L7.reluLayer
         boost::shared_ptr<ReluLayer> reluLayer(new ReluLayer());
         reluLayer->init();
@@ -94,7 +94,7 @@ int main()
         inputLayer->getTopData()->print();
         char filename[32];
         const char* format = "inputLayer_top_data_l%d_%d.bmp";
-        sprintf(filename, format, label, i);
+        snprintf(filename, sizeof(filename), format, label, i);
         inputLayer->getTopData()->genBmp(filename);
         cout << "---------convLayer1 top_data-----------" << endl;
         convLayer1->getTopData()->print();

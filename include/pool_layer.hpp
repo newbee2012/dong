@@ -12,7 +12,7 @@ namespace dong
 class PoolLayer: public Layer
 {
 public:
-    PoolLayer(){};
+    PoolLayer(){ _forwardType = INNER_PRODUCT; };
     ~PoolLayer(){};
     virtual LayerType getType()
     {
@@ -20,7 +20,8 @@ public:
     }
 
     virtual void init(int kernel_h, int _kernel_w, int _stride_h, int _stride_w);
-    virtual void forward();
+    virtual void setUp(const boost::shared_ptr<Data>& data);
+    virtual void forward_cpu();
     virtual void backward();
 
 protected:

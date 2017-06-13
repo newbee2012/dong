@@ -5,8 +5,9 @@ using namespace std;
 namespace dong
 {
 
-void PoolLayer::forward()
+void PoolLayer::setUp(const boost::shared_ptr<Data>& data)
 {
+    Layer::setUp(data);
     int b_n = _bottom_data->num();
     int b_h = _bottom_data->height();
     int b_w = _bottom_data->width();
@@ -18,19 +19,21 @@ void PoolLayer::forward()
     for (int n = 0; n < t_n; n++) {
         for (int h = 0; h < t_h; h++) {
             for (int w = 0; w < t_w; w++) {
-                float t_value = 0;
-
+                Neuron& t_neuron = _top_data->get(n, 0, h, w);
                 for (int offset_h = 0; offset_h < _kernel_h; offset_h++) {
                     for (int offset_w = 0; offset_w < _kernel_w; offset_w++) {
-                        float b_value = _bottom_data->get(0, 0, h * _stride_h + offset_h, w * _kernel_w + offset_w)._value;
-                        t_value = MAX(t_value, b_value);
+                        Neuron& b_neuron = _bottom_data->get(0, 0, h * _stride_h + offset_h, w * _kernel_w + offset_w);
+                        b_neuron._forward_neuron.push_back(&t_neuron);
                     }
                 }
-
-                //_top_data->get(n, 0, h, w).value = t_value;
             }
         }
     }
+}
+
+void PoolLayer::forward_cpu()
+{
+    Layer::forwardBase(MAX);
 }
 
 void PoolLayer::backward()

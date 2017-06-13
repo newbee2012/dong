@@ -11,14 +11,14 @@ namespace dong
 class ReluLayer: public Layer
 {
 public:
-    explicit ReluLayer();
+    explicit ReluLayer(){_forwardType = INNER_PRODUCT;};
     virtual LayerType getType()
     {
         return RELU;
     }
 
     virtual void init();
-    virtual void forward();
+    virtual void forward_cpu();
     virtual void backward();
 
 protected:

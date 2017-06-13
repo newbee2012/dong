@@ -17,7 +17,7 @@ public:
         return INPUT;
     }
 
-    virtual void forward();
+    virtual void forward_cpu();
 
 protected:
 
