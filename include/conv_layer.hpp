@@ -15,7 +15,7 @@ public:
 
     virtual LayerType getType()
     {
-        return CONVOLUTION;
+        return CONVOLUTION_LAYER;
     }
 
     virtual void init(int kernel_num, int kernel_channels, int kernel_h, int kernel_w);

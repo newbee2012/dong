@@ -12,7 +12,9 @@ namespace dong
 class Data
 {
 public:
-    explicit Data(int num, int channels, int height, int width, bool newData);
+    enum InitType{CONSTANT, RANDOM,};
+    explicit Data(int num, int channels, int height, int width, InitType type);
+    explicit Data(int num, int channels, int height, int width);
     Data* setUp(const boost::shared_ptr<Neuron[]>& data);
     void print();
     void genBmp(const char* filename);
@@ -70,8 +72,8 @@ protected:
     boost::shared_ptr<Neuron[]> _data;
     int _num;
     int _channels;
-    int _width;
     int _height;
+    int _width;
 
     DISABLE_COPY_AND_ASSIGN(Data);
 };

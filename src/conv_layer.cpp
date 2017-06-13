@@ -8,7 +8,7 @@ namespace dong
 
 void ConvLayer::init(int kernel_num, int kernel_channels, int kernel_h, int kernel_w)
 {
-    _weight_data.reset(new Data(kernel_num, kernel_channels, kernel_h, kernel_w, true));
+    _weight_data.reset(new Data(kernel_num, kernel_channels, kernel_h, kernel_w, Data::RANDOM));
     for (int i = 0; i < _weight_data->count(); i++)
     {
         _weight_data->get(i)._value = (float)random(2);//2 * ((float)random(2) - 0.5); // * (random(2)==0?-1:1);
@@ -27,7 +27,7 @@ void ConvLayer::setUp(const boost::shared_ptr<Data>& data)
     int t_n = k_n;
     int t_h = b_h - k_h + 1;
     int t_w = b_w - k_w + 1;
-    _top_data.reset(new Data(t_n, 1, t_h, t_w, true));
+    _top_data.reset(new Data(t_n, 1, t_h, t_w, Data::CONSTANT));
 
     for (int n = 0; n < t_n; n++)
     {

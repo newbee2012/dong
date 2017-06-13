@@ -11,15 +11,15 @@ namespace dong
 class SoftmaxLayer: public Layer
 {
 public:
-    explicit SoftmaxLayer();
+    explicit SoftmaxLayer(){};
     virtual ~SoftmaxLayer() {};
     virtual LayerType getType()
     {
-        return SOFTMAX;
+        return SOFTMAX_LAYER;
     }
 
     virtual void init();
-    virtual void forward();
+    virtual void forward_cpu();
     virtual void backward();
 
 protected:

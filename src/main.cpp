@@ -41,7 +41,7 @@ int main()
         }
 
 
-        boost::shared_ptr<Data> inputData((new Data(1, channels, height, width, false))->setUp(inputImage));
+        boost::shared_ptr<Data> inputData((new Data(1, channels, height, width))->setUp(inputImage));
         //L1.inputLayer
         boost::shared_ptr<InputLayer> inputLayer(new InputLayer());
         inputLayer->setUp(inputData);
@@ -68,7 +68,7 @@ int main()
         poolLayer2->init(2, 2, 2, 2);
         poolLayer2->setUp(convLayer2->getTopData());
         poolLayer2->forward();
-        //L6.InnerProductLayer
+        //L6.FullConnectLayer
         boost::shared_ptr<FullConnectLayer> fullConnectLayer(new FullConnectLayer());
         fullConnectLayer->init(10);
         fullConnectLayer->setUp(poolLayer2->getTopData());
@@ -76,17 +76,17 @@ int main()
         //L7.reluLayer
         boost::shared_ptr<ReluLayer> reluLayer(new ReluLayer());
         reluLayer->init();
-        reluLayer->setUp(innerProductLayer->getTopData());
+        reluLayer->setUp(fullConnectLayer->getTopData());
         reluLayer->forward();
-        //L8.InnerProductLayer
-        boost::shared_ptr<InnerProductLayer> innerProductLayer2(new InnerProductLayer());
-        innerProductLayer2->init(10);
-        innerProductLayer2->setUp(reluLayer->getTopData());
-        innerProductLayer2->forward();
+        //L8.FullConnectLayer
+        boost::shared_ptr<FullConnectLayer> fullConnectLayer2(new FullConnectLayer());
+        fullConnectLayer2->init(10);
+        fullConnectLayer2->setUp(reluLayer->getTopData());
+        fullConnectLayer2->forward();
         //L9.SoftmaxLayer
         boost::shared_ptr<SoftmaxLayer> softmaxLayer(new SoftmaxLayer());
         softmaxLayer->init();
-        softmaxLayer->setUp(innerProductLayer2->getTopData());
+        softmaxLayer->setUp(fullConnectLayer2->getTopData());
         softmaxLayer->forward();
 
         //print per layer
@@ -114,17 +114,17 @@ int main()
         cout << "---------poolLayer2 top_data-----------" << endl;
         poolLayer2->getTopData()->print();
         poolLayer2->getTopData()->genBmp("poolLayer2_top_data.bmp");
-        cout << "---------innerProductLayer weight_data-----------" << endl;
-        innerProductLayer->getWeightData()->print();
-        cout << "---------innerProductLayer top_data-----------" << endl;
-        innerProductLayer->getTopData()->print();
+        cout << "---------fullConnectLayer weight_data-----------" << endl;
+        fullConnectLayer->getWeightData()->print();
+        cout << "---------fullConnectLayer top_data-----------" << endl;
+        fullConnectLayer->getTopData()->print();
         cout << "---------reluLayer top_data-----------" << endl;
         reluLayer->getTopData()->print();
         reluLayer->getTopData()->genBmp("reluLayer_top_data.bmp");
-        cout << "---------innerProductLayer2 weight_data-----------" << endl;
-        innerProductLayer2->getWeightData()->print();
-        cout << "---------innerProductLayer2 top_data-----------" << endl;
-        innerProductLayer2->getTopData()->print();
+        cout << "---------fullConnectLayer2 weight_data-----------" << endl;
+        fullConnectLayer2->getWeightData()->print();
+        cout << "---------fullConnectLayer2 top_data-----------" << endl;
+        fullConnectLayer2->getTopData()->print();
         cout << "---------softmaxLayer top_data-----------" << endl;
         softmaxLayer->getTopData()->print();
 

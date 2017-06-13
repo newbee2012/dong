@@ -14,7 +14,7 @@ public:
     explicit InputLayer();
     virtual LayerType getType()
     {
-        return INPUT;
+        return INPUT_LAYER;
     }
 
     virtual void forward_cpu();

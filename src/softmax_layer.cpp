@@ -8,13 +8,9 @@ using namespace std;
 namespace dong
 {
 
-SoftmaxLayer::SoftmaxLayer()
+void SoftmaxLayer::forward_cpu()
 {
-}
-
-void SoftmaxLayer::forward()
-{
-    _top_data.reset(new Data(1, 1, _bottom_data->height(), _bottom_data->width(), true));
+    _top_data.reset(new Data(1, 1, _bottom_data->height(), _bottom_data->width(), Data::CONSTANT));
     const int count = _bottom_data->count();
     float maxValue = 0.0F;
 

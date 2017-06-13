@@ -16,7 +16,7 @@ public:
     ~PoolLayer(){};
     virtual LayerType getType()
     {
-        return POOL;
+        return POOL_LAYER;
     }
 
     virtual void init(int kernel_h, int _kernel_w, int _stride_h, int _stride_w);

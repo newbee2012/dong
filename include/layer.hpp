@@ -9,8 +9,8 @@
 namespace dong
 {
 
-enum LayerType_ {INPUT, DATA, CONVOLUTION, POOL, FULL_CONNECT, RELU, SOFTMAX};
-enum ForwardComputeType_ {INNER_PRODUCT, MAX};
+enum LayerType_ {INPUT_LAYER, DATA_LAYER, CONVOLUTION_LAYER, POOL_LAYER, FULL_CONNECT_LAYER, RELU_LAYER, SOFTMAX_LAYER};
+enum ForwardComputeType_ {INNER_PRODUCT, MAX, RELU};
 typedef LayerType_ LayerType;
 typedef ForwardComputeType_ ForwardComputeType;
 
@@ -58,17 +58,14 @@ protected:
             for(int j=0; j<b_neuron._forward_neuron.size(); ++j)
             {
                 Neuron* t_neuron = b_neuron._forward_neuron[j];
-                Neuron* w_neuron = b_neuron._weight_neuron[j];
                 if(type == INNER_PRODUCT)
                 {
+                    Neuron* w_neuron = b_neuron._weight_neuron[j];
                     t_neuron->_value += (b_neuron._value * w_neuron->_value);
                 }
                 else if(type == MAX)
                 {
-                    {
-                        t_neuron->_value = MAX(t_neuron->_value, b_neuron._value);
-                    }
-
+                    t_neuron->_value = MAX(t_neuron->_value, b_neuron._value);
                 }
             }
         }

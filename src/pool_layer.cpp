@@ -14,7 +14,7 @@ void PoolLayer::setUp(const boost::shared_ptr<Data>& data)
     int t_n = b_n;
     int t_h = (b_h - _kernel_h) / _stride_h + 1;
     int t_w = (b_w - _kernel_w) / _stride_w + 1;
-    _top_data.reset(new Data(t_n, 1, t_h, t_w, true));
+    _top_data.reset(new Data(t_n, 1, t_h, t_w, Data::CONSTANT));
 
     for (int n = 0; n < t_n; n++) {
         for (int h = 0; h < t_h; h++) {
