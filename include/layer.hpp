@@ -51,8 +51,7 @@ public:
 protected:
     virtual void forwardBase(ForwardComputeType type)
     {
-        int count = _bottom_data->count();
-        for (int i = 0; i < count; ++i)
+        for (int i = 0; i < _bottom_data->count(); ++i)
         {
             Neuron& b_neuron = _bottom_data->get(i);
             for(int j=0; j<b_neuron._forward_neuron.size(); ++j)
@@ -71,7 +70,26 @@ protected:
         }
     }
 
-    virtual void backward() {};
+    virtual void backward()
+    {
+        for (int i = 0; i < _bottom_data->count(); ++i)
+        {
+            Neuron& b_neuron = _bottom_data->get(i);
+            for(int j=0; j<b_neuron._forward_neuron.size(); ++j)
+            {
+                Neuron* t_neuron = b_neuron._forward_neuron[j];
+                if(type == INNER_PRODUCT)
+                {
+                    Neuron* w_neuron = b_neuron._weight_neuron[j];
+                    b_neuron->_diff += (t_neuron._diff * w_neuron->_value);
+                }
+                else if(type == MAX)
+                {
+                    t_neuron->_value = MAX(t_neuron->_value, b_neuron._value);
+                }
+            }
+        }
+    };
 
     boost::shared_ptr<Data> _bottom_data;
     boost::shared_ptr<Data> _top_data;

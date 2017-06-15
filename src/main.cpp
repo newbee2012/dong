@@ -13,9 +13,31 @@ using namespace std;
 using namespace caffe;
 using namespace dong;
 
-int main()
+int sum = 0;
+void test2(char*p, char*q, int count1,int count2, int v)
 {
+        if(count1+count2==0)
+        {
+            //cout<<p<<endl;
+            sum++;
+            return;
+        }
 
+        if(v>=0 && count1>0)
+        {
+            *q='(';
+            test2(p,q+1,count1-1,count2,v+1);
+        }
+
+        if(count2>0)
+        {
+            *q=')';
+            test2(p,q+1,count1,count2-1,v-1);
+        }
+}
+
+void train()
+{
     srand((int)time(0));
     db::DB* mydb = db::GetDB("lmdb");
     mydb->Open("/home/chendejia/workspace/github/dong/data/mnist_train_lmdb", db::READ);
@@ -134,7 +156,17 @@ int main()
     delete corsor;
     mydb->Close();
     delete mydb;
-
+}
+int main()
+{
+    /*for(int i=1;i<16;i++)
+    {
+        char* p=new char[i*2];
+        test2(p,p, i,i,0);
+        cout<<i<<","<<sum<<endl;
+        delete[] p;
+    }*/
+    train();
     cout << "Hello world!" << endl;
     return 0;
 }

@@ -23,6 +23,7 @@ public:
 
     void forward();
     float _value;
+    float _diff;
 
     vector< Neuron* > _forward_neuron;
     vector< Neuron* > _weight_neuron;
