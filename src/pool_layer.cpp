@@ -20,26 +20,26 @@ void PoolLayer::setUp(const boost::shared_ptr<Data>& data)
     for (int n = 0; n < t_n; n++) {
         for (int h = 0; h < t_h; h++) {
             for (int w = 0; w < t_w; w++) {
-                Neuron& t_neuron = _top_data->get(n, 0, h, w);
+                Neuron* t_neuron = _top_data->get(n, 0, h, w);
                 int max_index = _weight_data->offset(0, 0, h * _kernel_h + 0, w * _kernel_w + 0);
-                float max_value = _bottom_data->get(0, 0, h * _stride_h + 0, w * _stride_w + 0)._value;
+                float max_value = _bottom_data->get(0, 0, h * _stride_h + 0, w * _stride_w + 0)->_value;
 
                 for (int offset_h = 0; offset_h < _kernel_h; offset_h++) {
                     for (int offset_w = 0; offset_w < _kernel_w; offset_w++) {
-                        Neuron& b_neuron = _bottom_data->get(0, 0, h * _stride_h + offset_h, w * _stride_w + offset_w);
-                        Neuron& w_neuron = _weight_data->get(0, 0, h * _kernel_h + offset_h, w * _kernel_w + offset_w);
+                        Neuron* b_neuron = _bottom_data->get(0, 0, h * _stride_h + offset_h, w * _stride_w + offset_w);
+                        Neuron* w_neuron = _weight_data->get(0, 0, h * _kernel_h + offset_h, w * _kernel_w + offset_w);
 
-                        if (b_neuron._value > max_value) {
-                            max_value = b_neuron._value;
+                        if (b_neuron->_value > max_value) {
+                            max_value = b_neuron->_value;
                             max_index = _weight_data->offset(0, 0, h * _kernel_h + offset_h, w * _kernel_w + offset_w);
                         }
 
-                        b_neuron._forward_neuron.push_back(&t_neuron);
-                        b_neuron._weight_neuron.push_back(&w_neuron);
+                        b_neuron->_forward_neuron.push_back(t_neuron);
+                        b_neuron->_weight_neuron.push_back(w_neuron);
                     }
                 }
 
-                _weight_data->get(max_index)._value = 1;
+                _weight_data->get(max_index)->_value = 1;
             }
         }
     }
@@ -47,11 +47,12 @@ void PoolLayer::setUp(const boost::shared_ptr<Data>& data)
 
 void PoolLayer::forward_cpu()
 {
-    Layer::forwardBase(MAX);
+    Layer::forwardBase();
 }
 
-void PoolLayer::backward()
+void PoolLayer::backward_cpu()
 {
+    Layer::backwardBase();
 }
 
 void PoolLayer::init(int kernel_h, int kernel_w, int stride_h, int stride_w)

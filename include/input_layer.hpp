@@ -18,6 +18,7 @@ public:
     }
 
     virtual void forward_cpu();
+    virtual void backward_cpu();
 
 protected:
 

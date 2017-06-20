@@ -20,7 +20,7 @@ public:
 
     virtual void init();
     virtual void forward_cpu();
-    virtual void backward();
+    virtual void backward_cpu();
 
 protected:
 

@@ -112,41 +112,59 @@ void train()
         const char* format = "inputLayer_top_data_l%d_%d.bmp";
         snprintf(filename, sizeof(filename), format, label, i);
         inputLayer->getTopData()->genBmp(filename);
+
         cout << "---------convLayer1 weight-----------" << endl;
         convLayer1->getWeightData()->print();
         convLayer1->getWeightData()->genBmp("convLayer1_weight_data.bmp");
+
         cout << "---------convLayer1 top_data-----------" << endl;
         convLayer1->getTopData()->print();
         convLayer1->getTopData()->genBmp("convLayer1_top_data.bmp");
+
         cout << "---------poolLayer1 weight-----------" << endl;
         poolLayer1->getWeightData()->print();
         poolLayer1->getWeightData()->genBmp("poolLayer1_weight_data.bmp");
+
         cout << "---------poolLayer1 top_data-----------" << endl;
         poolLayer1->getTopData()->print();
         poolLayer1->getTopData()->genBmp("poolLayer1_top_data.bmp");
+
         cout << "---------convLayer2 weight-----------" << endl;
         convLayer2->getWeightData()->print();
         convLayer2->getWeightData()->genBmp("convLayer2_weight_data.bmp");
+
         cout << "---------convLayer2 top_data-----------" << endl;
         convLayer2->getTopData()->print();
         convLayer2->getTopData()->genBmp("convLayer2_top_data.bmp");
+
         cout << "---------poolLayer2 weight-----------" << endl;
         poolLayer2->getWeightData()->print();
         poolLayer2->getWeightData()->genBmp("poolLayer2_weight_data.bmp");
+
         cout << "---------poolLayer2 top_data-----------" << endl;
         poolLayer2->getTopData()->print();
         poolLayer2->getTopData()->genBmp("poolLayer2_top_data.bmp");
+
         cout << "---------fullConnectLayer weight_data-----------" << endl;
         fullConnectLayer->getWeightData()->print();
+
         cout << "---------fullConnectLayer top_data-----------" << endl;
         fullConnectLayer->getTopData()->print();
+
+        cout << "---------reluLayer weight-----------" << endl;
+        reluLayer->getWeightData()->print();
+        reluLayer->getWeightData()->genBmp("reluLayer_weight_data.bmp");
+
         cout << "---------reluLayer top_data-----------" << endl;
         reluLayer->getTopData()->print();
         reluLayer->getTopData()->genBmp("reluLayer_top_data.bmp");
+
         cout << "---------fullConnectLayer2 weight_data-----------" << endl;
         fullConnectLayer2->getWeightData()->print();
+
         cout << "---------fullConnectLayer2 top_data-----------" << endl;
         fullConnectLayer2->getTopData()->print();
+
         cout << "---------softmaxLayer top_data-----------" << endl;
         softmaxLayer->getTopData()->print();
         corsor->Next();

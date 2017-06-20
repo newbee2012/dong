@@ -46,38 +46,44 @@ public:
         this->forward_cpu();
     }
 
+    virtual void backward_cpu() = 0;
+
+    virtual void backward()
+    {
+        this->backward_cpu();
+    }
+
     virtual LayerType getType() = 0;
 
 protected:
-    virtual void forwardBase(ForwardComputeType type)
+    virtual void forwardBase()
     {
         for (int i = 0; i < _bottom_data->count(); ++i)
         {
-            Neuron& b_neuron = _bottom_data->get(i);
+            const Neuron* b_neuron = _bottom_data->get(i);
 
-            for (int j = 0; j < b_neuron._forward_neuron.size(); ++j)
+            for (int j = 0; j < b_neuron->_forward_neuron.size(); ++j)
             {
-                Neuron* t_neuron = b_neuron._forward_neuron[j];
-                Neuron* w_neuron = b_neuron._weight_neuron[j];
-                t_neuron->_value += (b_neuron._value * w_neuron->_value);
+                Neuron* t_neuron = b_neuron->_forward_neuron[j];
+                Neuron* w_neuron = b_neuron->_weight_neuron[j];
+                t_neuron->_value += (b_neuron->_value * w_neuron->_value);
             }
         }
     }
 
-    virtual void backward()
+    virtual void backwardBase()
     {
         for (int i = 0; i < _bottom_data->count(); ++i)
         {
-            Neuron* b_neuron = &_bottom_data->get(i);
+            Neuron* b_neuron = _bottom_data->get(i);
             for (int j = 0; j < b_neuron->_forward_neuron.size(); ++j)
             {
                 Neuron* t_neuron = b_neuron->_forward_neuron[j];
                 Neuron* w_neuron = b_neuron->_weight_neuron[j];
                 b_neuron->_diff +=(t_neuron->_diff * w_neuron->_value);
-                w_neuron->_diff +=(t_neuron->_diff * b_neuron->_value);
+                w_neuron->_diff = t_neuron->_diff * b_neuron->_value;
+                w_neuron->_value -= (BASE_LEARNING_RATE * w_neuron->_diff);
             }
-
-            w_neuron->_value -= (BASE_LEARNING_RATE * t_neuron->_diff * b_neuron->_value);
         }
     };
 

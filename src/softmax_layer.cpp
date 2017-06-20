@@ -15,23 +15,23 @@ void SoftmaxLayer::forward_cpu()
     float maxValue = 0.0F;
 
     for (int i = 0; i < count; ++i) {
-        maxValue = MAX(maxValue, _bottom_data->get(i)._value);
+        maxValue = MAX(maxValue, _bottom_data->get(i)->_value);
     }
 
     double sumExp = 0.0F;
 
     for (int i = 0; i < count; ++i) {
-        float expValue = exp(_bottom_data->get(i)._value / (maxValue / 10)) ;
-        _top_data->get(i)._value = expValue;
+        float expValue = exp(_bottom_data->get(i)->_value / (maxValue / 10)) ;
+        _top_data->get(i)->_value = expValue;
         sumExp += expValue;
     }
 
     for (int i = 0; i < count; ++i) {
-        _top_data->get(i)._value = (float)_top_data->get(i)._value / sumExp;
+        _top_data->get(i)->_value = (float)_top_data->get(i)->_value / sumExp;
     }
 }
 
-void SoftmaxLayer::backward()
+void SoftmaxLayer::backward_cpu()
 {
 }
 

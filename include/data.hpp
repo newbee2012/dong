@@ -24,12 +24,12 @@ public:
         return _num * _channels * _width * _height;
     }
 
-    Neuron& get(int offset)
+    Neuron* get(int offset)
     {
-        return _data[offset];
+        return &_data[offset];
     };
 
-    Neuron& get(int n, int c, int h, int w)
+    Neuron* get(int n, int c, int h, int w)
     {
         return get(offset(n, c, h, w));
     };

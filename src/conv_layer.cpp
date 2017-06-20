@@ -11,7 +11,7 @@ void ConvLayer::init(int kernel_num, int kernel_channels, int kernel_h, int kern
     _weight_data.reset(new Data(kernel_num, kernel_channels, kernel_h, kernel_w, Data::RANDOM));
 
     for (int i = 0; i < _weight_data->count(); i++) {
-        _weight_data->get(i)._value = (float)random(2);//2 * ((float)random(2) - 0.5); // * (random(2)==0?-1:1);
+        _weight_data->get(i)->_value = (float)random(2);//2 * ((float)random(2) - 0.5); // * (random(2)==0?-1:1);
     }
 }
 
@@ -32,14 +32,14 @@ void ConvLayer::setUp(const boost::shared_ptr<Data>& data)
     for (int n = 0; n < t_n; n++) {
         for (int h = 0; h < t_h; h++) {
             for (int w = 0; w < t_w; w++) {
-                Neuron& t_neuron = _top_data->get(n, 0, h, w);
+                Neuron* t_neuron = _top_data->get(n, 0, h, w);
 
                 for (int offset_h = 0; offset_h < k_h; offset_h++) {
                     for (int offset_w = 0; offset_w < k_w; offset_w++) {
-                        Neuron& b_neuron = _bottom_data->get(0, 0, h + offset_h, w + offset_w);
-                        Neuron& w_neuron = _weight_data->get(n, 0, offset_h, offset_w);
-                        b_neuron._forward_neuron.push_back(&t_neuron);
-                        b_neuron._weight_neuron.push_back(&w_neuron);
+                        Neuron* b_neuron = _bottom_data->get(0, 0, h + offset_h, w + offset_w);
+                        Neuron* w_neuron = _weight_data->get(n, 0, offset_h, offset_w);
+                        b_neuron->_forward_neuron.push_back(t_neuron);
+                        b_neuron->_weight_neuron.push_back(w_neuron);
                     }
                 }
             }
@@ -49,11 +49,12 @@ void ConvLayer::setUp(const boost::shared_ptr<Data>& data)
 
 void ConvLayer::forward_cpu()
 {
-    Layer::forwardBase(INNER_PRODUCT);
+    Layer::forwardBase();
 }
 
-void ConvLayer::backward()
+void ConvLayer::backward_cpu()
 {
+    Layer::backwardBase();
 }
 
 

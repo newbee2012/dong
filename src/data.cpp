@@ -39,7 +39,7 @@ void Data::print()
 
     for (int h = 0; h < _height; h++) {
         for (int w = 0; w < _width; w++) {
-            float value = this->get(0, 0, h, w)._value;
+            float value = this->get(0, 0, h, w)->_value;
             //if (value > 0)
             //{
             cout << value;
@@ -70,7 +70,7 @@ void Data::genBmp(const char* filename)
 
     for (int h = 0; h < _height; h++) {
         for (int w = 0; w < _width; w++) {
-            BYTE gray = this->get(0, 0, h, w)._value;
+            BYTE gray = this->get(0, 0, h, w)->_value;
 
             if (w == 0 || w == _width - 1 || h == 0 || h == _height - 1) {
                 pRGB[(_height - h - 1)*_width + w].r = 0xFF;

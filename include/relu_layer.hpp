@@ -23,7 +23,7 @@ public:
     virtual void init();
     virtual void setUp(const boost::shared_ptr<Data>& data);
     virtual void forward_cpu();
-    virtual void backward();
+    virtual void backward_cpu();
 
 protected:
 

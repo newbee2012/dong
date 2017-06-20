@@ -20,13 +20,13 @@ void FullConnectLayer::setUp(const boost::shared_ptr<Data>& data)
     for (int n = 0; n < t_n; n++) {
         for (int h = 0; h < t_h; h++) {
             for (int w = 0; w < t_w; w++) {
-                Neuron& t_neuron = _top_data->get(n, 0, h, w);
+                Neuron* t_neuron = _top_data->get(n, 0, h, w);
 
                 for (int i = 0; i < _bottom_data->count(); i++) {
-                    Neuron& b_neuron = _bottom_data->get(i);
-                    Neuron& w_neuron = _weight_data->get(0, 0, i, w);
-                    b_neuron._forward_neuron.push_back(&t_neuron);
-                    b_neuron._weight_neuron.push_back(&w_neuron);
+                    Neuron* b_neuron = _bottom_data->get(i);
+                    Neuron* w_neuron = _weight_data->get(0, 0, i, w);
+                    b_neuron->_forward_neuron.push_back(t_neuron);
+                    b_neuron->_weight_neuron.push_back(w_neuron);
                 }
             }
         }
@@ -35,11 +35,12 @@ void FullConnectLayer::setUp(const boost::shared_ptr<Data>& data)
 
 void FullConnectLayer::forward_cpu()
 {
-    Layer::forwardBase(INNER_PRODUCT);
+    Layer::forwardBase();
 }
 
-void FullConnectLayer::backward()
+void FullConnectLayer::backward_cpu()
 {
+    Layer::backwardBase();
 }
 
 void FullConnectLayer::init(int num)

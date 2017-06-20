@@ -14,4 +14,9 @@ void InputLayer::forward_cpu()
     this->_top_data = this->_bottom_data;
 }
 
+void InputLayer::backward_cpu()
+{
+}
+
+
 }
