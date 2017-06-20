@@ -12,7 +12,7 @@ namespace dong
 class Data
 {
 public:
-    enum InitType{CONSTANT, RANDOM,};
+    enum InitType {CONSTANT, RANDOM,};
     explicit Data(int num, int channels, int height, int width, InitType type);
     explicit Data(int num, int channels, int height, int width);
     Data* setUp(const boost::shared_ptr<Neuron[]>& data);

@@ -54,18 +54,12 @@ protected:
         for (int i = 0; i < _bottom_data->count(); ++i)
         {
             Neuron& b_neuron = _bottom_data->get(i);
-            for(int j=0; j<b_neuron._forward_neuron.size(); ++j)
+
+            for (int j = 0; j < b_neuron._forward_neuron.size(); ++j)
             {
                 Neuron* t_neuron = b_neuron._forward_neuron[j];
-                if(type == INNER_PRODUCT)
-                {
-                    Neuron* w_neuron = b_neuron._weight_neuron[j];
-                    t_neuron->_value += (b_neuron._value * w_neuron->_value);
-                }
-                else if(type == MAX)
-                {
-                    t_neuron->_value = MAX(t_neuron->_value, b_neuron._value);
-                }
+                Neuron* w_neuron = b_neuron._weight_neuron[j];
+                t_neuron->_value += (b_neuron._value * w_neuron->_value);
             }
         }
     }
@@ -74,20 +68,16 @@ protected:
     {
         for (int i = 0; i < _bottom_data->count(); ++i)
         {
-            Neuron& b_neuron = _bottom_data->get(i);
-            for(int j=0; j<b_neuron._forward_neuron.size(); ++j)
+            Neuron* b_neuron = &_bottom_data->get(i);
+            for (int j = 0; j < b_neuron->_forward_neuron.size(); ++j)
             {
-                Neuron* t_neuron = b_neuron._forward_neuron[j];
-                if(type == INNER_PRODUCT)
-                {
-                    Neuron* w_neuron = b_neuron._weight_neuron[j];
-                    b_neuron->_diff += (t_neuron._diff * w_neuron->_value);
-                }
-                else if(type == MAX)
-                {
-                    t_neuron->_value = MAX(t_neuron->_value, b_neuron._value);
-                }
+                Neuron* t_neuron = b_neuron->_forward_neuron[j];
+                Neuron* w_neuron = b_neuron->_weight_neuron[j];
+                b_neuron->_diff +=(t_neuron->_diff * w_neuron->_value);
+                w_neuron->_diff +=(t_neuron->_diff * b_neuron->_value);
             }
+
+            w_neuron->_value -= (BASE_LEARNING_RATE * t_neuron->_diff * b_neuron->_value);
         }
     };
 

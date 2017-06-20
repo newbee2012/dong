@@ -12,8 +12,11 @@ namespace dong
 class PoolLayer: public Layer
 {
 public:
-    PoolLayer(){ _forwardType = INNER_PRODUCT; };
-    ~PoolLayer(){};
+    PoolLayer()
+    {
+        _forwardType = INNER_PRODUCT;
+    };
+    ~PoolLayer() {};
     virtual LayerType getType()
     {
         return POOL_LAYER;

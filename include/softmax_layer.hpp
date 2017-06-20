@@ -11,7 +11,7 @@ namespace dong
 class SoftmaxLayer: public Layer
 {
 public:
-    explicit SoftmaxLayer(){};
+    explicit SoftmaxLayer() {};
     virtual ~SoftmaxLayer() {};
     virtual LayerType getType()
     {

@@ -11,7 +11,10 @@ namespace dong
 class ConvLayer: public Layer
 {
 public:
-    explicit ConvLayer(){_forwardType = INNER_PRODUCT;};
+    explicit ConvLayer()
+    {
+        _forwardType = INNER_PRODUCT;
+    };
 
     virtual LayerType getType()
     {

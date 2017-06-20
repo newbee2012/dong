@@ -14,26 +14,23 @@ using namespace caffe;
 using namespace dong;
 
 int sum = 0;
-void test2(char*p, char*q, int count1,int count2, int v)
+void test2(char* p, char* q, int count1, int count2, int v)
 {
-        if(count1+count2==0)
-        {
-            //cout<<p<<endl;
-            sum++;
-            return;
-        }
+    if (count1 + count2 == 0) {
+        cout << p << endl;
+        sum++;
+        return;
+    }
 
-        if(v>=0 && count1>0)
-        {
-            *q='(';
-            test2(p,q+1,count1-1,count2,v+1);
-        }
+    if (v >= 0 && count1 > 0) {
+        *q = '(';
+        test2(p, q + 1, count1 - 1, count2, v + 1);
+    }
 
-        if(count2>0)
-        {
-            *q=')';
-            test2(p,q+1,count1,count2-1,v-1);
-        }
+    if (count2 > 0) {
+        *q = ')';
+        test2(p, q + 1, count1, count2 - 1, v - 1);
+    }
 }
 
 void train()
@@ -52,8 +49,8 @@ void train()
         int width = datum.width();
         int height = datum.height();
         int label = datum.label();
+        boost::shared_ptr<Neuron[]> inputImage(new Neuron[height * width]());
 
-        boost::shared_ptr<Neuron[]> inputImage(new Neuron[height*width]());
         for (int c = 0; c < channels; c++) {
             for (int w = 0; w < width; w++) {
                 for (int h = 0; h < height; h++) {
@@ -62,14 +59,12 @@ void train()
             }
         }
 
-
         boost::shared_ptr<Data> inputData((new Data(1, channels, height, width))->setUp(inputImage));
         //L1.inputLayer
         boost::shared_ptr<InputLayer> inputLayer(new InputLayer());
         inputLayer->setUp(inputData);
         cout << "Label: " << label << endl;
         inputLayer->forward();
-
         //L2.convLayer1
         boost::shared_ptr<ConvLayer> convLayer1(new ConvLayer());
         convLayer1->init(1, 1, 5, 5);
@@ -110,7 +105,6 @@ void train()
         softmaxLayer->init();
         softmaxLayer->setUp(fullConnectLayer2->getTopData());
         softmaxLayer->forward();
-
         //print per layer
         cout << "---------inputLayer top_data-----------" << endl;
         inputLayer->getTopData()->print();
@@ -118,21 +112,27 @@ void train()
         const char* format = "inputLayer_top_data_l%d_%d.bmp";
         snprintf(filename, sizeof(filename), format, label, i);
         inputLayer->getTopData()->genBmp(filename);
-        cout << "---------convLayer1 top_data-----------" << endl;
-        convLayer1->getTopData()->print();
-        convLayer1->getTopData()->genBmp("convLayer1_top_data.bmp");
         cout << "---------convLayer1 weight-----------" << endl;
         convLayer1->getWeightData()->print();
         convLayer1->getWeightData()->genBmp("convLayer1_weight_data.bmp");
+        cout << "---------convLayer1 top_data-----------" << endl;
+        convLayer1->getTopData()->print();
+        convLayer1->getTopData()->genBmp("convLayer1_top_data.bmp");
+        cout << "---------poolLayer1 weight-----------" << endl;
+        poolLayer1->getWeightData()->print();
+        poolLayer1->getWeightData()->genBmp("poolLayer1_weight_data.bmp");
         cout << "---------poolLayer1 top_data-----------" << endl;
         poolLayer1->getTopData()->print();
         poolLayer1->getTopData()->genBmp("poolLayer1_top_data.bmp");
-        cout << "---------convLayer2 top_data-----------" << endl;
-        convLayer2->getTopData()->print();
-        convLayer2->getTopData()->genBmp("convLayer2_top_data.bmp");
         cout << "---------convLayer2 weight-----------" << endl;
         convLayer2->getWeightData()->print();
         convLayer2->getWeightData()->genBmp("convLayer2_weight_data.bmp");
+        cout << "---------convLayer2 top_data-----------" << endl;
+        convLayer2->getTopData()->print();
+        convLayer2->getTopData()->genBmp("convLayer2_top_data.bmp");
+        cout << "---------poolLayer2 weight-----------" << endl;
+        poolLayer2->getWeightData()->print();
+        poolLayer2->getWeightData()->genBmp("poolLayer2_weight_data.bmp");
         cout << "---------poolLayer2 top_data-----------" << endl;
         poolLayer2->getTopData()->print();
         poolLayer2->getTopData()->genBmp("poolLayer2_top_data.bmp");
@@ -149,7 +149,6 @@ void train()
         fullConnectLayer2->getTopData()->print();
         cout << "---------softmaxLayer top_data-----------" << endl;
         softmaxLayer->getTopData()->print();
-
         corsor->Next();
     }
 
@@ -159,13 +158,6 @@ void train()
 }
 int main()
 {
-    /*for(int i=1;i<16;i++)
-    {
-        char* p=new char[i*2];
-        test2(p,p, i,i,0);
-        cout<<i<<","<<sum<<endl;
-        delete[] p;
-    }*/
     train();
     cout << "Hello world!" << endl;
     return 0;
