@@ -26,7 +26,7 @@ public:
 
 protected:
     int _num;
-
+    bool need_init_weight = true;
     DISABLE_COPY_AND_ASSIGN(FullConnectLayer);
 };
 

@@ -14,6 +14,7 @@ public:
     Neuron()
     {
         this->_value = 0;
+        this->_diff = 0;
     }
 
     Neuron(float value)

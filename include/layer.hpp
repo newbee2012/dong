@@ -8,9 +8,10 @@
 
 namespace dong
 {
-
-enum LayerType_ {INPUT_LAYER, DATA_LAYER, CONVOLUTION_LAYER, POOL_LAYER, FULL_CONNECT_LAYER, RELU_LAYER, SOFTMAX_LAYER};
+enum LayerType_ {INPUT_LAYER, CONVOLUTION_LAYER, POOL_LAYER, FULL_CONNECT_LAYER, RELU_LAYER, SOFTMAX_LAYER};
 enum ForwardComputeType_ {INNER_PRODUCT, MAX, RELU};
+enum Mode {TRAIN,TEST};
+
 typedef LayerType_ LayerType;
 typedef ForwardComputeType_ ForwardComputeType;
 
@@ -82,7 +83,17 @@ protected:
                 Neuron* w_neuron = b_neuron->_weight_neuron[j];
                 b_neuron->_diff +=(t_neuron->_diff * w_neuron->_value);
                 w_neuron->_diff = t_neuron->_diff * b_neuron->_value;
-                w_neuron->_value -= (BASE_LEARNING_RATE * w_neuron->_diff);
+
+                switch(getType())
+                {
+                    case CONVOLUTION_LAYER:
+                    case FULL_CONNECT_LAYER:
+                        w_neuron->_value -= (BASE_LEARNING_RATE * w_neuron->_diff);
+                        break;
+                    default:
+                        break;
+                }
+
             }
         }
     };
@@ -91,6 +102,7 @@ protected:
     boost::shared_ptr<Data> _top_data;
     boost::shared_ptr<Data> _weight_data;
     ForwardComputeType _forwardType;
+
     DISABLE_COPY_AND_ASSIGN(Layer);
 };
 

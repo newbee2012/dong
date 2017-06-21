@@ -16,12 +16,12 @@ using namespace std;
 #include <glog/logging.h>
 #include <math.h>
 #include <algorithm>
-
+#include <float.h>
 
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 #define random(x) (rand()%x)
-#define BASE_LEARNING_RATE (0.001F)
+#define BASE_LEARNING_RATE (0.000001F)
 
 
 #endif  // CAFFE_COMMON_HPP_

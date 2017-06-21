@@ -17,7 +17,8 @@ public:
     explicit Data(int num, int channels, int height, int width);
     Data* setUp(const boost::shared_ptr<Neuron[]>& data);
     void print();
-    void genBmp(const char* filename);
+    void printDiff();
+    void genBmp(const char* filename, int label);
 
     int inline count()
     {
