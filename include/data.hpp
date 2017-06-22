@@ -35,16 +35,6 @@ public:
         return get(offset(n, c, h, w));
     };
 
-    void set(int offset, Neuron value)
-    {
-        _data[offset] = value;
-    };
-
-    void set(int n, int c, int h, int w, Neuron value)
-    {
-        _data[offset(n, c, h, w)] = value;
-    };
-
     inline int offset(const int n, const int c = 0, const int h = 0, const int w = 0) const
     {
         return ((n * channels() + c) * height() + h) * width() + w;
@@ -68,6 +58,14 @@ public:
     inline int width() const
     {
         return _width;
+    }
+
+    void clearDiff()
+    {
+        for(int i=0;i < count(); ++i)
+        {
+            _data[i]._diff = 0.0F;
+        }
     }
 protected:
     boost::shared_ptr<Neuron[]> _data;

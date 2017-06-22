@@ -21,12 +21,14 @@ Data::Data(int num, int channels, int height, int width, InitType type): _num(nu
     {
         if (type == Data::CONSTANT)
         {
-            _data[i]._value = 0;
+            _data[i]._value = 0.0F;
         }
         else if (type == Data::RANDOM)
         {
             _data[i]._value = random(2);
         }
+
+        _data[i]._diff = 0.0F;
     }
 }
 
@@ -74,7 +76,7 @@ void Data::print()
             cout << endl << endl;
         }
 
-        cout << "----------------------------------"<<endl;
+        cout << "-----------------"<<endl;
     }
 }
 

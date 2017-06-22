@@ -69,7 +69,7 @@ void train()
         softmaxLayer->init();
 
 
-    for (int i = 0; i < 1000 && corsor->valid(); i++) {
+    for (int i = 0; i < 2 && corsor->valid(); i++) {
         const string& value = corsor->value();
         Datum datum;
         datum.ParseFromString(value);
@@ -91,7 +91,14 @@ void train()
         //L1.inputLayer
         inputLayer->setUp(inputData);
         //cout << "Label: " << label << endl;
+
+        cout << "---------inputLayer bottom_data-----------" << endl;
+        inputLayer->getBottomData()->print();
+
+
         inputLayer->forward();
+
+
         //L2.convLayer1
         convLayer1->setUp(inputLayer->getTopData());
         convLayer1->forward();
@@ -117,6 +124,7 @@ void train()
         softmaxLayer->setUp(fullConnectLayer2->getTopData());
         softmaxLayer->setLabel(label);
         softmaxLayer->forward();
+
 
         /*
         //print per layer
@@ -178,12 +186,9 @@ void train()
 
         cout << "---------softmaxLayer top_data-----------" << endl;
         softmaxLayer->getTopData()->print();
+
 */
-
-
-
         ///////////////////////////////backward///////////////////////////////
-
         softmaxLayer->backward();
         fullConnectLayer2->backward();
         reluLayer->backward();
@@ -192,6 +197,18 @@ void train()
         convLayer2->backward();
         poolLayer1->backward();
         convLayer1->backward();
+
+/*
+        cout << "---------softmaxLayer bottom data-----------" << endl;
+        softmaxLayer->getBottomData()->print();
+
+        cout << "---------softmaxLayer bottom diff-----------" << endl;
+        softmaxLayer->getBottomData()->printDiff();
+
+        cout << "---------softmaxLayer loss-----------" << endl;
+        cout<<softmaxLayer->getLoss()<<endl;
+        */
+
 /*
         cout <<"*************************************************"<<endl;
         cout <<"*************************************************"<<endl;
@@ -216,10 +233,6 @@ void train()
         corsor->Next();
     }
 
-        cout << "---------softmaxLayer top_data-----------" << endl;
-        softmaxLayer->getTopData()->print();
-        cout << "---------softmaxLayer loss-----------" << endl;
-        cout<<softmaxLayer->getLoss()<<endl;
 
     delete corsor;
     mydb->Close();

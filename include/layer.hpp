@@ -18,6 +18,8 @@ typedef ForwardComputeType_ ForwardComputeType;
 class Layer
 {
 public:
+    const char* EnumNames[6]={"INPUT_LAYER", "CONVOLUTION_LAYER", "POOL_LAYER", "FULL_CONNECT_LAYER", "RELU_LAYER", "SOFTMAX_LAYER"};
+
     Layer() {};
     virtual ~Layer() {};
     virtual void setUp(const boost::shared_ptr<Data>& data)
@@ -45,6 +47,16 @@ public:
     virtual void forward()
     {
         this->forward_cpu();
+        cout<<"--------------------"<< EnumNames[getType()]<<"-----------------------"<<endl;
+        cout<<"bottom diff forward"<<endl;
+        _bottom_data->printDiff();
+        cout<<"weight diff forward"<<endl;
+        if(_weight_data.get()!= NULL){
+            _weight_data->printDiff();
+        }else{
+            cout<<"---------------"<<endl;
+        }
+
     }
 
     virtual void backward_cpu() = 0;
@@ -52,6 +64,15 @@ public:
     virtual void backward()
     {
         this->backward_cpu();
+        cout<<"--------------------"<< EnumNames[getType()]<<"-----------------------"<<endl;
+        cout<<"bottom diff backward"<<endl;
+        _bottom_data->printDiff();
+        cout<<"weight diff backward"<<endl;
+        if(_weight_data.get()!= NULL){
+            _weight_data->printDiff();
+        }else{
+            cout<<"---------------"<<endl;
+        }
     }
 
     virtual LayerType getType() = 0;

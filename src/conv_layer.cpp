@@ -14,6 +14,7 @@ void ConvLayer::init(int kernel_num, int kernel_channels, int kernel_h, int kern
 void ConvLayer::setUp(const boost::shared_ptr<Data>& data)
 {
     Layer::setUp(data);
+    _weight_data->clearDiff();
     int b_n = _bottom_data->num();
     int b_h = _bottom_data->height();
     int b_w = _bottom_data->width();

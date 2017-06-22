@@ -10,8 +10,12 @@ void FullConnectLayer::setUp(const boost::shared_ptr<Data>& data)
     Layer::setUp(data);
     if(need_init_weight)
     {
-        this->_weight_data.reset(new Data(1, 1, _bottom_data->count(), _num, Data::RANDOM));
+        _weight_data.reset(new Data(1, 1, _bottom_data->count(), _num, Data::RANDOM));
         need_init_weight = false;
+    }
+    else
+    {
+        _weight_data->clearDiff();
     }
 
     int b_n = _bottom_data->num();
