@@ -23,7 +23,7 @@ void SoftmaxLayer::forward_cpu()
 
     for (int i = 0; i < count; ++i)
     {
-        float expValue = exp(_bottom_data->get(i)->_value/(maxValue/10)) ;
+        float expValue = exp(_bottom_data->get(i)->_value-maxValue) ;
         _top_data->get(i)->_value = expValue;
         sumExp += expValue;
     }

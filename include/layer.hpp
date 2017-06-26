@@ -18,7 +18,7 @@ typedef ForwardComputeType_ ForwardComputeType;
 class Layer
 {
 public:
-    const char* EnumNames[6]={"INPUT_LAYER", "CONVOLUTION_LAYER", "POOL_LAYER", "FULL_CONNECT_LAYER", "RELU_LAYER", "SOFTMAX_LAYER"};
+    const char* EnumNames[6]= {"INPUT_LAYER", "CONVOLUTION_LAYER", "POOL_LAYER", "FULL_CONNECT_LAYER", "RELU_LAYER", "SOFTMAX_LAYER"};
 
     Layer() {};
     virtual ~Layer() {};
@@ -47,15 +47,19 @@ public:
     virtual void forward()
     {
         this->forward_cpu();
-        cout<<"--------------------"<< EnumNames[getType()]<<"-----------------------"<<endl;
-        cout<<"bottom diff forward"<<endl;
-        _bottom_data->printDiff();
-        cout<<"weight diff forward"<<endl;
-        if(_weight_data.get()!= NULL){
-            _weight_data->printDiff();
-        }else{
+        /*cout<<"--------------------"<< EnumNames[getType()]<<"-----------------------"<<endl;
+        cout<<"bottom data forward"<<endl;
+        _bottom_data->print();
+        cout<<"weight data forward"<<endl;
+        if(_weight_data.get()!= NULL)
+        {
+            _weight_data->print();
+        }
+        else
+        {
             cout<<"---------------"<<endl;
         }
+        */
 
     }
 
@@ -64,15 +68,19 @@ public:
     virtual void backward()
     {
         this->backward_cpu();
-        cout<<"--------------------"<< EnumNames[getType()]<<"-----------------------"<<endl;
+        /*cout<<"--------------------"<< EnumNames[getType()]<<"-----------------------"<<endl;
         cout<<"bottom diff backward"<<endl;
         _bottom_data->printDiff();
         cout<<"weight diff backward"<<endl;
-        if(_weight_data.get()!= NULL){
+        if(_weight_data.get()!= NULL)
+        {
             _weight_data->printDiff();
-        }else{
+        }
+        else
+        {
             cout<<"---------------"<<endl;
         }
+        */
     }
 
     virtual LayerType getType() = 0;
@@ -103,18 +111,23 @@ protected:
                 Neuron* t_neuron = b_neuron->_forward_neuron[j];
                 Neuron* w_neuron = b_neuron->_weight_neuron[j];
                 b_neuron->_diff +=(t_neuron->_diff * w_neuron->_value);
-                w_neuron->_diff = t_neuron->_diff * b_neuron->_value;
+                w_neuron->_diff +=(t_neuron->_diff * b_neuron->_value);
+                //w_neuron->_share_count++;
+            }
+        }
 
-                switch(getType())
-                {
-                    case CONVOLUTION_LAYER:
-                    case FULL_CONNECT_LAYER:
-                        w_neuron->_value -= (BASE_LEARNING_RATE * w_neuron->_diff);
-                        break;
-                    default:
-                        break;
-                }
-
+        for (int k = 0; k < _weight_data->count(); ++k)
+        {
+            Neuron* w_neuron = _weight_data->get(k);
+            //w_neuron->_diff = w_neuron->_diff / w_neuron->_share_count;
+            switch(getType())
+            {
+            case CONVOLUTION_LAYER:
+            case FULL_CONNECT_LAYER:
+                w_neuron->_value -= (BASE_LEARNING_RATE * w_neuron->_diff);
+                break;
+            default:
+                break;
             }
         }
     };

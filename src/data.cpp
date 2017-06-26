@@ -26,6 +26,7 @@ Data::Data(int num, int channels, int height, int width, InitType type): _num(nu
         else if (type == Data::RANDOM)
         {
             _data[i]._value = random(2);
+            _data[i]._value /=1000;
         }
 
         _data[i]._diff = 0.0F;
@@ -75,8 +76,7 @@ void Data::print()
 
             cout << endl << endl;
         }
-
-        cout << "-----------------"<<endl;
+        cout << "----------------------------------"<<endl;
     }
 }
 
@@ -122,7 +122,7 @@ void Data::printDiff()
 
 void Data::genBmp(const char* format, int index)
 {
-/*
+
     for (int n = 0; n < _num; n++)
     {
         char filename[60];
@@ -153,7 +153,7 @@ void Data::genBmp(const char* format, int index)
 
         BmpTool::generateBMP((BYTE*)pRGB, _width, _height, filename);
     }
-    */
+
 }
 
 

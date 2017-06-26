@@ -45,13 +45,13 @@ void train()
         boost::shared_ptr<InputLayer> inputLayer(new InputLayer());
         //L2.convLayer1
         boost::shared_ptr<ConvLayer> convLayer1(new ConvLayer());
-        convLayer1->init(1, 1, 5, 5);
+        convLayer1->init(1,1,5,5);
         //L3.poolLayer
         boost::shared_ptr<PoolLayer> poolLayer1(new PoolLayer());
         poolLayer1->init(2, 2, 2, 2);
         //L4.convLayer
         boost::shared_ptr<ConvLayer> convLayer2(new ConvLayer());
-        convLayer2->init(1, 1, 5, 5);
+        convLayer2->init(30,1,5,5);
         //L5.poolLayer
         boost::shared_ptr<PoolLayer> poolLayer2(new PoolLayer());
         poolLayer2->init(2, 2, 2, 2);
@@ -69,7 +69,7 @@ void train()
         softmaxLayer->init();
 
 
-    for (int i = 0; i < 2 && corsor->valid(); i++) {
+    for (int i = 0; i < 10000 && corsor->valid(); i++) {
         const string& value = corsor->value();
         Datum datum;
         datum.ParseFromString(value);
@@ -77,6 +77,11 @@ void train()
         int width = datum.width();
         int height = datum.height();
         int label = datum.label();
+        if(label !=8)
+        {
+            corsor->Next();
+           continue;
+        }
         boost::shared_ptr<Neuron[]> inputImage(new Neuron[height * width]());
 
         for (int c = 0; c < channels; c++) {
@@ -92,8 +97,8 @@ void train()
         inputLayer->setUp(inputData);
         //cout << "Label: " << label << endl;
 
-        cout << "---------inputLayer bottom_data-----------" << endl;
-        inputLayer->getBottomData()->print();
+        //cout << "---------inputLayer bottom_data-----------" << endl;
+        //inputLayer->getBottomData()->print();
 
 
         inputLayer->forward();
@@ -188,6 +193,9 @@ void train()
         softmaxLayer->getTopData()->print();
 
 */
+        cout << "---------softmaxLayer top_data-----------" << endl;
+        softmaxLayer->getTopData()->print();
+
         ///////////////////////////////backward///////////////////////////////
         softmaxLayer->backward();
         fullConnectLayer2->backward();
@@ -197,6 +205,9 @@ void train()
         convLayer2->backward();
         poolLayer1->backward();
         convLayer1->backward();
+
+        cout << "---------softmaxLayer loss-----------" << endl;
+        cout<<softmaxLayer->getLoss()<<endl;
 
 /*
         cout << "---------softmaxLayer bottom data-----------" << endl;
@@ -232,6 +243,15 @@ void train()
 */
         corsor->Next();
     }
+
+        inputLayer->getTopData()->genBmp("inputLayer_top_data_%d_%d.bmp", 1);
+        cout << "---------convLayer1 weight-----------" << endl;
+        convLayer1->getWeightData()->print();
+        convLayer1->getTopData()->genBmp("convLayer1_top_data_%d_%d.bmp", 1);
+
+        cout << "---------convLayer2 weight-----------" << endl;
+        convLayer2->getWeightData()->print();
+        convLayer2->getTopData()->genBmp("convLayer2_top_data_%d_%d.bmp", 1);
 
 
     delete corsor;

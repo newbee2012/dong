@@ -65,6 +65,7 @@ public:
         for(int i=0;i < count(); ++i)
         {
             _data[i]._diff = 0.0F;
+            _data[i]._share_count=0;
         }
     }
 protected:

@@ -13,8 +13,9 @@ class Neuron
 public:
     Neuron()
     {
-        this->_value = 0;
-        this->_diff = 0;
+        _value = 0.0F;
+        _diff = 0.0F;
+        _share_count = 0;
     }
 
     Neuron(float value)
@@ -25,6 +26,7 @@ public:
     void forward();
     float _value;
     float _diff;
+    int _share_count;
 
     vector< Neuron* > _forward_neuron;
     vector< Neuron* > _weight_neuron;
