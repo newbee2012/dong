@@ -25,7 +25,7 @@ Data::Data(int num, int channels, int height, int width, InitType type): _num(nu
         }
         else if (type == Data::RANDOM)
         {
-            _data[i]._value = random(2);
+            _data[i]._value = (float)random(2)-0.5F;
             _data[i]._value /=1000;
         }
 

@@ -53,14 +53,14 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1498499637 /home/chendejia/workspace/github/dong/include/common.hpp
+1498684434 /home/chendejia/workspace/github/dong/include/common.hpp
 	<gflags/gflags.h>
 	<glog/logging.h>
 	<math.h>
 	<algorithm>
 	<float.h>
 
-1498499440 source:/home/chendejia/workspace/github/dong/src/main.cpp
+1498684409 source:/home/chendejia/workspace/github/dong/src/main.cpp
 	<iostream>
 	"util/gen_bmp.hpp"
 	"input_layer.hpp"
@@ -93,7 +93,7 @@
 	"lmdb.h"
 	"util/db.hpp"
 
-1498494809 source:/home/chendejia/workspace/github/dong/src/data.cpp
+1498684189 source:/home/chendejia/workspace/github/dong/src/data.cpp
 	"common.hpp"
 	"data.hpp"
 	"util/gen_bmp.hpp"
@@ -127,12 +127,12 @@
 	<iostream>
 	"layer.hpp"
 
-1498161538 source:/home/chendejia/workspace/github/dong/src/conv_layer.cpp
+1498672248 source:/home/chendejia/workspace/github/dong/src/conv_layer.cpp
 	<iostream>
 	"conv_layer.hpp"
 	"neuron.hpp"
 
-1497982355 /home/chendejia/workspace/github/dong/include/conv_layer.hpp
+1498670793 /home/chendejia/workspace/github/dong/include/conv_layer.hpp
 	"common.hpp"
 	"layer.hpp"
 	<boost/shared_ptr.hpp>
@@ -177,7 +177,7 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1498497456 source:/home/chendejia/workspace/github/dong/src/softmax_layer.cpp
+1498674270 source:/home/chendejia/workspace/github/dong/src/softmax_layer.cpp
 	<iostream>
 	<common.hpp>
 	<algorithm>
@@ -198,11 +198,11 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1498161604 source:/home/chendejia/workspace/github/dong/src/full_connect_layer.cpp
+1498670815 source:/home/chendejia/workspace/github/dong/src/full_connect_layer.cpp
 	<iostream>
 	"full_connect_layer.hpp"
 
-1498073030 /home/chendejia/workspace/github/dong/include/full_connect_layer.hpp
+1498670808 /home/chendejia/workspace/github/dong/include/full_connect_layer.hpp
 	"common.hpp"
 	"layer.hpp"
 	<boost/shared_ptr.hpp>

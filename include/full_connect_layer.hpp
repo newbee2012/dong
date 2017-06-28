@@ -14,6 +14,7 @@ public:
     explicit FullConnectLayer()
     {
         _forwardType = INNER_PRODUCT;
+        _need_init_weight = true;
     };
     virtual LayerType getType()
     {
@@ -26,7 +27,7 @@ public:
 
 protected:
     int _num;
-    bool need_init_weight = true;
+    bool _need_init_weight;
     DISABLE_COPY_AND_ASSIGN(FullConnectLayer);
 };
 

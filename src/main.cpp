@@ -33,6 +33,14 @@ void test2(char* p, char* q, int count1, int count2, int v)
     }
 }
 
+void test3()
+{
+    float a = random(1000);
+    a=a/1000;
+    cout<<a<<endl;
+
+}
+
 void train()
 {
     srand((int)time(0));
@@ -45,19 +53,19 @@ void train()
         boost::shared_ptr<InputLayer> inputLayer(new InputLayer());
         //L2.convLayer1
         boost::shared_ptr<ConvLayer> convLayer1(new ConvLayer());
-        convLayer1->init(1,1,5,5);
+        convLayer1->init(6,5,5);
         //L3.poolLayer
         boost::shared_ptr<PoolLayer> poolLayer1(new PoolLayer());
         poolLayer1->init(2, 2, 2, 2);
         //L4.convLayer
         boost::shared_ptr<ConvLayer> convLayer2(new ConvLayer());
-        convLayer2->init(30,1,5,5);
+        convLayer2->init(6,5,5);
         //L5.poolLayer
         boost::shared_ptr<PoolLayer> poolLayer2(new PoolLayer());
         poolLayer2->init(2, 2, 2, 2);
         //L6.FullConnectLayer
         boost::shared_ptr<FullConnectLayer> fullConnectLayer(new FullConnectLayer());
-        fullConnectLayer->init(10);
+        fullConnectLayer->init(100);
         //L7.reluLayer
         boost::shared_ptr<ReluLayer> reluLayer(new ReluLayer());
         reluLayer->init();
@@ -77,10 +85,10 @@ void train()
         int width = datum.width();
         int height = datum.height();
         int label = datum.label();
-        if(label !=8)
+        if( label ==18)
         {
             corsor->Next();
-           continue;
+            continue;
         }
         boost::shared_ptr<Neuron[]> inputImage(new Neuron[height * width]());
 
@@ -95,7 +103,7 @@ void train()
         boost::shared_ptr<Data> inputData((new Data(1, channels, height, width))->setUp(inputImage));
         //L1.inputLayer
         inputLayer->setUp(inputData);
-        //cout << "Label: " << label << endl;
+        cout << "Label: " << label << endl;
 
         //cout << "---------inputLayer bottom_data-----------" << endl;
         //inputLayer->getBottomData()->print();
@@ -261,6 +269,7 @@ void train()
 int main()
 {
     train();
+    //test3();
     cout << "Hello world!" << endl;
     return 0;
 }

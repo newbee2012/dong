@@ -8,10 +8,10 @@ namespace dong
 void FullConnectLayer::setUp(const boost::shared_ptr<Data>& data)
 {
     Layer::setUp(data);
-    if(need_init_weight)
+    if(_need_init_weight)
     {
         _weight_data.reset(new Data(1, 1, _bottom_data->count(), _num, Data::RANDOM));
-        need_init_weight = false;
+        _need_init_weight = false;
     }
     else
     {
