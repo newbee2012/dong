@@ -17,6 +17,17 @@ void PoolLayer::setUp(const boost::shared_ptr<Data>& data)
     _top_data.reset(new Data(t_n, 1, t_h, t_w, Data::CONSTANT));
     _weight_data.reset(new Data(t_n, 1, t_h * _kernel_h, t_w * _kernel_w, Data::CONSTANT));
 
+
+}
+
+void PoolLayer::forward_cpu()
+{
+    int t_n = _top_data->num();
+    int t_h = _top_data->height();
+    int t_w = _top_data->width();
+
+    _weight_data->clearValue();
+    _top_data->clearValue();
     for (int n = 0; n < t_n; n++) {
         for (int h = 0; h < t_h; h++) {
             for (int w = 0; w < t_w; w++) {
@@ -39,15 +50,11 @@ void PoolLayer::setUp(const boost::shared_ptr<Data>& data)
                     }
                 }
 
-                _weight_data->get(max_index)->_value = 1;
+                t_neuron->_value = max_value;
+                _weight_data->get(max_index)->_value = 1.0F;
             }
         }
     }
-}
-
-void PoolLayer::forward_cpu()
-{
-    Layer::forwardBase();
 }
 
 void PoolLayer::backward_cpu()

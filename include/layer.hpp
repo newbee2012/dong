@@ -46,19 +46,23 @@ public:
 
     virtual void forward()
     {
+        if(_weight_data.get() != NULL)
+        {
+            _weight_data->clearDiff();
+        }
+
+        _bottom_data->clearDiff();
+        _top_data->clearValue();
         this->forward_cpu();
-        /*
-        cout<<"--------------------"<< EnumNames[getType()]<<"-----------------------"<<endl;
+
+/*
+        cout<<"--------------------"<< EnumNames[getType()]<<" forward-----------------------"<<endl;
         cout<<"bottom data forward"<<endl;
         _bottom_data->print();
         cout<<"weight data forward"<<endl;
         if(_weight_data.get()!= NULL)
         {
             _weight_data->print();
-        }
-        else
-        {
-            cout<<"---------------"<<endl;
         }
         */
 
@@ -69,7 +73,9 @@ public:
     virtual void backward()
     {
         this->backward_cpu();
-        /*cout<<"--------------------"<< EnumNames[getType()]<<"-----------------------"<<endl;
+
+        /*
+        cout<<"--------------------"<< EnumNames[getType()]<<" backward-----------------------"<<endl;
         cout<<"bottom diff backward"<<endl;
         _bottom_data->printDiff();
         cout<<"weight diff backward"<<endl;
@@ -81,7 +87,7 @@ public:
         {
             cout<<"---------------"<<endl;
         }
-        */
+*/
     }
 
     virtual LayerType getType() = 0;
@@ -113,14 +119,12 @@ protected:
                 Neuron* w_neuron = b_neuron->_weight_neuron[j];
                 b_neuron->_diff +=(t_neuron->_diff * w_neuron->_value);
                 w_neuron->_diff +=(t_neuron->_diff * b_neuron->_value);
-                //w_neuron->_share_count++;
             }
         }
 
         for (int k = 0; k < _weight_data->count(); ++k)
         {
             Neuron* w_neuron = _weight_data->get(k);
-            //w_neuron->_diff = w_neuron->_diff / w_neuron->_share_count;
             switch(getType())
             {
             case CONVOLUTION_LAYER:

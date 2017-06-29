@@ -17,20 +17,11 @@ void ConvLayer::setUp(const boost::shared_ptr<Data>& data)
 {
     Layer::setUp(data);
 
-
     int b_n = _bottom_data->num();
     int b_h = _bottom_data->height();
     int b_w = _bottom_data->width();
 
-    if(_need_init_weight)
-    {
-        _weight_data.reset(new Data(_num_output, b_n, _kernel_h, _kernel_w, Data::XAVIER));
-        _need_init_weight = false;
-    }
-    else
-    {
-        _weight_data->clearDiff();
-    }
+    _weight_data.reset(new Data(_num_output, b_n, _kernel_h, _kernel_w, Data::XAVIER));
 
     int k_n = _weight_data->num();
     int k_h = _weight_data->height();

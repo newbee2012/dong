@@ -8,9 +8,15 @@ using namespace std;
 namespace dong
 {
 
+void SoftmaxLayer::setUp(const boost::shared_ptr<Data>& data)
+{
+    Layer::setUp(data);
+    _top_data.reset(new Data(1, 1, _bottom_data->height(), _bottom_data->width(), Data::CONSTANT));
+}
+
 void SoftmaxLayer::forward_cpu()
 {
-    _top_data.reset(new Data(1, 1, _bottom_data->height(), _bottom_data->width(), Data::CONSTANT));
+    _top_data->clearValue();
     const int count = _bottom_data->count();
     float maxValue = 0.0F;
 

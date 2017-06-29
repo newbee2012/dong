@@ -15,7 +15,7 @@ public:
     enum InitType {CONSTANT, RANDOM, XAVIER};
     explicit Data(int num, int channels, int height, int width, InitType type);
     explicit Data(int num, int channels, int height, int width);
-    Data* setUp(const boost::shared_ptr<Neuron[]>& data);
+    void setUp(const boost::shared_ptr<Neuron[]>& neurons);
     void print();
     void printDiff();
     void genBmp(const char* filename, int label);
@@ -27,7 +27,7 @@ public:
 
     Neuron* get(int offset)
     {
-        return &_data[offset];
+        return &_neurons[offset];
     };
 
     Neuron* get(int n, int c, int h, int w)
@@ -64,12 +64,20 @@ public:
     {
         for(int i=0;i < count(); ++i)
         {
-            _data[i]._diff = 0.0F;
-            _data[i]._share_count=0;
+            _neurons[i]._diff = 0.0F;
         }
     }
+
+    void clearValue()
+    {
+        for(int i=0;i < count(); ++i)
+        {
+            _neurons[i]._value = 0.0F;
+        }
+    }
+
 protected:
-    boost::shared_ptr<Neuron[]> _data;
+    boost::shared_ptr<Neuron[]> _neurons;
     int _num;
     int _channels;
     int _height;

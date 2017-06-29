@@ -8,15 +8,8 @@ namespace dong
 void FullConnectLayer::setUp(const boost::shared_ptr<Data>& data)
 {
     Layer::setUp(data);
-    if(_need_init_weight)
-    {
-        _weight_data.reset(new Data(_num, _bottom_data->count(), 1, 1, Data::RANDOM));
-        _need_init_weight = false;
-    }
-    else
-    {
-        _weight_data->clearDiff();
-    }
+
+    _weight_data.reset(new Data(_num, _bottom_data->count(), 1, 1, Data::RANDOM));
 
     int b_n = _bottom_data->num();
     int b_h = _bottom_data->height();
@@ -24,6 +17,7 @@ void FullConnectLayer::setUp(const boost::shared_ptr<Data>& data)
     int t_n = 1;
     int t_h = 1;
     int t_w = _num;
+
     _top_data.reset(new Data(t_n, 1, t_h, t_w, Data::CONSTANT));
 
     for (int n = 0; n < t_n; n++)

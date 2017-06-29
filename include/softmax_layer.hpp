@@ -20,6 +20,7 @@ public:
     }
 
     virtual void init();
+    virtual void setUp(const boost::shared_ptr<Data>& data);
     virtual void setLabel(int label);
     virtual void forward_cpu();
     virtual void backward_cpu();

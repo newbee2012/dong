@@ -16,7 +16,7 @@ Data::Data(int num, int channels, int height, int width): _num(num), _channels(c
 Data::Data(int num, int channels, int height, int width, InitType type): _num(num), _channels(channels),
     _height(height), _width(width)
 {
-    _data.reset(new Neuron[count()]);
+    _neurons.reset(new Neuron[count()]);
 
     int fan_in = count() / num;
     int fan_out = count() / channels;
@@ -30,29 +30,28 @@ Data::Data(int num, int channels, int height, int width, InitType type): _num(nu
     {
         if (type == Data::CONSTANT)
         {
-            _data[i]._value = 0.0F;
+            _neurons[i]._value = 0.0F;
         }
         else if (type == Data::RANDOM)
         {
 
-            _data[i]._value = ((float)random(2)-0.5);
-            _data[i]._value /=1000;
+            _neurons[i]._value = ((float)random(2)-0.5);
+            _neurons[i]._value /=1000;
         }
         else if(type==Data::XAVIER)
         {
-            _data[i]._value = t[i];
+            _neurons[i]._value = t[i];
         }
 
-        _data[i]._diff = 0.0F;
+        _neurons[i]._diff = 0.0F;
     }
 
     delete[] t;
 }
 
-Data* Data::setUp(const boost::shared_ptr<Neuron[]>& data)
+void Data::setUp(const boost::shared_ptr<Neuron[]>& neurons)
 {
-    _data = data;
-    return this;
+    _neurons = neurons;
 }
 
 void Data::print()
@@ -61,38 +60,41 @@ void Data::print()
 
     for (int n = 0; n < _num; n++)
     {
-        for (int h = 0; h < _height; h++)
+        for (int c = 0; c < _channels; c++)
         {
-            for (int w = 0; w < _width; w++)
+            for (int h = 0; h < _height; h++)
             {
-                float value = this->get(n, 0, h, w)->_value;
-                //if (value > 0)
-                //{
-                cout << value;
-                //cout << setprecision(2)<<fixed<< value;
-                //}
-                //else
-                //{
-                //    cout << ".";
-                //}
+                for (int w = 0; w < _width; w++)
+                {
+                    float value = this->get(n, c, h, w)->_value;
+                    //if (value > 0)
+                    //{
+                    cout << value;
+                    //cout << setprecision(2)<<fixed<< value;
+                    //}
+                    //else
+                    //{
+                    //    cout << ".";
+                    //}
 
-                if (value < 10)
-                {
-                    cout << "   ";
+                    if (value < 10)
+                    {
+                        cout << "   ";
+                    }
+                    else if (value < 100)
+                    {
+                        cout << "  ";
+                    }
+                    else
+                    {
+                        cout << " ";
+                    }
                 }
-                else if (value < 100)
-                {
-                    cout << "  ";
-                }
-                else
-                {
-                    cout << " ";
-                }
+
+                cout << endl << endl;
             }
-
-            cout << endl << endl;
+            cout << "----------------------------------"<<endl;
         }
-        cout << "----------------------------------"<<endl;
     }
 }
 
@@ -100,39 +102,44 @@ void Data::printDiff()
 {
     for (int n = 0; n < _num; n++)
     {
-        for (int h = 0; h < _height; h++)
+        for (int c = 0; c < _channels; c++)
         {
-            for (int w = 0; w < _width; w++)
-            {
-                float value = this->get(n, 0, h, w)->_diff;
-                //if (value > 0)
-                //{
-                cout << value;
-                //cout << setprecision(2)<<fixed<< value;
-                //}
-                //else
-                //{
-                //    cout << ".";
-                //}
 
-                if (value < 10)
+
+            for (int h = 0; h < _height; h++)
+            {
+                for (int w = 0; w < _width; w++)
                 {
-                    cout << "   ";
+                    float value = this->get(n, c, h, w)->_diff;
+                    //if (value > 0)
+                    //{
+                    cout << value;
+                    //cout << setprecision(2)<<fixed<< value;
+                    //}
+                    //else
+                    //{
+                    //    cout << ".";
+                    //}
+
+                    if (value < 10)
+                    {
+                        cout << "   ";
+                    }
+                    else if (value < 100)
+                    {
+                        cout << "  ";
+                    }
+                    else
+                    {
+                        cout << " ";
+                    }
                 }
-                else if (value < 100)
-                {
-                    cout << "  ";
-                }
-                else
-                {
-                    cout << " ";
-                }
+
+                cout << endl << endl;
             }
 
-            cout << endl << endl;
+            cout << "----------------------------------"<<endl;
         }
-
-        cout << "----------------------------------"<<endl;
     }
 }
 
