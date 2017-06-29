@@ -27,7 +27,9 @@ void PoolLayer::forward_cpu()
     int t_w = _top_data->width();
 
     _weight_data->clearValue();
+    _weight_data->clearDiff();
     _top_data->clearValue();
+    _top_data->clearDiff();
     for (int n = 0; n < t_n; n++) {
         for (int h = 0; h < t_h; h++) {
             for (int w = 0; w < t_w; w++) {

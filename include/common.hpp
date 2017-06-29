@@ -24,7 +24,7 @@ private:\
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 #define random(x) (rand()%x)
-#define BASE_LEARNING_RATE (0.001F)
+#define BASE_LEARNING_RATE (0.0001F)
 
 
 using namespace std;

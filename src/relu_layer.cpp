@@ -18,7 +18,9 @@ void ReluLayer::setUp(const boost::shared_ptr<Data>& data)
 void ReluLayer::forward_cpu()
 {
     _weight_data->clearValue();
+    _weight_data->clearDiff();
     _top_data->clearValue();
+    _top_data->clearDiff();
     for (int i = 0; i < _bottom_data->count(); ++i) {
         Neuron* b_neuron = _bottom_data->get(i);
         Neuron* t_neuron = _top_data->get(i);

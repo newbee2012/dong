@@ -53,6 +53,8 @@ public:
 
         _bottom_data->clearDiff();
         _top_data->clearValue();
+        _top_data->clearDiff();
+
         this->forward_cpu();
 
 /*
