@@ -53,19 +53,19 @@ void train()
         boost::shared_ptr<InputLayer> inputLayer(new InputLayer());
         //L2.convLayer1
         boost::shared_ptr<ConvLayer> convLayer1(new ConvLayer());
-        convLayer1->init(6,5,5);
+        convLayer1->init(20,5,5);
         //L3.poolLayer
         boost::shared_ptr<PoolLayer> poolLayer1(new PoolLayer());
         poolLayer1->init(2, 2, 2, 2);
         //L4.convLayer
         boost::shared_ptr<ConvLayer> convLayer2(new ConvLayer());
-        convLayer2->init(6,5,5);
+        convLayer2->init(50,5,5);
         //L5.poolLayer
         boost::shared_ptr<PoolLayer> poolLayer2(new PoolLayer());
         poolLayer2->init(2, 2, 2, 2);
         //L6.FullConnectLayer
         boost::shared_ptr<FullConnectLayer> fullConnectLayer(new FullConnectLayer());
-        fullConnectLayer->init(100);
+        fullConnectLayer->init(500);
         //L7.reluLayer
         boost::shared_ptr<ReluLayer> reluLayer(new ReluLayer());
         reluLayer->init();
@@ -77,7 +77,7 @@ void train()
         softmaxLayer->init();
 
 
-    for (int i = 0; i < 10000 && corsor->valid(); i++) {
+    for (int i = 0; i < 1000 && corsor->valid(); i++) {
         const string& value = corsor->value();
         Datum datum;
         datum.ParseFromString(value);
