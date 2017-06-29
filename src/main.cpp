@@ -85,13 +85,7 @@ void train()
         int width = datum.width();
         int height = datum.height();
         int label = datum.label();
-        if( label ==18)
-        {
-            corsor->Next();
-            continue;
-        }
         boost::shared_ptr<Neuron[]> inputImage(new Neuron[height * width]());
-
         for (int c = 0; c < channels; c++) {
             for (int w = 0; w < width; w++) {
                 for (int h = 0; h < height; h++) {
@@ -137,7 +131,6 @@ void train()
         softmaxLayer->setUp(fullConnectLayer2->getTopData());
         softmaxLayer->setLabel(label);
         softmaxLayer->forward();
-
 
         /*
         //print per layer
@@ -256,10 +249,11 @@ void train()
         cout << "---------convLayer1 weight-----------" << endl;
         convLayer1->getWeightData()->print();
         convLayer1->getTopData()->genBmp("convLayer1_top_data_%d_%d.bmp", 1);
-
+        convLayer1->getWeightData()->genBmp("convLayer1_Weight_data_%d_%d.bmp", 1);
         cout << "---------convLayer2 weight-----------" << endl;
         convLayer2->getWeightData()->print();
         convLayer2->getTopData()->genBmp("convLayer2_top_data_%d_%d.bmp", 1);
+        convLayer2->getWeightData()->genBmp("convLayer2_Weight_data_%d_%d.bmp", 1);
 
 
     delete corsor;

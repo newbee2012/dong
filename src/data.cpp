@@ -17,6 +17,15 @@ Data::Data(int num, int channels, int height, int width, InitType type): _num(nu
     _height(height), _width(width)
 {
     _data.reset(new Neuron[count()]);
+
+    int fan_in = count() / num;
+    int fan_out = count() / channels;
+    float n = (fan_in + fan_out) / float(2);
+    float scale = sqrt(float(3) / n);
+
+    float* t = new float[count()];
+
+    MathUtils::caffe_rng_uniform(count(),-scale, scale, t);
     for (int i = 0; i < count(); ++i)
     {
         if (type == Data::CONSTANT)
@@ -25,12 +34,19 @@ Data::Data(int num, int channels, int height, int width, InitType type): _num(nu
         }
         else if (type == Data::RANDOM)
         {
-            _data[i]._value = (float)random(2)-0.5;
+
+            _data[i]._value = ((float)random(2)-0.5);
             _data[i]._value /=1000;
+        }
+        else if(type==Data::XAVIER)
+        {
+            _data[i]._value = t[i];
         }
 
         _data[i]._diff = 0.0F;
     }
+
+    delete[] t;
 }
 
 Data* Data::setUp(const boost::shared_ptr<Neuron[]>& data)

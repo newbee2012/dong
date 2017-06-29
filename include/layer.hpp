@@ -47,7 +47,8 @@ public:
     virtual void forward()
     {
         this->forward_cpu();
-        /*cout<<"--------------------"<< EnumNames[getType()]<<"-----------------------"<<endl;
+        /*
+        cout<<"--------------------"<< EnumNames[getType()]<<"-----------------------"<<endl;
         cout<<"bottom data forward"<<endl;
         _bottom_data->print();
         cout<<"weight data forward"<<endl;

@@ -24,7 +24,7 @@ void ConvLayer::setUp(const boost::shared_ptr<Data>& data)
 
     if(_need_init_weight)
     {
-        _weight_data.reset(new Data(_num_output, b_n, _kernel_h, _kernel_w, Data::RANDOM));
+        _weight_data.reset(new Data(_num_output, b_n, _kernel_h, _kernel_w, Data::XAVIER));
         _need_init_weight = false;
     }
     else
