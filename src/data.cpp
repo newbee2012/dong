@@ -150,7 +150,7 @@ void Data::genBmp(const char* format, int index)
         {
             for (int w = 0; w < _width; w++)
             {
-                BYTE gray = this->get(n, 0, h, w)->_value;
+                BYTE gray = this->get(n, 0, h, w)->_value >1 ? this->get(n, 0, h, w)->_value:(this->get(n, 0, h, w)->_value)*0xFF*10;
 
                 if (w == 0 || w == _width - 1 || h == 0 || h == _height - 1)
                 {

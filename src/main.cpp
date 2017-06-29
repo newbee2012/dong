@@ -7,7 +7,7 @@
 #include "relu_layer.hpp"
 #include "softmax_layer.hpp"
 #include "util/db.hpp"
-
+#include <time.h>
 #include <boost/shared_ptr.hpp>
 using namespace std;
 using namespace caffe;
@@ -43,6 +43,7 @@ void test3()
 
 void train()
 {
+    time_t t1 = time(NULL);
     srand((int)time(0));
     db::DB* mydb = db::GetDB("lmdb");
     mydb->Open("/home/chendejia/workspace/github/dong/data/mnist_train_lmdb", db::READ);
@@ -76,8 +77,8 @@ void train()
         boost::shared_ptr<SoftmaxLayer> softmaxLayer(new SoftmaxLayer(dong::TRAIN));
         softmaxLayer->init();
 
-
-    for (int i = 0; i < 1000 && corsor->valid(); i++) {
+    int train_count = 30;
+    for (int i = 0; i < train_count && corsor->valid(); i++) {
         const string& value = corsor->value();
         Datum datum;
         datum.ParseFromString(value);
@@ -259,11 +260,16 @@ void train()
     delete corsor;
     mydb->Close();
     delete mydb;
+
+    time_t t2 = time(NULL);
+    cout<<"训练速度:"<< train_count/ (t2-t1)<<" pic / s"<<endl;
+
 }
 int main()
 {
+
     train();
     //test3();
-    cout << "Hello world!" << endl;
+    cout << "Hello world!"<< endl;
     return 0;
 }
