@@ -91,7 +91,10 @@ void Data::print()
                     }
                 }
 
-                cout << endl << endl;
+                if(_width>1)
+                {
+                    cout << endl << endl;
+                }
             }
             cout << "----------------------------------"<<endl;
         }
@@ -104,7 +107,6 @@ void Data::printDiff()
     {
         for (int c = 0; c < _channels; c++)
         {
-
 
             for (int h = 0; h < _height; h++)
             {

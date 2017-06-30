@@ -1,5 +1,5 @@
-#ifndef CAFFE_COMMON_HPP_
-#define CAFFE_COMMON_HPP_
+#ifndef DONG_COMMON_HPP_
+#define DONG_COMMON_HPP_
 
 typedef unsigned char  BYTE;
 typedef unsigned short WORD;
@@ -24,7 +24,6 @@ private:\
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 #define random(x) (rand()%x)
-#define BASE_LEARNING_RATE (0.0001F)
 
 
 using namespace std;
@@ -35,7 +34,6 @@ namespace dong
 
 using namespace dong;
 typedef boost::mt19937 rng_t;
-
 
 class RNG
 {
@@ -91,4 +89,4 @@ public:
 
 }
 
-#endif  // CAFFE_COMMON_HPP_
+#endif  // DONG_COMMON_HPP_

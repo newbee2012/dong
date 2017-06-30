@@ -14,10 +14,10 @@ enum Mode {TRAIN,TEST};
 
 typedef LayerType_ LayerType;
 typedef ForwardComputeType_ ForwardComputeType;
-
 class Layer
 {
 public:
+
     const char* EnumNames[6]= {"INPUT_LAYER", "CONVOLUTION_LAYER", "POOL_LAYER", "FULL_CONNECT_LAYER", "RELU_LAYER", "SOFTMAX_LAYER"};
 
     Layer() {};
@@ -55,18 +55,21 @@ public:
         _top_data->clearValue();
         _top_data->clearDiff();
 
-        this->forward_cpu();
 
+
+        this->forward_cpu();
 /*
         cout<<"--------------------"<< EnumNames[getType()]<<" forward-----------------------"<<endl;
         cout<<"bottom data forward"<<endl;
         _bottom_data->print();
+        cout<<"top data forward"<<endl;
+        _top_data->print();
         cout<<"weight data forward"<<endl;
         if(_weight_data.get()!= NULL)
         {
             _weight_data->print();
         }
-        */
+*/
 
     }
 
@@ -76,7 +79,7 @@ public:
     {
         this->backward_cpu();
 
-        /*
+
         cout<<"--------------------"<< EnumNames[getType()]<<" backward-----------------------"<<endl;
         cout<<"bottom diff backward"<<endl;
         _bottom_data->printDiff();
@@ -89,10 +92,11 @@ public:
         {
             cout<<"---------------"<<endl;
         }
-*/
+
     }
 
     virtual LayerType getType() = 0;
+    static float BASE_LEARNING_RATE;
 
 protected:
     virtual void forwardBase()
@@ -131,7 +135,7 @@ protected:
             {
             case CONVOLUTION_LAYER:
             case FULL_CONNECT_LAYER:
-                w_neuron->_value -= (BASE_LEARNING_RATE * w_neuron->_diff);
+                w_neuron->_value -= (Layer::BASE_LEARNING_RATE* w_neuron->_diff);
                 break;
             default:
                 break;

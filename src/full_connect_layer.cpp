@@ -11,9 +11,6 @@ void FullConnectLayer::setUp(const boost::shared_ptr<Data>& data)
 
     _weight_data.reset(new Data(_num, _bottom_data->count(), 1, 1, Data::RANDOM));
 
-    int b_n = _bottom_data->num();
-    int b_h = _bottom_data->height();
-    int b_w = _bottom_data->width();
     int t_n = 1;
     int t_h = 1;
     int t_w = _num;

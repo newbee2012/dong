@@ -13,7 +13,10 @@ using namespace std;
 using namespace caffe;
 using namespace dong;
 
+float Layer::BASE_LEARNING_RATE;
+
 int sum = 0;
+
 void test2(char* p, char* q, int count1, int count2, int v)
 {
     if (count1 + count2 == 0)
@@ -65,7 +68,7 @@ void train(int train_count)
     inputLayer->setUp(inputData);
     //L2.convLayer1
     boost::shared_ptr<ConvLayer> convLayer1(new ConvLayer());
-    convLayer1->init(20,5,5);
+    convLayer1->init(2,5,5);
     convLayer1->setUp(inputLayer->getTopData());
     //L3.poolLayer
     boost::shared_ptr<PoolLayer> poolLayer1(new PoolLayer());
@@ -73,7 +76,7 @@ void train(int train_count)
     poolLayer1->setUp(convLayer1->getTopData());
     //L4.convLayer
     boost::shared_ptr<ConvLayer> convLayer2(new ConvLayer());
-    convLayer2->init(50,5,5);
+    convLayer2->init(5,5,5);
     convLayer2->setUp(poolLayer1->getTopData());
     //L5.poolLayer
     boost::shared_ptr<PoolLayer> poolLayer2(new PoolLayer());
@@ -81,7 +84,7 @@ void train(int train_count)
     poolLayer2->setUp(convLayer2->getTopData());
     //L6.FullConnectLayer
     boost::shared_ptr<FullConnectLayer> fullConnectLayer(new FullConnectLayer());
-    fullConnectLayer->init(500);
+    fullConnectLayer->init(10);
     fullConnectLayer->setUp(poolLayer2->getTopData());
     //L7.reluLayer
     boost::shared_ptr<ReluLayer> reluLayer(new ReluLayer());
@@ -242,9 +245,8 @@ void train(int train_count)
         */
         corsor->Next();
     }
-
+/*
     inputLayer->getTopData()->genBmp("inputLayer_top_data_%d_%d.bmp", 1);
-
     cout << "---------convLayer1 weight-----------" << endl;
     convLayer1->getWeightData()->print();
     convLayer1->getTopData()->genBmp("convLayer1_top_data_%d_%d.bmp", 1);
@@ -253,7 +255,7 @@ void train(int train_count)
     convLayer2->getWeightData()->print();
     convLayer2->getTopData()->genBmp("convLayer2_top_data_%d_%d.bmp", 1);
     convLayer2->getWeightData()->genBmp("convLayer2_Weight_data_%d_%d.bmp", 1);
-
+*/
 
     delete corsor;
     mydb->Close();
@@ -263,12 +265,19 @@ void train(int train_count)
     cout<<"训练速度:"<< train_count/ (t2-t1+1)<<" pic / s"<<endl;
 
 }
+
+
 int main(int argc,char *argv[])
 {
     int train_count = 1;
-    if(argc ==2)
+    if(argc >=2)
     {
         train_count = atoi(argv[1]);
+    }
+
+    if(argc >=3)
+    {
+        Layer::BASE_LEARNING_RATE = atof(argv[2]);
     }
 
     train(train_count);

@@ -52,7 +52,6 @@ void ConvLayer::setUp(const boost::shared_ptr<Data>& data)
                         }
                     }
                 }
-
             }
         }
     }
