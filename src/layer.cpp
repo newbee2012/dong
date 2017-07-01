@@ -77,14 +77,14 @@ void Layer::forwardBase()
 void Layer::backwardBase()
 {
 
-    #define THREAD_COUNT 4
+#define THREAD_COUNT 4
     bool multithreading = true;
 
     if(multithreading)
     {
         pthread_t thread[THREAD_COUNT];
         ThreadParam p[THREAD_COUNT];
-        int spilit_count = _bottom_data->count()/THREAD_COUNT;
+        int spilit_count = _bottom_data->count() / THREAD_COUNT;
         for(int i=0; i<THREAD_COUNT; ++i)
         {
             int offset_start = i * spilit_count;
@@ -105,20 +105,30 @@ void Layer::backwardBase()
     }
     else
     {
-        for (int i = 0; i < _bottom_data->count(); ++i)
-        {
-            Neuron* b_neuron = _bottom_data->get(i);
-
-            for (int j = 0; j < b_neuron->_forward_neuron.size(); ++j)
-            {
-                Neuron* t_neuron = b_neuron->_forward_neuron[j];
-                Neuron* w_neuron = b_neuron->_weight_neuron[j];
-                b_neuron->_diff += (t_neuron->_diff * w_neuron->_value);
-                w_neuron->_diff += (t_neuron->_diff * b_neuron->_value);
-            }
-        }
+        Layer::backward_diff(_bottom_data.get(), 0, _bottom_data->count());
     }
 
+    update_weight();
+};
+
+
+void Layer::backward_diff(Data* bottom_data, int offset_start, int offset_end)
+{
+    for (int i = offset_start; i < offset_end; ++i)
+    {
+        Neuron* b_neuron = bottom_data->get(i);
+        for (int j = 0; j < b_neuron->_forward_neuron.size(); ++j)
+        {
+            Neuron* t_neuron = b_neuron->_forward_neuron[j];
+            Neuron* w_neuron = b_neuron->_weight_neuron[j];
+            b_neuron->_diff += (t_neuron->_diff * w_neuron->_value);
+            w_neuron->_diff += (t_neuron->_diff * b_neuron->_value);
+        }
+    }
+}
+
+void Layer::update_weight()
+{
     for (int k = 0; k < _weight_data->count(); ++k)
     {
         Neuron* w_neuron = _weight_data->get(k);
@@ -134,23 +144,13 @@ void Layer::backwardBase()
             break;
         }
     }
-};
+}
 
 void* Layer::backwardBase_thread(void *ptr)
 {
     ThreadParam* p = (ThreadParam*)ptr;
-    Data* _bottom_data = p->_bottom_data;
-    for (int i = p->_offset_start; i < p->_offset_end; ++i)
-    {
-        Neuron* b_neuron = _bottom_data->get(i);
-        for (int j = 0; j < b_neuron->_forward_neuron.size(); ++j)
-        {
-            Neuron* t_neuron = b_neuron->_forward_neuron[j];
-            Neuron* w_neuron = b_neuron->_weight_neuron[j];
-            b_neuron->_diff += (t_neuron->_diff * w_neuron->_value);
-            w_neuron->_diff += (t_neuron->_diff * b_neuron->_value);
-        }
-    }
+    Data* bottom_data = p->_bottom_data;
+    Layer::backward_diff(bottom_data, p->_offset_start, p->_offset_end);
 
     return 0;
 }

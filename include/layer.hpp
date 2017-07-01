@@ -72,6 +72,8 @@ protected:
     virtual void forwardBase();
     virtual void backwardBase();
     static void* backwardBase_thread(void *ptr);
+    static void backward_diff(Data* _bottom_data, int offset_start, int offset_end);
+    virtual void update_weight();
     boost::shared_ptr<Data> _bottom_data;
     boost::shared_ptr<Data> _top_data;
     boost::shared_ptr<Data> _weight_data;

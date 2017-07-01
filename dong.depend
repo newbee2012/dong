@@ -63,7 +63,7 @@
 	<boost/random.hpp>
 	<boost/shared_ptr.hpp>
 
-1498928202 source:/home/chendejia/workspace/github/dong/src/main.cpp
+1498928584 source:/home/chendejia/workspace/github/dong/src/main.cpp
 	<iostream>
 	"util/gen_bmp.hpp"
 	"input_layer.hpp"
@@ -123,13 +123,13 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1498846342 /home/chendejia/workspace/github/dong/include/layer.hpp
+1498929672 /home/chendejia/workspace/github/dong/include/layer.hpp
 	"common.hpp"
 	"data.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1498850891 source:/home/chendejia/workspace/github/dong/src/layer.cpp
+1498929649 source:/home/chendejia/workspace/github/dong/src/layer.cpp
 	<iostream>
 	<pthread.h>
 	"layer.hpp"
