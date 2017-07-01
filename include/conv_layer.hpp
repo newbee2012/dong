@@ -11,18 +11,9 @@ namespace dong
 class ConvLayer: public Layer
 {
 public:
-    explicit ConvLayer()
-    {
-        _forwardType = INNER_PRODUCT;
-        _need_init_weight = true;
-    };
-
-    virtual LayerType getType()
-    {
-        return CONVOLUTION_LAYER;
-    }
-
-    virtual void init(int num_output,int kernel_h, int kernel_w);
+    explicit ConvLayer(){};
+    inline virtual LayerType getType(){return CONVOLUTION_LAYER;}
+    virtual void init(int num_output, int kernel_h, int kernel_w);
     virtual void setUp(const boost::shared_ptr<Data>& data);
     virtual void forward_cpu();
     virtual void backward_cpu();

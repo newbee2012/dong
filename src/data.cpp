@@ -6,6 +6,7 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 #include <iomanip>
+#include "util/math_utils.hpp"
 
 namespace dong
 {
@@ -17,15 +18,13 @@ Data::Data(int num, int channels, int height, int width, InitType type): _num(nu
     _height(height), _width(width)
 {
     _neurons.reset(new Neuron[count()]);
-
     int fan_in = count() / num;
     int fan_out = count() / channels;
     float n = (fan_in + fan_out) / float(2);
     float scale = sqrt(float(3) / n);
-
     float* t = new float[count()];
+    RandomGenerator::rng_uniform(count(), -scale, scale, t);
 
-    MathUtils::caffe_rng_uniform(count(),-scale, scale, t);
     for (int i = 0; i < count(); ++i)
     {
         if (type == Data::CONSTANT)
@@ -34,11 +33,10 @@ Data::Data(int num, int channels, int height, int width, InitType type): _num(nu
         }
         else if (type == Data::RANDOM)
         {
-
-            _neurons[i]._value = ((float)random(2)-0.5);
-            _neurons[i]._value /=1000;
+            _neurons[i]._value = ((float)random(2) - 0.5);
+            _neurons[i]._value /= 1000;
         }
-        else if(type==Data::XAVIER)
+        else if (type == Data::XAVIER)
         {
             _neurons[i]._value = t[i];
         }
@@ -47,6 +45,22 @@ Data::Data(int num, int channels, int height, int width, InitType type): _num(nu
     }
 
     delete[] t;
+}
+
+void Data::clearDiff()
+{
+    for (int i = 0; i < count(); ++i)
+    {
+        _neurons[i]._diff = 0.0F;
+    }
+}
+
+void Data::clearValue()
+{
+    for (int i = 0; i < count(); ++i)
+    {
+        _neurons[i]._value = 0.0F;
+    }
 }
 
 void Data::setUp(const boost::shared_ptr<Neuron[]>& neurons)
@@ -67,16 +81,9 @@ void Data::print()
                 for (int w = 0; w < _width; w++)
                 {
                     float value = this->get(n, c, h, w)->_value;
-                    //if (value > 0)
-                    //{
                     cout << value;
-                    //cout << setprecision(2)<<fixed<< value;
-                    //}
-                    //else
-                    //{
-                    //    cout << ".";
-                    //}
 
+                    //cout << setprecision(2)<<fixed<< value;
                     if (value < 10)
                     {
                         cout << "   ";
@@ -91,12 +98,13 @@ void Data::print()
                     }
                 }
 
-                if(_width>1)
+                if (_width > 1)
                 {
                     cout << endl << endl;
                 }
             }
-            cout << "----------------------------------"<<endl;
+
+            cout << "----------------------------------" << endl;
         }
     }
 }
@@ -107,22 +115,14 @@ void Data::printDiff()
     {
         for (int c = 0; c < _channels; c++)
         {
-
             for (int h = 0; h < _height; h++)
             {
                 for (int w = 0; w < _width; w++)
                 {
                     float value = this->get(n, c, h, w)->_diff;
-                    //if (value > 0)
-                    //{
                     cout << value;
-                    //cout << setprecision(2)<<fixed<< value;
-                    //}
-                    //else
-                    //{
-                    //    cout << ".";
-                    //}
 
+                    //cout << setprecision(2)<<fixed<< value;
                     if (value < 10)
                     {
                         cout << "   ";
@@ -137,17 +137,19 @@ void Data::printDiff()
                     }
                 }
 
-                cout << endl << endl;
+                if (_width > 1)
+                {
+                    cout << endl << endl;
+                }
             }
 
-            cout << "----------------------------------"<<endl;
+            cout << "----------------------------------" << endl;
         }
     }
 }
 
 void Data::genBmp(const char* format, int index)
 {
-
     for (int n = 0; n < _num; n++)
     {
         char filename[60];
@@ -159,7 +161,8 @@ void Data::genBmp(const char* format, int index)
         {
             for (int w = 0; w < _width; w++)
             {
-                BYTE gray = this->get(n, 0, h, w)->_value >1 ? this->get(n, 0, h, w)->_value:(this->get(n, 0, h, w)->_value)*0xFF*10;
+                BYTE gray = this->get(n, 0, h, w)->_value > 1 ? this->get(n, 0, h, w)->_value : (this->get(n, 0, h,
+                            w)->_value) * 0xFF * 10;
 
                 if (w == 0 || w == _width - 1 || h == 0 || h == _height - 1)
                 {
@@ -178,7 +181,6 @@ void Data::genBmp(const char* format, int index)
 
         BmpTool::generateBMP((BYTE*)pRGB, _width, _height, filename);
     }
-
 }
 
 

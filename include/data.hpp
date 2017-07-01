@@ -19,23 +19,25 @@ public:
     void print();
     void printDiff();
     void genBmp(const char* filename, int label);
+    void clearDiff();
+    void clearValue();
 
-    int inline count()
+    inline int count()
     {
         return _num * _channels * _width * _height;
     }
 
-    Neuron* get(int offset)
+    inline Neuron* get(int offset)
     {
         return &_neurons[offset];
     };
 
-    Neuron* get(int n, int c, int h, int w)
+    inline Neuron* get(int n, int c, int h, int w)
     {
         return get(offset(n, c, h, w));
     };
 
-    inline int offset(const int n, const int c = 0, const int h = 0, const int w = 0) const
+    inline int offset(int n, int c, int h, int w) const
     {
         return ((n * channels() + c) * height() + h) * width() + w;
     }
@@ -58,22 +60,6 @@ public:
     inline int width() const
     {
         return _width;
-    }
-
-    void clearDiff()
-    {
-        for(int i=0;i < count(); ++i)
-        {
-            _neurons[i]._diff = 0.0F;
-        }
-    }
-
-    void clearValue()
-    {
-        for(int i=0;i < count(); ++i)
-        {
-            _neurons[i]._value = 0.0F;
-        }
     }
 
 protected:

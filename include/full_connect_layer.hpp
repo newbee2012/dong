@@ -11,15 +11,8 @@ namespace dong
 class FullConnectLayer: public Layer
 {
 public:
-    explicit FullConnectLayer()
-    {
-        _forwardType = INNER_PRODUCT;
-        _need_init_weight = true;
-    };
-    virtual LayerType getType()
-    {
-        return FULL_CONNECT_LAYER;
-    }
+    explicit FullConnectLayer(){};
+    inline virtual LayerType getType(){return FULL_CONNECT_LAYER;}
     virtual void setUp(const boost::shared_ptr<Data>& bottomData);
     virtual void init(int num);
     virtual void forward_cpu();
@@ -27,7 +20,6 @@ public:
 
 protected:
     int _num;
-    bool _need_init_weight;
     DISABLE_COPY_AND_ASSIGN(FullConnectLayer);
 };
 

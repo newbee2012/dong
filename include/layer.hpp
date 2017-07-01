@@ -10,139 +10,68 @@ namespace dong
 {
 enum LayerType_ {INPUT_LAYER, CONVOLUTION_LAYER, POOL_LAYER, FULL_CONNECT_LAYER, RELU_LAYER, SOFTMAX_LAYER};
 enum ForwardComputeType_ {INNER_PRODUCT, MAX, RELU};
-enum Mode {TRAIN,TEST};
+enum Mode {TRAIN, TEST};
 
 typedef LayerType_ LayerType;
 typedef ForwardComputeType_ ForwardComputeType;
+
+class ThreadParam
+{
+public:
+    void init(Data* bottom_data,int offset_start, int offset_end, int threadIndex)
+    {
+        _bottom_data=bottom_data;
+        _offset_start=offset_start;
+        _offset_end=offset_end;
+        _threadIndex=threadIndex;
+    };
+
+    Data* _bottom_data;
+    int _offset_start;
+    int _offset_end;
+    int _threadIndex;
+    dong::LayerType layerType;
+};
+
 class Layer
 {
 public:
 
-    const char* EnumNames[6]= {"INPUT_LAYER", "CONVOLUTION_LAYER", "POOL_LAYER", "FULL_CONNECT_LAYER", "RELU_LAYER", "SOFTMAX_LAYER"};
+    const char* EnumNames[6] = {"INPUT_LAYER", "CONVOLUTION_LAYER", "POOL_LAYER", "FULL_CONNECT_LAYER", "RELU_LAYER", "SOFTMAX_LAYER"};
 
     Layer() {};
     virtual ~Layer() {};
-    virtual void setUp(const boost::shared_ptr<Data>& data)
+    virtual void forward_cpu() = 0;
+    virtual void forward();
+    virtual void backward_cpu() = 0;
+    virtual void backward();
+    virtual LayerType getType() = 0;
+    static float BASE_LEARNING_RATE;
+
+    inline virtual void setUp(const boost::shared_ptr<Data>& data)
     {
         this->_bottom_data = data;
     }
 
-    virtual boost::shared_ptr<Data> getBottomData()
+    inline virtual boost::shared_ptr<Data> getBottomData()
     {
         return _bottom_data;
     }
 
-    virtual boost::shared_ptr<Data> getTopData()
+    inline virtual boost::shared_ptr<Data> getTopData()
     {
         return _top_data;
     }
 
-    virtual boost::shared_ptr<Data> getWeightData()
+    inline virtual boost::shared_ptr<Data> getWeightData()
     {
         return _weight_data;
     }
 
-    virtual void forward_cpu() = 0;
-
-    virtual void forward()
-    {
-        if(_weight_data.get() != NULL)
-        {
-            _weight_data->clearDiff();
-        }
-
-        _bottom_data->clearDiff();
-        _top_data->clearValue();
-        _top_data->clearDiff();
-
-
-
-        this->forward_cpu();
-/*
-        cout<<"--------------------"<< EnumNames[getType()]<<" forward-----------------------"<<endl;
-        cout<<"bottom data forward"<<endl;
-        _bottom_data->print();
-        cout<<"top data forward"<<endl;
-        _top_data->print();
-        cout<<"weight data forward"<<endl;
-        if(_weight_data.get()!= NULL)
-        {
-            _weight_data->print();
-        }
-*/
-
-    }
-
-    virtual void backward_cpu() = 0;
-
-    virtual void backward()
-    {
-        this->backward_cpu();
-
-
-        cout<<"--------------------"<< EnumNames[getType()]<<" backward-----------------------"<<endl;
-        cout<<"bottom diff backward"<<endl;
-        _bottom_data->printDiff();
-        cout<<"weight diff backward"<<endl;
-        if(_weight_data.get()!= NULL)
-        {
-            _weight_data->printDiff();
-        }
-        else
-        {
-            cout<<"---------------"<<endl;
-        }
-
-    }
-
-    virtual LayerType getType() = 0;
-    static float BASE_LEARNING_RATE;
-
 protected:
-    virtual void forwardBase()
-    {
-        for (int i = 0; i < _bottom_data->count(); ++i)
-        {
-            const Neuron* b_neuron = _bottom_data->get(i);
-
-            for (int j = 0; j < b_neuron->_forward_neuron.size(); ++j)
-            {
-                Neuron* t_neuron = b_neuron->_forward_neuron[j];
-                Neuron* w_neuron = b_neuron->_weight_neuron[j];
-                t_neuron->_value += (b_neuron->_value * w_neuron->_value);
-            }
-        }
-    }
-
-    virtual void backwardBase()
-    {
-        for (int i = 0; i < _bottom_data->count(); ++i)
-        {
-            Neuron* b_neuron = _bottom_data->get(i);
-            for (int j = 0; j < b_neuron->_forward_neuron.size(); ++j)
-            {
-                Neuron* t_neuron = b_neuron->_forward_neuron[j];
-                Neuron* w_neuron = b_neuron->_weight_neuron[j];
-                b_neuron->_diff +=(t_neuron->_diff * w_neuron->_value);
-                w_neuron->_diff +=(t_neuron->_diff * b_neuron->_value);
-            }
-        }
-
-        for (int k = 0; k < _weight_data->count(); ++k)
-        {
-            Neuron* w_neuron = _weight_data->get(k);
-            switch(getType())
-            {
-            case CONVOLUTION_LAYER:
-            case FULL_CONNECT_LAYER:
-                w_neuron->_value -= (Layer::BASE_LEARNING_RATE* w_neuron->_diff);
-                break;
-            default:
-                break;
-            }
-        }
-    };
-
+    virtual void forwardBase();
+    virtual void backwardBase();
+    static void* backwardBase_thread(void *ptr);
     boost::shared_ptr<Data> _bottom_data;
     boost::shared_ptr<Data> _top_data;
     boost::shared_ptr<Data> _weight_data;
