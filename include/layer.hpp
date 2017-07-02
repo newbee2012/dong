@@ -72,11 +72,13 @@ protected:
     virtual void forwardBase();
     virtual void backwardBase();
     static void* backwardBase_thread(void *ptr);
-    static void backward_diff(Data* _bottom_data, int offset_start, int offset_end);
+    static void backward_spilit(Data* _bottom_data, int offset_start, int offset_end);
     virtual void update_weight();
+    virtual void update_bias();
     boost::shared_ptr<Data> _bottom_data;
     boost::shared_ptr<Data> _top_data;
     boost::shared_ptr<Data> _weight_data;
+    boost::shared_ptr<Data> _bias_data;
     ForwardComputeType _forwardType;
 
     DISABLE_COPY_AND_ASSIGN(Layer);

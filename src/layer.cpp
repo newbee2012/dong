@@ -63,14 +63,7 @@ void Layer::forwardBase()
 {
     for (int i = 0; i < _bottom_data->count(); ++i)
     {
-        const Neuron* b_neuron = _bottom_data->get(i);
-
-        for (int j = 0; j < b_neuron->_forward_neuron.size(); ++j)
-        {
-            Neuron* t_neuron = b_neuron->_forward_neuron[j];
-            Neuron* w_neuron = b_neuron->_weight_neuron[j];
-            t_neuron->_value += (b_neuron->_value * w_neuron->_value);
-        }
+        _bottom_data->get(i)->forward();
     }
 }
 
@@ -105,25 +98,18 @@ void Layer::backwardBase()
     }
     else
     {
-        Layer::backward_diff(_bottom_data.get(), 0, _bottom_data->count());
+        Layer::backward_spilit(_bottom_data.get(), 0, _bottom_data->count());
     }
 
     update_weight();
 };
 
 
-void Layer::backward_diff(Data* bottom_data, int offset_start, int offset_end)
+void Layer::backward_spilit(Data* bottom_data, int offset_start, int offset_end)
 {
     for (int i = offset_start; i < offset_end; ++i)
     {
-        Neuron* b_neuron = bottom_data->get(i);
-        for (int j = 0; j < b_neuron->_forward_neuron.size(); ++j)
-        {
-            Neuron* t_neuron = b_neuron->_forward_neuron[j];
-            Neuron* w_neuron = b_neuron->_weight_neuron[j];
-            b_neuron->_diff += (t_neuron->_diff * w_neuron->_value);
-            w_neuron->_diff += (t_neuron->_diff * b_neuron->_value);
-        }
+        bottom_data->get(i)->backward();
     }
 }
 
@@ -146,11 +132,30 @@ void Layer::update_weight()
     }
 }
 
+void Layer::update_bias()
+{
+    for (int k = 0; k < _bias_data->count(); ++k)
+    {
+        Neuron* b_neuron = _bias_data->get(k);
+
+        switch (getType())
+        {
+        case CONVOLUTION_LAYER:
+        case FULL_CONNECT_LAYER:
+            w_neuron->_value -= (Layer::BASE_LEARNING_RATE * w_neuron->_diff);
+            break;
+
+        default:
+            break;
+        }
+    }
+}
+
 void* Layer::backwardBase_thread(void *ptr)
 {
     ThreadParam* p = (ThreadParam*)ptr;
     Data* bottom_data = p->_bottom_data;
-    Layer::backward_diff(bottom_data, p->_offset_start, p->_offset_end);
+    Layer::backward_spilit(bottom_data, p->_offset_start, p->_offset_end);
 
     return 0;
 }

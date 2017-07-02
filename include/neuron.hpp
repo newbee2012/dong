@@ -22,6 +22,7 @@ public:
     }
 
     void forward();
+    void backward();
     float _value;
     float _diff;
 

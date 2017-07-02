@@ -63,7 +63,7 @@
 	<boost/random.hpp>
 	<boost/shared_ptr.hpp>
 
-1498928584 source:/home/chendejia/workspace/github/dong/src/main.cpp
+1498962176 source:/home/chendejia/workspace/github/dong/src/main.cpp
 	<iostream>
 	"util/gen_bmp.hpp"
 	"input_layer.hpp"
@@ -123,13 +123,13 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1498929672 /home/chendejia/workspace/github/dong/include/layer.hpp
+1498999585 /home/chendejia/workspace/github/dong/include/layer.hpp
 	"common.hpp"
 	"data.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1498929649 source:/home/chendejia/workspace/github/dong/src/layer.cpp
+1498929994 source:/home/chendejia/workspace/github/dong/src/layer.cpp
 	<iostream>
 	<pthread.h>
 	"layer.hpp"
@@ -196,11 +196,11 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1498829413 source:/home/chendejia/workspace/github/dong/src/neuron.cpp
+1498999167 source:/home/chendejia/workspace/github/dong/src/neuron.cpp
 	<iostream>
 	"neuron.hpp"
 
-1498829565 /home/chendejia/workspace/github/dong/include/neuron.hpp
+1498998836 /home/chendejia/workspace/github/dong/include/neuron.hpp
 	"common.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>

@@ -125,6 +125,7 @@ void train(int batch_count,int per_batch_iter_count,int per_iter_train_count)
             //训练这批数据
             for (int i = 0; i < per_iter_train_count; i++)
             {
+                int label = batchLabels[i];
                 Neuron* neuron= batchDatas.get(i,0,0,0);
                 Neuron* inputNeuron = inputImage.get();
 
@@ -133,7 +134,7 @@ void train(int batch_count,int per_batch_iter_count,int per_iter_train_count)
                     inputNeuron[j]._value = neuron[j]._value;
                 }
 
-                int label = batchLabels[i];
+
 
                 convLayer1->forward();
                 poolLayer1->forward();
