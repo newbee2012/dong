@@ -176,6 +176,9 @@ void train(int batch_count,int per_batch_iter_count,int per_iter_train_count)
     convLayer2->getTopData()->genBmp("convLayer2_top_data_%d_%d.bmp", 1);
     convLayer2->getWeightData()->genBmp("convLayer2_Weight_data_%d_%d.bmp", 1);
 
+    cout << "---------convLayer2 _bias-----------" << endl;
+    convLayer2->getBiasData()->print();
+
     delete cursor;
     mydb->Close();
     delete mydb;
@@ -185,14 +188,20 @@ void train(int batch_count,int per_batch_iter_count,int per_iter_train_count)
 
 int main(int argc, char* argv[])
 {
+    int batch_count = 1;
+    int per_batch_iter_count = 1;
+    int per_iter_train_count = 1;
+    Layer::BASE_LEARNING_RATE = 0.0001;
+
     if (argc == 5)
     {
-        int batch_count = atoi(argv[1]);
-        int per_batch_iter_count = atoi(argv[2]);
-        int per_iter_train_count = atoi(argv[3]);
+        batch_count = atoi(argv[1]);
+        per_batch_iter_count = atoi(argv[2]);
+        per_iter_train_count = atoi(argv[3]);
         Layer::BASE_LEARNING_RATE = atof(argv[4]);
-        train(batch_count, per_batch_iter_count, per_iter_train_count);
     }
+
+    train(batch_count, per_batch_iter_count, per_iter_train_count);
 
     //threadTest();
     cout << "Hello world!" << endl;

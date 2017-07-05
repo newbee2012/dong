@@ -24,6 +24,11 @@ void Layer::forward()
         }
     }
 
+    if (_bias_data != NULL)
+    {
+        _bias_data->clearDiff();
+    }
+
     this->forward_cpu();
     /*
             cout<<"--------------------"<< EnumNames[getType()]<<" forward-----------------------"<<endl;
@@ -65,6 +70,14 @@ void Layer::forwardBase()
     {
         _bottom_data->get(i)->forward();
     }
+
+    if(NULL != _bias_data.get())
+    {
+        for (int i = 0; i < _top_data->count(); ++i)
+        {
+            _top_data->get(i)->_value += _bias_data->get(i)->_value;
+        }
+    }
 }
 
 void Layer::backwardBase()
@@ -101,7 +114,16 @@ void Layer::backwardBase()
         Layer::backward_spilit(_bottom_data.get(), 0, _bottom_data->count());
     }
 
-    update_weight();
+    switch (getType())
+    {
+    case CONVOLUTION_LAYER:
+    case FULL_CONNECT_LAYER:
+        update_weight();
+        update_bias();
+        break;
+    default:
+        break;
+    }
 };
 
 
@@ -115,39 +137,19 @@ void Layer::backward_spilit(Data* bottom_data, int offset_start, int offset_end)
 
 void Layer::update_weight()
 {
-    for (int k = 0; k < _weight_data->count(); ++k)
+    for (int i = 0; i < _weight_data->count(); ++i)
     {
-        Neuron* w_neuron = _weight_data->get(k);
-
-        switch (getType())
-        {
-        case CONVOLUTION_LAYER:
-        case FULL_CONNECT_LAYER:
-            w_neuron->_value -= (Layer::BASE_LEARNING_RATE * w_neuron->_diff);
-            break;
-
-        default:
-            break;
-        }
+        Neuron* w_neuron = _weight_data->get(i);
+        w_neuron->_value -= (Layer::BASE_LEARNING_RATE * w_neuron->_diff);
     }
 }
 
 void Layer::update_bias()
 {
-    for (int k = 0; k < _bias_data->count(); ++k)
+    for (int i = 0; i < _bias_data->count(); ++i)
     {
-        Neuron* b_neuron = _bias_data->get(k);
-
-        switch (getType())
-        {
-        case CONVOLUTION_LAYER:
-        case FULL_CONNECT_LAYER:
-            w_neuron->_value -= (Layer::BASE_LEARNING_RATE * w_neuron->_diff);
-            break;
-
-        default:
-            break;
-        }
+        Neuron* bias_neuron = _bias_data->get(i);
+        bias_neuron->_value -= (Layer::BASE_LEARNING_RATE * bias_neuron->_diff);
     }
 }
 

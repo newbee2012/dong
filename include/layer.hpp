@@ -68,6 +68,11 @@ public:
         return _weight_data;
     }
 
+    inline virtual boost::shared_ptr<Data> getBiasData()
+    {
+        return _bias_data;
+    }
+
 protected:
     virtual void forwardBase();
     virtual void backwardBase();
@@ -79,6 +84,7 @@ protected:
     boost::shared_ptr<Data> _top_data;
     boost::shared_ptr<Data> _weight_data;
     boost::shared_ptr<Data> _bias_data;
+
     ForwardComputeType _forwardType;
 
     DISABLE_COPY_AND_ASSIGN(Layer);

@@ -21,6 +21,8 @@ public:
         this->_value = value;
     }
 
+    ~Neuron(){}
+
     void forward();
     void backward();
     float _value;
@@ -28,6 +30,7 @@ public:
 
     vector< Neuron* > _forward_neuron;
     vector< Neuron* > _weight_neuron;
+    Neuron* _bias;
     int _forward_neuron_count;
     int _backward_neuron_count;
 

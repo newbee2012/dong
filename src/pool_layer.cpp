@@ -21,7 +21,6 @@ void PoolLayer::setUp(const boost::shared_ptr<Data>& data)
         for (int h = 0; h < t_h; h++) {
             for (int w = 0; w < t_w; w++) {
                 Neuron* t_neuron = _top_data->get(n, 0, h, w);
-
                 for (int offset_h = 0; offset_h < _kernel_h; offset_h++) {
                     for (int offset_w = 0; offset_w < _kernel_w; offset_w++) {
                         Neuron* b_neuron = _bottom_data->get(n, 0, h * _stride_h + offset_h, w * _stride_w + offset_w);
