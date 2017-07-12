@@ -11,8 +11,11 @@ namespace dong
 class FullConnectLayer: public Layer
 {
 public:
-    explicit FullConnectLayer(){};
-    inline virtual LayerType getType(){return FULL_CONNECT_LAYER;}
+    explicit FullConnectLayer() {};
+    inline virtual LayerType getType()
+    {
+        return FULL_CONNECT_LAYER;
+    }
     virtual void setUp(const boost::shared_ptr<Data>& bottomData);
     virtual void init(int num);
     virtual void forward_cpu();

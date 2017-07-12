@@ -14,7 +14,10 @@ class PoolLayer: public Layer
 public:
     PoolLayer() {};
     ~PoolLayer() {};
-    inline virtual LayerType getType(){return POOL_LAYER;}
+    inline virtual LayerType getType()
+    {
+        return POOL_LAYER;
+    }
     virtual void init(int kernel_h, int _kernel_w, int _stride_h, int _stride_w);
     virtual void setUp(const boost::shared_ptr<Data>& data);
     virtual void forward_cpu();

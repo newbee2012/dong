@@ -11,8 +11,11 @@ namespace dong
 class ReluLayer: public Layer
 {
 public:
-    explicit ReluLayer(){};
-    inline virtual LayerType getType(){return RELU_LAYER;}
+    explicit ReluLayer() {};
+    inline virtual LayerType getType()
+    {
+        return RELU_LAYER;
+    }
     virtual void init();
     virtual void setUp(const boost::shared_ptr<Data>& data);
     virtual void forward_cpu();

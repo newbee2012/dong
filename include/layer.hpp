@@ -18,12 +18,12 @@ typedef ForwardComputeType_ ForwardComputeType;
 class ThreadParam
 {
 public:
-    void init(Data* bottom_data,int offset_start, int offset_end, int threadIndex)
+    void init(Data* bottom_data, int offset_start, int offset_end, int threadIndex)
     {
-        _bottom_data=bottom_data;
-        _offset_start=offset_start;
-        _offset_end=offset_end;
-        _threadIndex=threadIndex;
+        _bottom_data = bottom_data;
+        _offset_start = offset_start;
+        _offset_end = offset_end;
+        _threadIndex = threadIndex;
     };
 
     Data* _bottom_data;
@@ -76,10 +76,10 @@ public:
 protected:
     virtual void forwardBase();
     virtual void backwardBase();
-    static void* backwardBase_thread(void *ptr);
-    static void backward_spilit(Data* _bottom_data, int offset_start, int offset_end);
-    virtual void update_weight();
-    virtual void update_bias();
+    static void* backwardBaseThread(void* ptr);
+    static void backwardLimit(Data* _bottom_data, int offset_start, int offset_end);
+    virtual void updateWeight();
+    virtual void updateBias();
     boost::shared_ptr<Data> _bottom_data;
     boost::shared_ptr<Data> _top_data;
     boost::shared_ptr<Data> _weight_data;

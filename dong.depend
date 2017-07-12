@@ -63,7 +63,7 @@
 	<boost/random.hpp>
 	<boost/shared_ptr.hpp>
 
-1499271270 source:/home/chendejia/workspace/github/dong/src/main.cpp
+1499523672 source:/home/chendejia/workspace/github/dong/src/main.cpp
 	<iostream>
 	"util/gen_bmp.hpp"
 	"input_layer.hpp"
@@ -82,7 +82,7 @@
 	"common.hpp"
 	"proto/caffe.pb.h"
 
-1498829414 /home/chendejia/workspace/github/dong/include/proto/caffe.pb.h
+1499524797 /home/chendejia/workspace/github/dong/include/proto/caffe.pb.h
 	<string>
 	<google/protobuf/stubs/common.h>
 	<google/protobuf/generated_message_util.h>
@@ -123,18 +123,18 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1499268265 /home/chendejia/workspace/github/dong/include/layer.hpp
+1499524088 /home/chendejia/workspace/github/dong/include/layer.hpp
 	"common.hpp"
 	"data.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1499281622 source:/home/chendejia/workspace/github/dong/src/layer.cpp
+1499524194 source:/home/chendejia/workspace/github/dong/src/layer.cpp
 	<iostream>
 	<pthread.h>
 	"layer.hpp"
 
-1499278946 source:/home/chendejia/workspace/github/dong/src/conv_layer.cpp
+1499282050 source:/home/chendejia/workspace/github/dong/src/conv_layer.cpp
 	<iostream>
 	"conv_layer.hpp"
 	"neuron.hpp"
@@ -145,7 +145,7 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1499269326 source:/home/chendejia/workspace/github/dong/src/pool_layer.cpp
+1499282050 source:/home/chendejia/workspace/github/dong/src/pool_layer.cpp
 	<iostream>
 	"pool_layer.hpp"
 
@@ -184,7 +184,7 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1499276619 source:/home/chendejia/workspace/github/dong/src/softmax_layer.cpp
+1499282050 source:/home/chendejia/workspace/github/dong/src/softmax_layer.cpp
 	<iostream>
 	<common.hpp>
 	<algorithm>
@@ -196,16 +196,16 @@
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1499281573 source:/home/chendejia/workspace/github/dong/src/neuron.cpp
+1499282050 source:/home/chendejia/workspace/github/dong/src/neuron.cpp
 	<iostream>
 	"neuron.hpp"
 
-1499276442 /home/chendejia/workspace/github/dong/include/neuron.hpp
+1499282050 /home/chendejia/workspace/github/dong/include/neuron.hpp
 	"common.hpp"
 	<boost/shared_ptr.hpp>
 	<vector>
 
-1499276847 source:/home/chendejia/workspace/github/dong/src/full_connect_layer.cpp
+1499282050 source:/home/chendejia/workspace/github/dong/src/full_connect_layer.cpp
 	<iostream>
 	"full_connect_layer.hpp"
 

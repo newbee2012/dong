@@ -21,7 +21,7 @@ public:
         this->_value = value;
     }
 
-    ~Neuron(){}
+    ~Neuron() {}
 
     void forward();
     void backward();

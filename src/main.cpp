@@ -20,27 +20,24 @@ int sum = 0;
 
 void test2(char* p, char* q, int count1, int count2, int v)
 {
-    if (count1 + count2 == 0)
-    {
+    if (count1 + count2 == 0) {
         cout << p << endl;
         sum++;
         return;
     }
 
-    if (v >= 0 && count1 > 0)
-    {
+    if (v >= 0 && count1 > 0) {
         *q = '(';
         test2(p, q + 1, count1 - 1, count2, v + 1);
     }
 
-    if (count2 > 0)
-    {
+    if (count2 > 0) {
         *q = ')';
         test2(p, q + 1, count1, count2 - 1, v - 1);
     }
 }
 
-void train(int batch_count,int per_batch_iter_count,int per_iter_train_count)
+void train(int batch_count, int per_batch_iter_count, int per_iter_train_count)
 {
     time_t t1 = time(NULL);
     srand((int)time(0));
@@ -51,8 +48,7 @@ void train(int batch_count,int per_batch_iter_count,int per_iter_train_count)
     int channels = 1;
     int width = 28;
     int height = 28;
-
-    boost::shared_ptr<Neuron[]> inputImage(new Neuron[height*width]);
+    boost::shared_ptr<Neuron[]> inputImage(new Neuron[height * width]);
     boost::shared_ptr<Data> inputData(new Data(1, channels, height, width));
     inputData->setUp(inputImage);
     //L1.inputLayer
@@ -90,29 +86,24 @@ void train(int batch_count,int per_batch_iter_count,int per_iter_train_count)
     boost::shared_ptr<SoftmaxLayer> softmaxLayer(new SoftmaxLayer(dong::TRAIN));
     softmaxLayer->init();
     softmaxLayer->setUp(fullConnectLayer2->getTopData());
-
     float loss_record_sum = 0.0F;
-    int record_count=0;
-    Data batchDatas(per_iter_train_count,1, height, width, Data::CONSTANT);
+    int record_count = 0;
+    Data batchDatas(per_iter_train_count, 1, height, width, Data::CONSTANT);
     int batchLabels[per_iter_train_count];
 
     //训练batch_count批数据
-    for(int batch = 0; batch <batch_count; ++batch)
-    {
+    for (int batch = 0; batch < batch_count; ++batch) {
         cout << "batch: " << batch << endl;
+
         //读取一批数据
-        for (int i = 0; i < per_iter_train_count && cursor->valid(); i++, cursor->Next())
-        {
+        for (int i = 0; i < per_iter_train_count && cursor->valid(); i++, cursor->Next()) {
             const string& value = cursor->value();
             Datum datum;
             datum.ParseFromString(value);
-            for (int c = 0; c < channels; c++)
-            {
-                for (int w = 0; w < width; w++)
-                {
-                    for (int h = 0; h < height; h++)
-                    {
-                        batchDatas.get(i,c,w,h)->_value = (BYTE)(datum.data()[w * height + h]);
+            for (int c = 0; c < channels; c++) {
+                for (int w = 0; w < width; w++) {
+                    for (int h = 0; h < height; h++) {
+                        batchDatas.get(i, c, w, h)->_value = (BYTE)(datum.data()[w * height + h]);
                         batchLabels[i] = datum.label();
                     }
                 }
@@ -120,21 +111,15 @@ void train(int batch_count,int per_batch_iter_count,int per_iter_train_count)
         }
 
         //每一批数据迭代per_batch_iter_count次
-        for(int iter = 0; iter<per_batch_iter_count; ++iter)
-        {
+        for (int iter = 0; iter < per_batch_iter_count; ++iter) {
             //训练这批数据
-            for (int i = 0; i < per_iter_train_count; i++)
-            {
+            for (int i = 0; i < per_iter_train_count; i++) {
                 int label = batchLabels[i];
-                Neuron* neuron= batchDatas.get(i,0,0,0);
+                Neuron* neuron = batchDatas.get(i, 0, 0, 0);
                 Neuron* inputNeuron = inputImage.get();
-
-                for(int j=0; j<height*width; ++j)
-                {
+                for (int j = 0; j < height * width; ++j) {
                     inputNeuron[j]._value = neuron[j]._value;
                 }
-
-
 
                 convLayer1->forward();
                 poolLayer1->forward();
@@ -145,7 +130,6 @@ void train(int batch_count,int per_batch_iter_count,int per_iter_train_count)
                 fullConnectLayer2->forward();
                 softmaxLayer->setLabel(label);
                 softmaxLayer->forward();
-
                 softmaxLayer->backward();
                 fullConnectLayer2->backward();
                 reluLayer->backward();
@@ -154,18 +138,16 @@ void train(int batch_count,int per_batch_iter_count,int per_iter_train_count)
                 convLayer2->backward();
                 poolLayer1->backward();
                 convLayer1->backward();
-
                 ++record_count;
                 loss_record_sum += softmaxLayer->getLoss();
             }
 
             float avg_loss = loss_record_sum / record_count;
-            cout << "avg loss:" <<setprecision(8)<<fixed<<avg_loss<< endl;
+            cout << "avg loss:" << setprecision(8) << fixed << avg_loss << endl;
             loss_record_sum = 0.0F;
             record_count = 0;
         }
     }
-
 
     cout << "---------convLayer1 weight-----------" << endl;
     convLayer1->getWeightData()->print();
@@ -175,15 +157,14 @@ void train(int batch_count,int per_batch_iter_count,int per_iter_train_count)
     convLayer2->getWeightData()->print();
     convLayer2->getTopData()->genBmp("convLayer2_top_data_%d_%d.bmp", 1);
     convLayer2->getWeightData()->genBmp("convLayer2_Weight_data_%d_%d.bmp", 1);
-
     cout << "---------convLayer2 _bias-----------" << endl;
     convLayer2->getBiasData()->print();
-
     delete cursor;
     mydb->Close();
     delete mydb;
     time_t t2 = time(NULL);
-    cout << "训练速度:" << batch_count*per_batch_iter_count*per_iter_train_count / (t2 - t1 + 1) << " pic / s" << endl;
+    cout << "训练速度:" << batch_count* per_batch_iter_count* per_iter_train_count /
+         (t2 - t1 + 1) << " pic / s" << endl;
 }
 
 int main(int argc, char* argv[])
@@ -193,8 +174,7 @@ int main(int argc, char* argv[])
     int per_iter_train_count = 1;
     Layer::BASE_LEARNING_RATE = 0.0001;
 
-    if (argc == 5)
-    {
+    if (argc == 5) {
         batch_count = atoi(argv[1]);
         per_batch_iter_count = atoi(argv[2]);
         per_iter_train_count = atoi(argv[3]);
@@ -202,7 +182,6 @@ int main(int argc, char* argv[])
     }
 
     train(batch_count, per_batch_iter_count, per_iter_train_count);
-
     //threadTest();
     cout << "Hello world!" << endl;
     return 0;
